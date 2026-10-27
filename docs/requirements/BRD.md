@@ -1,490 +1,502 @@
-# Business Requirements Document — [Initiative Name]
+# Tài liệu Yêu cầu Nghiệp vụ (BRD) — Công cụ "Chat với tài liệu" (MVP)
 
-> **Standard:** IEEE 29148-2018 (Systems and software engineering — Life cycle processes — Requirements engineering)
-> **Document number:** [TBD: e.g., PRJ-XXXX-BRD-001]
-> **Version:** 0.1
-> **Status:** Draft (Template — not baselined)
-> **Author:** [TBD]
-> **Date:** [TBD]
-> **Confidentiality:** [Internal / Confidential]
+> **Chuẩn áp dụng:** IEEE 29148-2018
+> **Giai đoạn SDLC:** 5.2 Requirements and discovery
+> **Prompt nguồn:** [docs/BRD_Prompt_IEEE_standard.md](../BRD_Prompt_IEEE_standard.md)
 
 ---
 
-## 0. How to use this template
+## 0. Tóm tắt kiểm tra đầu vào (Validation summary)
 
-This BRD is structured to satisfy every item in `docs/requirements/BRD_IEEE_29148_Checklist.xlsx`
-(20 checklist items across 6 categories). See the compliance map in [Appendix B](#appendix-b--checklist-compliance-map).
+### 0.1 Đầu vào đã nhận
 
-**Rules for authors:**
-
-1. Replace every `[TBD: ...]` placeholder. If an item cannot be filled, record an `OQ-xxx` in Section 13 — do **not** invent metrics, baselines, stakeholders, or decisions.
-2. Keep all IDs (`BO-xxx`, `BR-xxx`, `OQ-xxx`, …) permanent. Never renumber after review; mark withdrawn items `Withdrawn` and keep the row.
-3. Business requirements must use **shall** syntax, one obligation per requirement, free of solution/technology design.
-4. Run the self-check in [Appendix A](#appendix-a--pre-review-verification-checklist) before circulating for review.
-
-**Identifier scheme**
-
-| Prefix | Meaning | Example |
-|---|---|---|
-| `SRC-xxx` | Source / evidence | SRC-001 |
-| `BO-xxx` | Business objective | BO-001 |
-| `MET-xxx` | Success metric / KPI | MET-001 |
-| `STK-xxx` | Stakeholder | STK-001 |
-| `SN-xxx` | Stakeholder need | SN-001 |
-| `BR-xxx` | Business requirement | BR-001 |
-| `BRU-xxx` | Business rule | BRU-001 |
-| `CON-xxx` | Constraint | CON-001 |
-| `ASM-xxx` | Assumption | ASM-001 |
-| `DEP-xxx` | Dependency | DEP-001 |
-| `RSK-xxx` | Risk | RSK-001 |
-| `OQ-xxx` | Open question | OQ-001 |
-| `AC-xxx` | Acceptance criterion | AC-001 |
-
-**Requirement syntax**
-
-> **[BR-xxx]** [Condition or trigger, if any], the [business actor or organization] **shall** [required capability or outcome] [object and qualifying constraint].
-
-- Use **shall** for mandatory, **should** for desirable, **may** for optional. Never "will", "must", "can", "needs to".
-- One idea per requirement. Quantify volume, time, frequency, accuracy, cost wherever a quantity matters.
-- Avoid unverifiable words: *fast, user-friendly, robust, seamless, efficient, world-class, as needed*.
-
-**Source register**
-
-| Source ID | Source | Type | Owner | Date / Version | What it evidences |
+| Source ID | Nguồn | Loại | Chủ sở hữu | Ngày / Phiên bản | Nội dung chứng minh |
 |---|---|---|---|---|---|
-| SRC-001 | [TBD: interview / report / policy / data extract / workshop] | [TBD] | [TBD] | [TBD] | [TBD] |
+| SRC-001 | Yêu cầu của quản lý (mục 2.1 của prompt BRD) | Sponsor brief (mô tả ngắn) | Quản lý dự án (chưa nêu tên) | 2026-10-27 / v1.0 | Vấn đề nghiệp vụ (khó nắm bắt nhiều PDF, tốn thời gian tổng hợp), mục tiêu MVP (web app, upload PDF, chat với AI), cho phép BA đề xuất thêm tính năng |
+| SRC-002 | Đề xuất của đội BA trong quá trình soạn BRD | Phân tích BA | Đội BA | 2026-10-27 | Các tính năng bổ sung (trích dẫn nguồn, lịch sử hội thoại, tóm tắt, phản hồi chất lượng câu trả lời) — **chưa được quản lý phê duyệt** |
+| SRC-003 | IEEE 29148-2018 | Tiêu chuẩn | IEEE | 2018 | Quy tắc chất lượng yêu cầu |
 
-> Claims without a source are marked `[Unverified]` and raise an `OQ-xxx`.
+### 0.2 Thông tin còn thiếu
+
+- Tên tổ chức, tên executive sponsor, business owner (khối Fill-In ở mục 8 của prompt còn trống).
+- Số liệu nền (baseline): số lượng tài liệu PDF, số người dùng, thời gian trung bình hiện nay để tìm một thông tin.
+- Mục tiêu định lượng (target) và mốc thời gian MVP, ngân sách.
+- Chính sách bảo mật / phân loại dữ liệu của tài liệu kinh doanh; việc có được phép gửi nội dung tài liệu tới dịch vụ AI bên ngoài hay không.
+- Không có phỏng vấn người dùng cuối (đội phát triển kinh doanh) hay mô tả quy trình hiện tại.
+
+### 0.3 Ba rủi ro lớn nhất đối với chất lượng yêu cầu
+
+1. **Thiếu baseline và target định lượng** → các mục tiêu BO-001..BO-003 chưa thể kiểm chứng (OQ-003, OQ-004, OQ-005).
+2. **Chưa rõ ràng buộc bảo mật dữ liệu** → có thể làm thay đổi phạm vi giải pháp (OQ-006, OQ-007, RSK-002).
+3. **Chỉ có một nguồn bằng chứng (SRC-001) dạng ngắn gọn** → nhu cầu của người dùng cuối mới là suy luận, cần xác nhận qua phỏng vấn (OQ-002).
 
 ---
 
-## 1. Document control
+## 1. Kiểm soát tài liệu (Document control)
 
-- **Title:** Business Requirements Document — [Initiative Name]
-- **Document number:** [TBD]
-- **Status:** Draft / In review / Approved / Baselined *(select one)*
-- **Author:** [TBD]
-- **Contributors:** [TBD]
-- **Reviewers:** [TBD]
-- **Approver:** [TBD]
+| Mục | Giá trị |
+|---|---|
+| Tiêu đề | BRD — Công cụ "Chat với tài liệu" (MVP) |
+| Mã tài liệu | BRD-CWD-001 |
+| Phiên bản | 0.1 |
+| Trạng thái | Draft |
+| Tác giả | Đội BA (minhtrungle) |
+| Người đóng góp | [TBD: OQ-001] |
+| Người review | Quản lý dự án; Đại diện đội phát triển kinh doanh; Trưởng nhóm kỹ thuật [TBD: OQ-001] |
+| Người phê duyệt | Executive sponsor [TBD: OQ-001] |
+| Phân loại bảo mật | Nội bộ (Internal) |
 
-**Version history**
+### Lịch sử phiên bản
 
-| Version | Date | Author | Change summary |
+| Phiên bản | Ngày | Tác giả | Tóm tắt thay đổi |
 |---|---|---|---|
-| 0.1 | [TBD] | [TBD] | Initial template draft |
+| 0.1 | 2026-10-27 | Đội BA | Bản nháp đầu tiên dựa trên SRC-001 |
 
-**Distribution list:** [TBD]
-**Confidentiality classification:** [TBD]
+### Danh sách phân phối
 
----
-
-## 2. Executive summary
-
-### 2.1 Business problem and impact
-
-[One paragraph: the core business problem/opportunity, quantified impact (revenue, cost, risk, compliance, customer impact), with source `SRC-xxx` or marked `[Unverified]`. — *Checklist: Business Purpose & Drivers*]
-
-### 2.2 Vision statement
-
-[One or two sentences: the desired future state and how this initiative aligns with organizational strategy. — *Checklist: Vision Statement*]
-
-> Example form: "By [date], [organization] will be able to [business outcome] so that [strategic benefit], measured by [MET-xxx]."
-
-### 2.3 Proposed business change
-
-[One paragraph: what changes in the business — processes, capabilities, roles — without prescribing technology.]
-
-### 2.4 Expected benefits and proving metrics
-
-| Benefit | Metric ID | Baseline | Target | Timeframe |
-|---|---|---|---|---|
-| [TBD] | MET-001 | [TBD] | [TBD] | [TBD] |
-
-### 2.5 Investment, timeline, and headline risks
-
-- **Investment / funding envelope:** [TBD]
-- **Target timeline / key dates:** [TBD]
-- **Top risks (headline):** [TBD: RSK-xxx]
-
-### 2.6 Decision requested
-
-[What the approver is being asked to approve, and by when.]
+| Người nhận | Mục đích |
+|---|---|
+| Quản lý dự án (sponsor) | Review & phê duyệt |
+| Đội phát triển kinh doanh | Xác nhận nhu cầu |
+| Đội kỹ thuật / phát triển | Đánh giá tính khả thi, làm đầu vào cho PRD/SRS |
+| Bộ phận IT / Bảo mật | Review ràng buộc dữ liệu |
 
 ---
 
-## 3. Business context and problem statement
+## 2. Tóm tắt điều hành (Executive summary)
 
-### 3.1 Current state ("As-Is") workflow
+**Vấn đề:** Đội phát triển kinh doanh phải làm việc với nhiều tài liệu PDF của dự án và khó nắm bắt đầy đủ nội dung. Mỗi lần cần một thông tin, họ phải mở và tổng hợp thủ công từ nhiều file, gây tốn thời gian (SRC-001). Mức độ tác động định lượng hiện chưa được đo [TBD: OQ-003].
 
-[Document the existing business process, who it affects, and where it breaks down. Root causes distinguished from symptoms. — *Checklist: Current State ('As-Is') Workflow*]
+**Thay đổi đề xuất:** Xây dựng một MVP dạng ứng dụng web cho phép người dùng tải lên các tài liệu PDF và đặt câu hỏi bằng ngôn ngữ tự nhiên; trợ lý AI trả lời dựa trên nội dung của các tài liệu đã tải lên, kèm chỉ dẫn nguồn để người dùng kiểm chứng (SRC-001, SRC-002).
+
+**Lợi ích kỳ vọng:**
+- Giảm thời gian tìm kiếm và tổng hợp thông tin từ tài liệu (MET-001).
+- Tăng tỷ lệ câu hỏi được trả lời chính xác, có nguồn kiểm chứng (MET-002).
+- Người dùng mục tiêu sử dụng công cụ thường xuyên (MET-003).
+
+**Đầu tư, tiến độ, rủi ro chính:** Ngân sách và tiến độ chưa xác định [TBD: OQ-008, OQ-009]. Rủi ro chính: AI trả lời sai/bịa thông tin (RSK-001), lộ dữ liệu kinh doanh (RSK-002), chất lượng trích xuất PDF scan/bảng biểu kém (RSK-004).
+
+**Quyết định cần phê duyệt:** Phê duyệt phạm vi MVP tại mục 5 và các yêu cầu mức **Must** tại mục 7, đồng thời chỉ định người chịu trách nhiệm trả lời các câu hỏi mở tại mục 12.
+
+---
+
+## 3. Bối cảnh nghiệp vụ và phát biểu vấn đề
+
+### 3.1 Quy trình hiện tại (As-is)
 
 ```mermaid
 flowchart TD
-    A([Start: trigger]) --> B[Step 1 — actor / system of record]
-    B --> C[Step 2]
-    C --> D{Decision}
-    D -->|path A| E[Step 3a]
-    D -->|path B| F[Step 3b]
-    E --> G([Outcome])
-    F --> G
-    %% Highlight pain points: classDef pain fill:#fdd;
-    classDef pain fill:#fdd;
-    class C,E pain
+    A[Nhân viên kinh doanh cần một thông tin] --> B[Xác định các file PDF có thể chứa thông tin]
+    B --> C[Mở từng file PDF]
+    C --> D[Đọc / tìm kiếm thủ công trong file]
+    D --> E{Đã đủ thông tin?}
+    E -- Chưa --> C
+    E -- Rồi --> F[Tổng hợp thủ công từ nhiều file]
+    F --> G[Sử dụng thông tin cho công việc]
 ```
 
-*Replace with the real flow; highlight pain points.*
+Nguồn: suy ra từ SRC-001 — chi tiết các bước **[Unverified]**, cần xác nhận qua phỏng vấn người dùng (OQ-002).
 
-**Affected parties and evidence:** [TBD]
-**Cost of inaction (12 months):** [TBD: quantify revenue, cost, risk, compliance, customer impact]
-**Why now (trigger and urgency):** [TBD: regulation / revenue loss / cost pressure / competitive threat / incident]
-
-### 3.2 Target state ("To-Be") workflow
-
-[The proposed business process, highlighting improvements, automation, or structural changes vs. 3.1. — *Checklist: Target State ('To-Be') Workflow*]
+### 3.2 Quy trình đề xuất (To-be, mức nghiệp vụ)
 
 ```mermaid
 flowchart TD
-    A([Start: trigger]) --> B[Step 1 — improved]
-    B --> C[Step 2 — automated / removed / re-sequenced]
-    C --> G([Outcome: measurable improvement])
+    A[Người dùng tải lên các tài liệu PDF] --> B[Tài liệu sẵn sàng để hỏi đáp]
+    B --> C[Người dùng đặt câu hỏi bằng ngôn ngữ tự nhiên]
+    C --> D[Trợ lý AI trả lời dựa trên nội dung tài liệu]
+    D --> E[Câu trả lời kèm nguồn: tên tài liệu, số trang]
+    E --> F{Cần kiểm chứng / hỏi thêm?}
+    F -- Hỏi thêm --> C
+    F -- Kiểm chứng --> G[Người dùng đối chiếu với tài liệu gốc]
+    F -- Đủ --> H[Sử dụng thông tin cho công việc]
 ```
 
-### 3.3 Operational scenarios and use cases
+### 3.3 Ai bị ảnh hưởng và như thế nào
 
-[High-level business scenarios and primary use cases from the end-user/business perspective (who does what, under which conditions, expected outcome). Detailed use cases belong downstream in PRD/SRS. — *Checklist: Operational Scenario & Use Cases*]
-
-| Scenario ID | Actor | Trigger | Goal / expected outcome | Notes |
-|---|---|---|---|---|
-| UC-001 | [TBD] | [TBD] | [TBD] | [TBD] |
-
----
-
-## 4. Business drivers and objectives
-
-*Checklist: Business Purpose & Drivers · Business Objectives & Success Metrics*
-
-### 4.1 Drivers and objectives
-
-| ID | Business driver | Objective (outcome, not activity) | Metric ID | Baseline | Target | Timeframe | Source |
-|---|---|---|---|---|---|---|---|
-| BO-001 | [TBD: driver, priority order — name the one whose removal kills the initiative] | [TBD: outcome] | MET-001 | [TBD] | [TBD] | [TBD] | SRC-xxx |
-
-### 4.2 Metric definitions
-
-A target without a baseline and a measurement method is not a valid objective. For each `MET-xxx`:
-
-| Metric ID | Definition | Formula | Data source | Owner | Frequency | Baseline date |
-|---|---|---|---|---|---|---|
-| MET-001 | [TBD] | [TBD] | [TBD] | [TBD] | [TBD] | [TBD] |
-
-### 4.3 Explicit non-goals
-
-[What is explicitly *not* a goal, even though stakeholders may assume it is. — *Checklist: completeness*]
-
----
-
-## 5. Scope
-
-*Checklist: Scope & Boundaries*
-
-### 5.1 In scope
-
-- **Business capabilities:** [TBD]
-- **Processes:** [TBD]
-- **Organizational units:** [TBD]
-- **Channels / customer segments / geographies:** [TBD]
-- **Data domains:** [TBD]
-
-### 5.2 Out of scope (with reasons)
-
-| Item | Reason for exclusion |
-|---|---|
-| [TBD: e.g., integration with X program — owned by initiative Y] | [TBD] |
-
-### 5.3 Deferred to a later phase
-
-| Item | Phase | Rationale |
+| Đối tượng | Ảnh hưởng | Bằng chứng |
 |---|---|---|
-| [TBD] | [TBD] | [TBD] |
+| Đội phát triển kinh doanh | Tốn thời gian tìm và tổng hợp thông tin; có nguy cơ bỏ sót thông tin do không nắm hết tài liệu | SRC-001 |
+| Quản lý dự án | Năng suất của đội giảm; quyết định có thể dựa trên thông tin chưa đầy đủ | SRC-001 (suy luận) **[Unverified]** |
 
-### 5.4 Boundaries with adjacent initiatives
+### 3.4 Chi phí nếu không hành động
 
-[Where this initiative stops and adjacent programs start; what a stakeholder might wrongly assume is included; minimum releasable scope if budget/time cut ~30%.]
+- **Chi phí thời gian:** số giờ/tuần dành cho việc tìm kiếm thủ công [TBD: OQ-003].
+- **Rủi ro chất lượng:** bỏ sót hoặc dùng sai thông tin trong tài liệu kinh doanh **[Unverified]**.
+- Chưa có số liệu doanh thu/chi phí liên quan [TBD: OQ-003].
 
----
+### 3.5 Nguyên nhân gốc và triệu chứng
 
-## 6. Stakeholders and needs
-
-### 6.1 Stakeholder identification
-
-*Checklist: Stakeholder Identification*
-
-Include internal and external stakeholders, sponsors, user classes, negative stakeholders, and those who can block adoption.
-
-| ID | Stakeholder / group | Role in the business | Interest | Influence (High/Med/Low) | Needs | Source |
-|---|---|---|---|---|---|---|
-| STK-001 | [TBD: e.g., executive sponsor] | [TBD] | [TBD] | [TBD] | SN-001 | SRC-xxx |
-| STK-002 | [TBD: e.g., end users / operations staff] | [TBD] | [TBD] | [TBD] | SN-002 | SRC-xxx |
-| STK-003 | [TBD: e.g., compliance / legal] | [TBD] | [TBD] | [TBD] | SN-003 | SRC-xxx |
-
-### 6.2 User personas and profile characteristics
-
-*Checklist: User Personas & Profile Characteristics*
-
-| Persona ID | Stakeholder group | Business role | Operational context | Domain experience level | Frequency of use | Notes |
-|---|---|---|---|---|---|---|
-| UP-001 | STK-002 | [TBD] | [TBD: where/when they work] | [TBD: novice / experienced / expert] | [TBD] | [TBD] |
-
-### 6.3 Stakeholder needs
-
-| ID | Stakeholder | Need statement (stakeholder's terms) | Current pain | Evidence | Priority (Must/Should/Could) |
-|---|---|---|---|---|---|
-| SN-001 | STK-001 | [TBD] | [TBD] | SRC-xxx | [TBD] |
-
-### 6.4 Conflicts between stakeholders
-
-| ID | Conflict | Parties | Arbitrator / decision owner | Status |
-|---|---|---|---|---|
-| C-001 | [TBD: e.g., speed vs. control] | [TBD] | [TBD] | Open → OQ-xxx |
-
----
-
-## 7. Business requirements
-
-*Checklist: Singularity & Clarity · Completeness & Implementation-Free · Traceability & Rationale · Feasibility & Realism*
-
-### 7.1 Quality rules for this section (IEEE 29148)
-
-Every `BR-xxx` **shall** satisfy all of the following before review:
-
-| Characteristic | Test |
+| Triệu chứng | Nguyên nhân gốc |
 |---|---|
-| Necessary | If removed, an objective or stakeholder need is no longer met |
-| Implementation-free | States outcome/capability, not mechanism, product, or design |
-| Unambiguous | Only one reading for an informed reader; terms in the glossary (Section 14) |
-| Consistent | Contradicts no other requirement, rule, or constraint |
-| Complete | Actor, trigger, outcome, and any limit are present |
-| Singular | Exactly one obligation — no "and/or" chains |
-| Feasible | Achievable within known constraints (Section 9) and risks (Section 10) |
-| Traceable | Unique ID and a named source (`BO-xxx` or `SN-xxx`) |
-| Verifiable | An acceptance criterion and verification method can be defined |
+| Tìm một thông tin mất nhiều thời gian | Thông tin phân tán trong nhiều file PDF, không có điểm truy cập tập trung theo nội dung |
+| Không nắm bắt đầy đủ tài liệu | Khối lượng tài liệu lớn so với thời gian đọc của người dùng [Unverified — OQ-004] |
+| Phải tổng hợp thủ công | Không có công cụ trả lời câu hỏi xuyên suốt nhiều tài liệu |
 
-### 7.2 Requirements
+### 3.6 Vì sao làm bây giờ
 
-Group requirements by business capability or process area — one table per group.
+Quản lý đã đưa ra yêu cầu phát triển MVP (SRC-001). Tác nhân thúc đẩy cụ thể và mức độ khẩn cấp (deadline, sự kiện kinh doanh) chưa được nêu [TBD: OQ-009].
 
-#### Group: [Capability / process area name]
+---
 
-| ID | Requirement (`shall` statement) | Rationale | Source | Priority | Acceptance criteria | Verification method | Status |
+## 4. Động lực nghiệp vụ và mục tiêu
+
+| ID | Động lực nghiệp vụ | Mục tiêu (kết quả) | Metric ID | Baseline | Target | Thời hạn | Nguồn |
 |---|---|---|---|---|---|---|---|
-| BR-001 | [TBD: "When [trigger], the [actor] shall [capability] [constraint]."] | [TBD: why needed] | BO-001 / SN-001 | Must / Should / Could / Won't | AC-001 | Review / Test / Inspection / Demonstration / Analysis | Draft |
-| BR-002 | [TBD] | [TBD] | BO-001 | [TBD] | AC-002 | [TBD] | Draft |
+| BO-001 | Tốn thời gian tìm thông tin trong nhiều PDF | Giảm thời gian để người dùng có được một thông tin cần thiết từ tài liệu dự án | MET-001 | [TBD: OQ-003] | [TBD: OQ-005] | [TBD: OQ-009] | SRC-001 |
+| BO-002 | Khó nắm bắt đầy đủ nội dung tài liệu | Người dùng nhận được câu trả lời đúng với nội dung tài liệu và có thể kiểm chứng nguồn | MET-002 | Không áp dụng (chưa có công cụ) | [TBD: OQ-005] | [TBD: OQ-009] | SRC-001, SRC-002 |
+| BO-003 | Chứng minh giá trị của MVP | Người dùng mục tiêu chấp nhận và sử dụng công cụ trong công việc | MET-003 | 0 (chưa có công cụ) | [TBD: OQ-005] | [TBD: OQ-009] | SRC-001 |
 
-**Priority scheme:** **Must** (initiative fails without it) · **Should** (significant value, workaround exists) · **Could** (desirable) · **Won't** (excluded this release).
+### Định nghĩa chỉ số
 
-Every requirement needs at least one acceptance criterion that is objectively decidable and does not restate the requirement verbatim.
-
----
-
-## 8. Business rules
-
-| ID | Rule | Type (Policy / Legal / Calculation / Decision) | Scope | Enforcement owner | Source |
-|---|---|---|---|---|---|
-| BRU-001 | [TBD: e.g., "A refund above 500 EUR requires manager approval"] | [TBD] | [TBD: process or domain] | [TBD] | SRC-xxx |
-
-*Classify which rules are legal/regulatory (non-negotiable) vs. internal policy (may change); note thresholds, exceptions, and approval limits; note rules that conflict across regions/products/business units.*
-
----
-
-## 9. Constraints
-
-*Checklist: Business Constraints · Dependencies & Constraints*
-
-Constraints are non-negotiable boundaries. Preferences belong in assumptions or design inputs, not here.
-
-| ID | Constraint | Type (Regulatory / Legal / Budget / Time / Contractual / Technical / Organizational) | Imposed by | Impact on the solution space | Source |
-|---|---|---|---|---|---|
-| CON-001 | [TBD] | [TBD] | [TBD: party] | [TBD] | SRC-xxx |
-
-*Also state: fixed budget/headcount/timeline limits; legacy systems, data, or vendors that must be retained; organizational/change-capacity limits; data residency requirements.*
-
----
-
-## 10. Assumptions, dependencies, and risks
-
-*Checklist: Business Assumptions · Dependencies & Constraints · Business Risks & Mitigation*
-
-| ID | Item | Type | Description | Impact if false / occurs | Owner | Validation / mitigation / contingency | Due |
-|---|---|---|---|---|---|---|---|
-| ASM-001 | [TBD] | Assumption | [TBD: what is assumed true but unverified] | [TBD] | [TBD] | [TBD: how and when validated] | [TBD] |
-| DEP-001 | [TBD] | Dependency | [TBD: external deliverable/decision — other teams, vendors, programs, legacy systems] | [TBD] | [TBD] | [TBD: tracking action + fallback if it slips] | [TBD] |
-| RSK-001 | [TBD] | Risk | [TBD: cause → event → effect] | [TBD: severity] | [TBD] | [TBD: mitigation / contingency; early-warning signal] | [TBD] |
-
-*Every assumption needs a validation action; every dependency needs an owner; every risk needs a severity and a response. Name the risk that would stop the initiative and who owns the response.*
-
----
-
-## 11. Business quality and non-functional attributes
-
-*Checklist: Compliance & Regulatory Standards · Business Continuity & Availability · Security & Business Policy Constraints*
-
-State these in **business terms** (obligations the business owes customers, regulators, or itself). Technical targets belong to the downstream PRD/SAD.
-
-### 11.1 Compliance and regulatory obligations
-
-| ID | Obligation | Origin (law / regulation / policy / contract) | Scope | Owner | Audit / evidence requirement | Source |
+| ID | Định nghĩa | Công thức | Nguồn dữ liệu | Chủ sở hữu | Tần suất | Ngày baseline |
 |---|---|---|---|---|---|---|
-| NFR-001 | [TBD: e.g., data privacy, retention, residency, auditability — GDPR/HIPAA/local law as applicable] | [TBD] | [TBD] | [TBD] | [TBD] | SRC-xxx |
-
-### 11.2 Business continuity and availability
-
-| ID | Obligation | Business impact of downtime | RTO / RPO expectation | Availability target | Contractual or aspirational | Source |
-|---|---|---|---|---|---|---|
-| NFR-002 | [TBD] | [TBD] | [TBD] | [TBD] | Hard obligation / aspiration | SRC-xxx |
-
-### 11.3 Security and business policy constraints
-
-| ID | Obligation | Origin (policy / regulation / contract) | Enforcement owner | Source |
-|---|---|---|---|---|
-| NFR-003 | [TBD: access control, segregation of duties, business policy enforcement] | [TBD] | [TBD] | SRC-xxx |
-
-### 11.4 Other business-level obligations
-
-Accessibility, language, channel, and volume/growth obligations:
-[TBD — e.g., "The business shall serve N concurrent users at peak" — hard obligation vs. aspiration.]
+| MET-001 | Thời gian trung bình để tìm được câu trả lời cho một câu hỏi nghiệp vụ từ bộ tài liệu dự án | Tổng thời gian tìm kiếm / số câu hỏi trong bộ câu hỏi chuẩn | Bài đo bấm giờ với bộ câu hỏi chuẩn, trước và sau MVP | Quản lý dự án | Một lần trước MVP, một lần khi nghiệm thu | [TBD: OQ-003] |
+| MET-002 | Tỷ lệ câu trả lời đúng và trích dẫn đúng nguồn | Số câu trả lời được người kiểm định đánh giá "đúng" / tổng số câu hỏi trong bộ câu hỏi chuẩn × 100% | Bộ câu hỏi chuẩn có đáp án do đội kinh doanh soạn (DEP-002) | Đội BA + Đội kinh doanh | Mỗi lần nghiệm thu | Không áp dụng |
+| MET-003 | Số người dùng hoạt động hàng tuần | Số người dùng khác nhau đặt ít nhất 1 câu hỏi trong tuần | Thống kê sử dụng của công cụ | Quản lý dự án | Hàng tuần | Ngày go-live |
 
 ---
 
-## 12. Traceability
+## 5. Phạm vi
 
-*Checklist: Traceability & Rationale*
+### 5.1 Trong phạm vi (MVP)
 
-### 12.1 Traceability matrix
+- Tải lên tài liệu định dạng PDF và quản lý danh sách tài liệu đã tải lên (SRC-001).
+- Hỏi đáp bằng ngôn ngữ tự nhiên trên nội dung **tất cả** tài liệu đã tải lên (SRC-001).
+- Câu trả lời có chỉ dẫn nguồn (tên tài liệu, số trang) (SRC-002).
+- Hội thoại nhiều lượt có ngữ cảnh trong một phiên (SRC-002).
+- Hỗ trợ câu hỏi và câu trả lời bằng tiếng Việt (SRC-002) [ngôn ngữ khác: OQ-010].
+- Kênh: ứng dụng web (SRC-001).
+- Người dùng: đội phát triển kinh doanh của dự án (SRC-001).
 
-| Business objective | Stakeholder need | Business requirement | Acceptance criteria | Downstream PRD/SRS ID |
-|---|---|---|---|---|
-| BO-001 | SN-001 | BR-001 | AC-001 | [TBD] |
+### 5.2 Ngoài phạm vi
 
-### 12.2 Coverage report
-
-Report explicitly (do not leave implicit):
-
-- **Objectives with no requirements:** [TBD / None]
-- **Requirements with no objective or need (orphans):** [TBD / None]
-- **Needs with no requirement:** [TBD / None]
-- **Requirements with no acceptance criterion or verification method:** [TBD / None]
-
----
-
-## 13. Open questions and decisions
-
-| ID | Question / decision needed | Why it matters (what it blocks) | Owner | Needed by | Status | Resolution |
-|---|---|---|---|---|---|---|
-| OQ-001 | [TBD: e.g., "Baseline value for MET-001 unknown — blocks Section 4"] | Section 4 | [TBD] | [TBD] | Open | — |
-
-*Decisions taken during elicitation are recorded here with date, decision maker, and rationale. Never resolve an open question silently by assumption.*
-
----
-
-## 14. Glossary and references
-
-### 14.1 Glossary
-
-| Term | Definition |
+| Hạng mục | Lý do |
 |---|---|
-| [TBD: business term / acronym, incl. any term whose meaning is disputed] | [TBD] |
+| Định dạng khác PDF (Word, Excel, PowerPoint, ảnh) | SRC-001 chỉ yêu cầu PDF |
+| Chỉnh sửa nội dung tài liệu PDF | Không thuộc mục tiêu hỏi đáp |
+| Ứng dụng di động native | SRC-001 chỉ định ứng dụng web |
+| Tích hợp với hệ thống lưu trữ tài liệu khác (Drive, SharePoint…) | Vượt phạm vi MVP |
+| Sinh tài liệu mới (báo cáo, email) từ câu trả lời | Vượt phạm vi MVP |
 
-### 14.2 References
+### 5.3 Hoãn sang giai đoạn sau
 
-| Reference | Version | Location | Access date |
-|---|---|---|---|
-| [TBD: business case, policies, regulations, prior analyses] | [TBD] | [TBD] | [TBD] |
+| Hạng mục | Lý do hoãn |
+|---|---|
+| Phân quyền chi tiết theo nhóm / tài liệu | Phụ thuộc chính sách bảo mật chưa rõ (OQ-007) |
+| Hỗ trợ PDF dạng ảnh scan (OCR) | Phụ thuộc kết quả xác nhận ASM-001 |
+| Lưu lịch sử hội thoại lâu dài giữa các phiên | Mức Could; đánh giá sau MVP |
 
----
+### 5.4 Ranh giới
 
-## 15. Approval
-
-| Role | Name | Decision | Signature / date |
-|---|---|---|---|
-| Executive sponsor | [TBD] | Approve / Approve with conditions / Reject | [TBD] |
-| Business owner | [TBD] | Approve / Reject | [TBD] |
-| Product manager / product owner | [TBD] | Approve / Reject | [TBD] |
-| Compliance / legal (if applicable) | [TBD] | Approve / Reject | [TBD] |
-
-*State the conditions of approval and the baseline version being approved. Target approval date: [TBD] — gates [TBD: downstream PRD/SAD work].*
-
-**Change control after baselining:** [TBD: how scope/objective changes will be controlled]
+Sáng kiến bắt đầu từ khi người dùng có file PDF trong tay và kết thúc khi người dùng nhận được câu trả lời có nguồn. Việc thu thập, tạo lập, phê duyệt tài liệu PDF nằm ngoài sáng kiến.
 
 ---
 
-## 16. Appendix
+## 6. Các bên liên quan và nhu cầu
 
-Supporting analysis, process maps, interview notes, data extracts, and any material referenced above.
+| ID | Bên liên quan | Vai trò | Mối quan tâm | Ảnh hưởng | Nhu cầu | Nguồn |
+|---|---|---|---|---|---|---|
+| STK-001 | Quản lý dự án | Người yêu cầu / sponsor của MVP | MVP chứng minh được giá trị, đúng tiến độ | Cao | SN-001, SN-002 | SRC-001 |
+| STK-002 | Đội phát triển kinh doanh | Người dùng cuối | Tìm thông tin nhanh, chính xác, tin cậy được | Cao | SN-003, SN-004, SN-005, SN-006 | SRC-001 |
+| STK-003 | Đội BA | Đề xuất tính năng, quản lý yêu cầu | Yêu cầu rõ ràng, truy vết được | Trung bình | SN-007 | SRC-001 |
+| STK-004 | Đội phát triển (kỹ thuật) | Xây dựng MVP | Phạm vi khả thi, ràng buộc rõ | Trung bình | SN-008 | SRC-001 (suy luận) |
+| STK-005 | Bộ phận IT / Bảo mật | Bảo vệ dữ liệu doanh nghiệp — **có thể chặn triển khai** | Tài liệu kinh doanh không bị lộ | Cao | SN-009 | **[Unverified]** — OQ-006 |
 
----
+### Nhu cầu chi tiết
 
-## Appendix A — Pre-review verification checklist
-
-Run before circulating. Report any failed check as an `OQ-xxx` or a defect against the affected ID.
-Do not mark the document ready for approval while a **Must** requirement fails a check.
-
-**Requirement quality**
-
-- [ ] Every requirement uses **shall** syntax and contains one obligation.
-- [ ] Every requirement is free of solution/design language.
-- [ ] Every requirement is quantified where quantity affects acceptance.
-- [ ] No vague qualifiers remain (*fast, easy, robust, efficient, user-friendly, …*).
-- [ ] Every specialized term is in the glossary (Section 14).
-- [ ] No requirement duplicates or contradicts another.
-- [ ] Every requirement has a unique, permanent ID.
-
-**Completeness and traceability**
-
-- [ ] Every business objective has at least one requirement.
-- [ ] Every requirement traces to an objective or stakeholder need.
-- [ ] Every requirement has at least one acceptance criterion.
-- [ ] Every requirement has a verification method.
-- [ ] Every stakeholder group has at least one need recorded.
-- [ ] Scope, exclusions, assumptions, dependencies, risks are all populated.
-- [ ] Every open question has an owner and a needed-by date.
-
-**Business validation**
-
-- [ ] The problem statement is evidenced, not asserted.
-- [ ] Baseline and target values are sourced and measurable.
-- [ ] Benefits and costs are stated in business terms.
-- [ ] The sponsor confirms the problem and desired outcome are represented accurately.
-- [ ] The document is understandable by a business reader without technical translation.
-
-**Readiness statement:** `Ready for review` / `Ready with conditions` / `Not ready` — blocking items: [TBD: list by ID]
+| ID | Bên liên quan | Phát biểu nhu cầu | Vấn đề hiện tại | Bằng chứng | Ưu tiên |
+|---|---|---|---|---|---|
+| SN-001 | STK-001 | Có một MVP chạy được để đánh giá giá trị của việc hỏi đáp trên tài liệu | Chưa có công cụ | SRC-001 | Must |
+| SN-002 | STK-001 | Đo được hiệu quả của công cụ so với cách làm hiện tại | Không có số liệu | SRC-001 (suy luận) | Should |
+| SN-003 | STK-002 | Đưa các tài liệu PDF của dự án vào một nơi để hỏi đáp | Tài liệu phân tán | SRC-001 | Must |
+| SN-004 | STK-002 | Hỏi một câu và nhận câu trả lời tổng hợp từ nhiều tài liệu | Tổng hợp thủ công tốn thời gian | SRC-001 | Must |
+| SN-005 | STK-002 | Tin cậy được câu trả lời — biết thông tin lấy từ đâu | AI có thể trả lời sai **[Unverified]** | SRC-002 | Must |
+| SN-006 | STK-002 | Hỏi tiếp, làm rõ mà không phải lặp lại ngữ cảnh | — | SRC-002 | Should |
+| SN-007 | STK-003 | Có thể bổ sung tính năng gia tăng giá trị (tóm tắt, phản hồi chất lượng) | — | SRC-001 | Could |
+| SN-008 | STK-004 | Phạm vi và tiêu chí nghiệm thu rõ ràng để ước lượng | Thông tin đầu vào còn thiếu | SRC-001 (suy luận) | Must |
+| SN-009 | STK-005 | Chỉ người được phép mới truy cập được tài liệu và câu trả lời | — | **[Unverified]** — OQ-006 | Must |
 
 ---
 
-## Appendix B — Checklist compliance map
+## 7. Yêu cầu nghiệp vụ
 
-Mapping of every item in `BRD_IEEE_29148_Checklist.xlsx` to the section of this BRD that satisfies it.
-Use this table to update the checklist's **Status** and **Notes** columns as the document matures.
+**Quy ước động từ:** **phải** = *shall* (bắt buộc); **nên** = *should* (mong muốn); **có thể** = *may* (cho phép).
+**Ưu tiên:** Must / Should / Could / Won't (MoSCoW).
 
-| # | Category | Checklist item | BRD section | How it is satisfied |
+### 7.1 Quản lý tài liệu
+
+| ID | Yêu cầu | Lý do | Nguồn | Ưu tiên | AC | Phương pháp kiểm chứng | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| BR-001 | Người dùng **phải** có khả năng tải lên một hoặc nhiều tài liệu PDF, mỗi tài liệu có dung lượng tối đa [TBD: OQ-011] MB. | Đưa tài liệu vào phạm vi hỏi đáp | BO-001 / SN-003 | Must | AC-001 | Test | Draft |
+| BR-002 | Khi tải lên một tệp không phải PDF hoặc vượt giới hạn dung lượng, người dùng **phải** nhận được thông báo nêu rõ lý do tệp bị từ chối. | Tránh người dùng nhầm tưởng tài liệu đã sẵn sàng | SN-003 | Must | AC-002 | Test | Draft |
+| BR-003 | Người dùng **phải** biết được khi nào một tài liệu đã tải lên sẵn sàng để hỏi đáp. | Tránh hỏi khi tài liệu chưa được xử lý xong | SN-003, SN-005 | Must | AC-003 | Demonstration | Draft |
+| BR-004 | Người dùng **phải** xem được danh sách tài liệu đã tải lên, gồm tên tài liệu và thời điểm tải lên. | Biết được phạm vi tri thức mà AI đang dùng | SN-003 | Must | AC-004 | Demonstration | Draft |
+| BR-005 | Người dùng **phải** có khả năng xóa một tài liệu đã tải lên. | Loại bỏ tài liệu sai, lỗi thời | SN-003 | Should | AC-005 | Test | Draft |
+| BR-006 | Sau khi một tài liệu bị xóa, câu trả lời cho các câu hỏi mới **phải** không sử dụng nội dung của tài liệu đó. | Đảm bảo tính đúng đắn của phạm vi tri thức | SN-005 | Should | AC-006 | Test | Draft |
+
+### 7.2 Hỏi đáp trên tài liệu
+
+| ID | Yêu cầu | Lý do | Nguồn | Ưu tiên | AC | Phương pháp kiểm chứng | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| BR-007 | Người dùng **phải** có khả năng đặt câu hỏi bằng ngôn ngữ tự nhiên về nội dung các tài liệu đã tải lên. | Chức năng cốt lõi của MVP | BO-001 / SN-004 | Must | AC-007 | Demonstration | Draft |
+| BR-008 | Khi thông tin trả lời nằm rải rác trong nhiều tài liệu, câu trả lời **phải** tổng hợp thông tin từ tất cả các tài liệu liên quan. | Giải quyết việc tổng hợp thủ công | BO-001 / SN-004 | Must | AC-008 | Test | Draft |
+| BR-009 | Câu trả lời **phải** chỉ dựa trên nội dung của các tài liệu đã tải lên. | Giảm rủi ro thông tin sai/bịa | BO-002 / SN-005 | Must | AC-009 | Test | Draft |
+| BR-010 | Khi các tài liệu đã tải lên không chứa thông tin để trả lời, câu trả lời **phải** nêu rõ là không tìm thấy thông tin trong tài liệu. | Người dùng không bị dẫn dắt sai | BO-002 / SN-005 | Must | AC-010 | Test | Draft |
+| BR-011 | Mỗi câu trả lời **phải** chỉ dẫn nguồn gồm tên tài liệu và số trang chứa thông tin được sử dụng. | Người dùng kiểm chứng được câu trả lời | BO-002 / SN-005 | Must | AC-011 | Test | Draft |
+| BR-012 | Tỷ lệ câu trả lời đúng trên bộ câu hỏi chuẩn **phải** đạt tối thiểu [TBD: OQ-005] %. | Định lượng chất lượng câu trả lời | BO-002 / MET-002 | Must | AC-012 | Analysis | Draft |
+| BR-013 | Người dùng **phải** nhận được câu trả lời trong vòng [TBD: OQ-012] giây kể từ khi gửi câu hỏi, đối với tối thiểu 90% số câu hỏi. | Mục tiêu giảm thời gian tìm thông tin | BO-001 / MET-001 | Must | AC-013 | Test | Draft |
+| BR-014 | Người dùng **phải** có khả năng đặt câu hỏi và nhận câu trả lời bằng tiếng Việt. | Ngôn ngữ làm việc của người dùng [Unverified — OQ-010] | SN-004 | Must | AC-014 | Test | Draft |
+| BR-015 | Trong một phiên hội thoại, người dùng **nên** có khả năng đặt câu hỏi tiếp theo tham chiếu đến câu hỏi/câu trả lời trước đó mà không cần nhắc lại ngữ cảnh. | Hỏi đáp tự nhiên, giảm thao tác | SN-006 | Should | AC-015 | Demonstration | Draft |
+| BR-016 | Người dùng **nên** có khả năng giới hạn phạm vi câu hỏi vào một hoặc một số tài liệu được chọn. | Tăng độ chính xác khi tài liệu có nội dung trùng lặp | SN-004, SN-005 | Should | AC-016 | Test | Draft |
+
+### 7.3 Lịch sử hội thoại
+
+| ID | Yêu cầu | Lý do | Nguồn | Ưu tiên | AC | Phương pháp kiểm chứng | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| BR-017 | Người dùng **nên** xem lại được toàn bộ câu hỏi và câu trả lời của phiên hội thoại hiện tại. | Tra cứu lại thông tin đã hỏi | SN-006 | Should | AC-017 | Demonstration | Draft |
+| BR-018 | Người dùng **có thể** xem lại lịch sử hội thoại của các phiên trước. | Tái sử dụng kết quả | SN-007 | Could | AC-018 | Demonstration | Draft |
+
+### 7.4 Truy cập và bảo mật
+
+| ID | Yêu cầu | Lý do | Nguồn | Ưu tiên | AC | Phương pháp kiểm chứng | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| BR-019 | Chỉ người dùng được cấp quyền **phải** truy cập được công cụ, tài liệu đã tải lên và câu trả lời. | Bảo vệ tài liệu kinh doanh | SN-009 | Must | AC-019 | Test | Draft |
+| BR-020 | Việc xử lý nội dung tài liệu **phải** tuân thủ chính sách dữ liệu của tổ chức về việc chia sẻ dữ liệu với bên thứ ba [TBD: OQ-006]. | Tránh vi phạm chính sách / lộ dữ liệu | SN-009 | Must | AC-020 | Review | Draft |
+
+### 7.5 Đo lường và tính năng gia tăng (đề xuất của BA)
+
+| ID | Yêu cầu | Lý do | Nguồn | Ưu tiên | AC | Phương pháp kiểm chứng | Trạng thái |
+|---|---|---|---|---|---|---|---|
+| BR-021 | Người dùng **nên** có khả năng đánh giá từng câu trả lời là hữu ích hoặc không hữu ích. | Thu thập dữ liệu chất lượng cho MET-002 | BO-002, BO-003 / SN-002 | Should | AC-021 | Demonstration | Draft |
+| BR-022 | Quản lý dự án **nên** xem được số người dùng hoạt động và số câu hỏi theo tuần. | Đo MET-003 | BO-003 / SN-002 | Should | AC-022 | Demonstration | Draft |
+| BR-023 | Người dùng **có thể** yêu cầu bản tóm tắt nội dung của một tài liệu đã tải lên. | Nắm nhanh nội dung tài liệu | BO-002 / SN-007 | Could | AC-023 | Demonstration | Draft |
+
+### 7.6 Tiêu chí nghiệm thu
+
+| ID | Yêu cầu | Tiêu chí nghiệm thu |
+|---|---|---|
+| AC-001 | BR-001 | Tải lên đồng thời 3 file PDF hợp lệ (mỗi file dưới giới hạn) → cả 3 file xuất hiện trong danh sách tài liệu. |
+| AC-002 | BR-002 | Tải lên 1 file .docx và 1 file PDF vượt giới hạn → mỗi file bị từ chối với thông báo lần lượt nêu "sai định dạng" và "vượt dung lượng". |
+| AC-003 | BR-003 | Sau khi tải lên, mỗi tài liệu hiển thị trạng thái; câu hỏi về nội dung tài liệu chỉ được trả lời đúng sau khi trạng thái là "sẵn sàng". |
+| AC-004 | BR-004 | Danh sách hiển thị đúng tên file và thời điểm tải lên của 100% tài liệu đã tải lên trong bài kiểm thử. |
+| AC-005 | BR-005 | Xóa 1 tài liệu → tài liệu không còn trong danh sách. |
+| AC-006 | BR-006 | Với câu hỏi chỉ có đáp án trong tài liệu đã xóa → câu trả lời nêu không tìm thấy thông tin và không trích dẫn tài liệu đã xóa. |
+| AC-007 | BR-007 | Người kiểm thử gửi 10 câu hỏi bằng ngôn ngữ tự nhiên → nhận được câu trả lời cho cả 10 câu. |
+| AC-008 | BR-008 | Với bộ câu hỏi có đáp án nằm ở ≥ 2 tài liệu khác nhau → câu trả lời chứa thông tin và trích dẫn từ tất cả các tài liệu chứa đáp án, trong ≥ [TBD: OQ-005] % số câu. |
+| AC-009 | BR-009 | Với 10 câu hỏi kiến thức chung không liên quan đến tài liệu → không câu trả lời nào đưa ra thông tin ngoài tài liệu. |
+| AC-010 | BR-010 | Với 10 câu hỏi không có đáp án trong tài liệu → ≥ 9/10 câu trả lời nêu rõ không tìm thấy thông tin. [Ngưỡng cần xác nhận — OQ-005] |
+| AC-011 | BR-011 | Với bộ câu hỏi chuẩn → 100% câu trả lời có trích dẫn; ≥ [TBD: OQ-005] % trích dẫn trỏ đúng tài liệu và trang chứa thông tin. |
+| AC-012 | BR-012 | Chạy bộ câu hỏi chuẩn (DEP-002), người kiểm định đánh giá → tỷ lệ đúng ≥ target tại OQ-005. |
+| AC-013 | BR-013 | Đo thời gian phản hồi cho bộ câu hỏi chuẩn → ≥ 90% câu trả lời trong ngưỡng tại OQ-012. |
+| AC-014 | BR-014 | Bộ câu hỏi chuẩn bằng tiếng Việt → 100% câu trả lời bằng tiếng Việt. |
+| AC-015 | BR-015 | Hỏi "Giá trị hợp đồng X là bao nhiêu?" rồi "Thời hạn của nó?" → câu trả lời thứ hai đề cập đúng hợp đồng X. |
+| AC-016 | BR-016 | Chọn 1 tài liệu và hỏi câu có đáp án ở tài liệu khác → câu trả lời không trích dẫn tài liệu ngoài phạm vi đã chọn. |
+| AC-017 | BR-017 | Sau 5 lượt hỏi đáp → cả 5 cặp câu hỏi/câu trả lời hiển thị đúng thứ tự. |
+| AC-018 | BR-018 | Đóng phiên và mở lại → hội thoại của phiên trước xem lại được. |
+| AC-019 | BR-019 | Người chưa được cấp quyền truy cập → không xem được tài liệu, câu hỏi hay câu trả lời. |
+| AC-020 | BR-020 | Bộ phận IT/Bảo mật review cách xử lý dữ liệu và ký xác nhận tuân thủ. |
+| AC-021 | BR-021 | Đánh giá 1 câu trả lời → đánh giá được ghi nhận và thống kê được theo tổng số. |
+| AC-022 | BR-022 | Sau 1 tuần sử dụng thử → số liệu hiển thị khớp với số người dùng và số câu hỏi thực tế đã ghi nhận. |
+| AC-023 | BR-023 | Yêu cầu tóm tắt 1 tài liệu → bản tóm tắt được người dùng nghiệp vụ đánh giá là phản ánh đúng các ý chính (review thủ công). |
+
+---
+
+## 8. Quy tắc nghiệp vụ
+
+| ID | Quy tắc | Loại | Phạm vi | Người chịu trách nhiệm | Nguồn |
+|---|---|---|---|---|---|
+| BRU-001 | Chỉ chấp nhận tài liệu định dạng PDF. | Policy | Quản lý tài liệu | Product owner | SRC-001 |
+| BRU-002 | Dung lượng tối đa mỗi tài liệu và tổng số tài liệu được phép là [TBD: OQ-011]. | Policy | Quản lý tài liệu | Product owner | OQ-011 |
+| BRU-003 | Câu trả lời không có nguồn trích dẫn từ tài liệu thì không được trình bày như một khẳng định thực tế. | Decision | Hỏi đáp | Product owner | SRC-002 |
+| BRU-004 | Tài liệu đã xóa không còn được dùng làm nguồn cho câu trả lời mới. | Decision | Quản lý tài liệu / Hỏi đáp | Product owner | SRC-002 |
+| BRU-005 | Phạm vi chia sẻ tài liệu giữa người dùng (riêng từng người hay chung cả đội) theo quyết định tại OQ-007. | Policy | Truy cập | Quản lý dự án | OQ-007 |
+
+---
+
+## 9. Ràng buộc
+
+| ID | Ràng buộc | Loại | Bên áp đặt | Ảnh hưởng | Nguồn |
+|---|---|---|---|---|---|
+| CON-001 | Giải pháp được cung cấp dưới dạng ứng dụng web. | Technical | Quản lý dự án | Không xây dựng ứng dụng desktop/mobile native | SRC-001 |
+| CON-002 | Giải pháp sử dụng AI để trả lời câu hỏi. | Technical | Quản lý dự án | Phải quản lý rủi ro độ chính xác (RSK-001) và chi phí sử dụng AI (RSK-005) | SRC-001 |
+| CON-003 | Phạm vi giao hàng là MVP. | Organizational | Quản lý dự án | Ưu tiên Must; Should/Could chỉ thực hiện khi còn năng lực | SRC-001 |
+| CON-004 | Đầu vào là tài liệu PDF. | Business | Quản lý dự án | Không hỗ trợ định dạng khác trong MVP | SRC-001 |
+| CON-005 | Ngân sách và thời hạn MVP. | Budget / Time | Sponsor | [TBD: OQ-008, OQ-009] | — |
+
+---
+
+## 10. Giả định, phụ thuộc và rủi ro
+
+| ID | Hạng mục | Loại | Mô tả | Tác động nếu sai | Chủ sở hữu | Xác nhận / giảm thiểu | Hạn |
+|---|---|---|---|---|---|---|---|
+| ASM-001 | PDF có lớp văn bản | Assumption | Phần lớn tài liệu PDF là PDF có văn bản (không phải ảnh scan) | Câu trả lời thiếu/sai với tài liệu scan; cần OCR (tăng phạm vi) | Đội BA | Lấy mẫu bộ tài liệu thực tế để kiểm tra | 2026-11-06 |
+| ASM-002 | Ngôn ngữ tài liệu | Assumption | Tài liệu chủ yếu bằng tiếng Việt và/hoặc tiếng Anh | Cần hỗ trợ thêm ngôn ngữ | Đội BA | Xác nhận với đội kinh doanh (OQ-010) | 2026-11-06 |
+| ASM-003 | Quy mô sử dụng | Assumption | Số người dùng và số tài liệu ở mức quy mô một đội dự án | Yêu cầu hiệu năng/chi phí thay đổi | Quản lý dự án | Xác nhận số liệu (OQ-004) | 2026-11-06 |
+| ASM-004 | Truy cập trình duyệt | Assumption | Người dùng có máy tính có trình duyệt web và kết nối mạng nội bộ/Internet | Không truy cập được công cụ | Đội kỹ thuật | Xác nhận với IT | 2026-11-06 |
+| DEP-001 | Dịch vụ AI | Dependency | Có quyền sử dụng một dịch vụ/mô hình AI được tổ chức phê duyệt | Không thể triển khai chức năng cốt lõi | Đội kỹ thuật | Chốt lựa chọn sau OQ-006 | 2026-11-10 |
+| DEP-002 | Bộ tài liệu & câu hỏi chuẩn | Dependency | Đội kinh doanh cung cấp bộ tài liệu mẫu và bộ câu hỏi có đáp án để nghiệm thu | Không đo được MET-001, MET-002 | Đội kinh doanh | Lên lịch workshop soạn bộ câu hỏi | 2026-11-10 |
+| DEP-003 | Hạ tầng triển khai | Dependency | Có môi trường để triển khai ứng dụng web | Chậm go-live | IT | Đăng ký môi trường | [TBD: OQ-009] |
+| RSK-001 | AI trả lời sai / bịa thông tin | Risk | Mô hình AI sinh nội dung không có trong tài liệu → người dùng dùng thông tin sai → quyết định kinh doanh sai | Cao | Product owner | BR-009, BR-010, BR-011; nghiệm thu bằng bộ câu hỏi chuẩn; hướng dẫn người dùng kiểm chứng nguồn | 2026-11-10 |
+| RSK-002 | Lộ dữ liệu kinh doanh | Risk | Tài liệu được gửi tới dịch vụ bên ngoài hoặc truy cập trái phép → lộ thông tin nhạy cảm → vi phạm chính sách/hợp đồng | Cao | IT / Bảo mật | BR-019, BR-020; review bảo mật trước go-live | 2026-11-10 |
+| RSK-003 | Mức độ sử dụng thấp | Risk | Người dùng không tin tưởng câu trả lời → quay lại cách làm cũ → MVP không chứng minh được giá trị | Trung bình | Quản lý dự án | Trích dẫn nguồn (BR-011), thu phản hồi (BR-021), đào tạo ngắn | Go-live + 4 tuần |
+| RSK-004 | Trích xuất PDF kém | Risk | PDF scan, bảng biểu, nhiều cột → nội dung trích xuất sai → câu trả lời sai | Trung bình | Đội kỹ thuật | Kiểm tra ASM-001 sớm; nêu giới hạn trong hướng dẫn sử dụng | 2026-11-06 |
+| RSK-005 | Chi phí AI vượt dự kiến | Risk | Số câu hỏi/tài liệu lớn → chi phí dịch vụ AI tăng → vượt ngân sách | Trung bình | Quản lý dự án | Đặt giới hạn sử dụng (BRU-002), theo dõi chi phí hàng tuần | [TBD: OQ-008] |
+| RSK-006 | Phình phạm vi | Risk | Thêm nhiều tính năng đề xuất → trễ tiến độ MVP | Trung bình | Product owner | Giữ MoSCoW, chỉ cam kết Must | Liên tục |
+
+---
+
+## 11. Truy vết (Traceability)
+
+| Mục tiêu | Nhu cầu | Yêu cầu nghiệp vụ | Tiêu chí nghiệm thu | ID PRD/SRS |
 |---|---|---|---|---|
-| 1 | 1. Document & Business Overview | Business Purpose & Drivers | §2.1, §4.1 | Problem quantified with sources; drivers listed in priority order |
-| 2 | 1. Document & Business Overview | Business Objectives & Success Metrics | §4 | Every objective has metric ID, baseline, target, timeframe, source; metrics defined in §4.2 |
-| 3 | 1. Document & Business Overview | Scope & Boundaries | §5 | In-scope, out-of-scope (with reasons), deferred, boundaries all explicit |
-| 4 | 1. Document & Business Overview | Vision Statement | §2.2 | Concise future-state vision aligned with organizational strategy |
-| 5 | 2. Stakeholder & User Analysis | Stakeholder Identification | §6.1 | Internal/external stakeholders, sponsors, user classes identified and categorized |
-| 6 | 2. Stakeholder & User Analysis | User Personas & Profile Characteristics | §6.2 | User profiles, business roles, operational contexts, experience levels specified |
-| 7 | 2. Stakeholder & User Analysis | Business Constraints | §9 | Organizational, financial, regulatory, time-to-market constraints documented with imposer and impact |
-| 8 | 3. Business Process & Operational Concept | Current State ('As-Is') Workflow | §3.1 | Existing workflow documented (Mermaid), pain points highlighted, cost of inaction quantified |
-| 9 | 3. Business Process & Operational Concept | Target State ('To-Be') Workflow | §3.2 | Proposed process illustrated, improvements/automation/structural changes highlighted |
-| 10 | 3. Business Process & Operational Concept | Operational Scenario & Use Cases | §3.3 | High-level business scenarios and primary use cases from end-user perspective |
-| 11 | 4. Business & High-Level Functional Requirements | Singularity & Clarity | §7.1, §7.2 | Each `BR-xxx` is one shall-statement, one obligation, unambiguous |
-| 12 | 4. Business & High-Level Functional Requirements | Completeness & Implementation-Free | §7.1, §7.2 | Actor/trigger/outcome/limits present; no technical design embedded |
-| 13 | 4. Business & High-Level Functional Requirements | Traceability & Rationale | §7.2, §12 | Every requirement has rationale, unique ID, source; matrix in §12 |
-| 14 | 4. Business & High-Level Functional Requirements | Feasibility & Realism | §7.1, §9, §10 | Feasibility test against constraints and risks before review |
-| 15 | 5. Business Quality & Non-Functional Attributes | Compliance & Regulatory Standards | §11.1 | Legal/regulatory/privacy/auditability obligations with origin and owner |
-| 16 | 5. Business Quality & Non-Functional Attributes | Business Continuity & Availability | §11.2 | Downtime impact, RTO/RPO, availability targets defined |
-| 17 | 5. Business Quality & Non-Functional Constraints | Security & Business Policy Constraints | §11.3 | High-level security, access control, policy enforcement established |
-| 18 | 6. Assumptions, Dependencies & Risks | Business Assumptions | §10 | Every `ASM-xxx` has a validation action and due date |
-| 19 | 6. Assumptions, Dependencies & Risks | Dependencies & Constraints | §9, §10 | Interdependencies with initiatives, third parties, legacy systems mapped with owners |
-| 20 | 6. Assumptions, Dependencies & Risks | Business Risks & Mitigation | §10 | Risks with cause→event→effect, severity, owner, mitigation/contingency |
+| BO-001 | SN-003 | BR-001 | AC-001 | [TBD] |
+| BO-001 | SN-003 | BR-002 | AC-002 | [TBD] |
+| BO-001 | SN-003, SN-005 | BR-003 | AC-003 | [TBD] |
+| BO-001 | SN-003 | BR-004 | AC-004 | [TBD] |
+| BO-001 | SN-003 | BR-005 | AC-005 | [TBD] |
+| BO-002 | SN-005 | BR-006 | AC-006 | [TBD] |
+| BO-001 | SN-004 | BR-007 | AC-007 | [TBD] |
+| BO-001 | SN-004 | BR-008 | AC-008 | [TBD] |
+| BO-002 | SN-005 | BR-009 | AC-009 | [TBD] |
+| BO-002 | SN-005 | BR-010 | AC-010 | [TBD] |
+| BO-002 | SN-005 | BR-011 | AC-011 | [TBD] |
+| BO-002 | SN-005 | BR-012 | AC-012 | [TBD] |
+| BO-001 | SN-004 | BR-013 | AC-013 | [TBD] |
+| BO-001 | SN-004 | BR-014 | AC-014 | [TBD] |
+| BO-001 | SN-006 | BR-015 | AC-015 | [TBD] |
+| BO-002 | SN-004, SN-005 | BR-016 | AC-016 | [TBD] |
+| BO-001 | SN-006 | BR-017 | AC-017 | [TBD] |
+| BO-003 | SN-007 | BR-018 | AC-018 | [TBD] |
+| BO-003 | SN-009 | BR-019 | AC-019 | [TBD] |
+| BO-003 | SN-009 | BR-020 | AC-020 | [TBD] |
+| BO-002, BO-003 | SN-002 | BR-021 | AC-021 | [TBD] |
+| BO-003 | SN-002 | BR-022 | AC-022 | [TBD] |
+| BO-002 | SN-007 | BR-023 | AC-023 | [TBD] |
+
+### Báo cáo độ phủ
+
+| Kiểm tra | Kết quả |
+|---|---|
+| Mục tiêu không có yêu cầu | Không có |
+| Yêu cầu mồ côi (không có mục tiêu/nhu cầu) | Không có |
+| Nhu cầu không có yêu cầu | **SN-001** (có MVP để đánh giá) và **SN-008** (phạm vi rõ cho đội kỹ thuật) được đáp ứng bởi chính tài liệu BRD và tập yêu cầu, không phải bởi một BR riêng — ghi nhận, không phải lỗi |
+| Yêu cầu không có AC hoặc phương pháp kiểm chứng | Không có. Tuy nhiên AC-008, AC-011, AC-012, AC-013 phụ thuộc ngưỡng chưa xác định (OQ-005, OQ-012) |
+
+---
+
+## 12. Câu hỏi mở và quyết định
+
+| ID | Câu hỏi / quyết định cần có | Vì sao quan trọng | Người chịu trách nhiệm | Hạn | Trạng thái | Kết luận |
+|---|---|---|---|---|---|---|
+| OQ-001 | Ai là executive sponsor, business owner, người review và người phê duyệt BRD? | Không thể phê duyệt BRD | Quản lý dự án | 2026-11-03 | Open | — |
+| OQ-002 | Quy trình tìm thông tin hiện tại của đội kinh doanh cụ thể ra sao? Các loại câu hỏi thường gặp là gì? | Xác nhận mục 3.1 và nhu cầu SN-003..SN-006 | Đội BA | 2026-11-06 | Open | — |
+| OQ-003 | Thời gian trung bình hiện tại để tìm một thông tin là bao nhiêu (baseline MET-001)? | BO-001 không kiểm chứng được | Quản lý dự án + Đội kinh doanh | 2026-11-06 | Open | — |
+| OQ-004 | Số lượng tài liệu PDF, tổng số trang, số người dùng dự kiến? | Ảnh hưởng ASM-003, BRU-002, chi phí | Quản lý dự án | 2026-11-06 | Open | — |
+| OQ-005 | Target cho MET-001, MET-002, MET-003 và các ngưỡng độ chính xác trong AC-008, AC-010, AC-011, AC-012? | BR-012 và nhiều AC chưa có ngưỡng | Quản lý dự án | 2026-11-06 | Open | — |
+| OQ-006 | Chính sách bảo mật có cho phép gửi nội dung tài liệu tới dịch vụ AI bên ngoài không? Mức phân loại của tài liệu? | Có thể thay đổi phạm vi giải pháp (BR-020, DEP-001) | IT / Bảo mật | 2026-11-06 | Open | — |
+| OQ-007 | Tài liệu tải lên là riêng của từng người dùng hay dùng chung cho cả đội? | Ảnh hưởng BR-019, BRU-005 | Quản lý dự án | 2026-11-06 | Open | — |
+| OQ-008 | Ngân sách MVP (bao gồm chi phí dịch vụ AI)? | CON-005, RSK-005 | Sponsor | 2026-11-10 | Open | — |
+| OQ-009 | Thời hạn go-live MVP và tác nhân thúc đẩy (vì sao bây giờ)? | Lập kế hoạch, ưu tiên | Sponsor | 2026-11-03 | Open | — |
+| OQ-010 | Ngoài tiếng Việt, có cần hỗ trợ hỏi đáp bằng tiếng Anh (hoặc hỏi tiếng Việt trên tài liệu tiếng Anh) không? | BR-014, ASM-002 | Đội kinh doanh | 2026-11-06 | Open | — |
+| OQ-011 | Dung lượng tối đa mỗi file PDF và tổng số tài liệu cho phép? | BR-001, BRU-002 | Product owner | 2026-11-06 | Open | — |
+| OQ-012 | Thời gian phản hồi tối đa chấp nhận được cho một câu trả lời? | BR-013 | Đội kinh doanh | 2026-11-06 | Open | — |
+| OQ-013 | Quản lý có chấp thuận các tính năng đề xuất của BA (BR-016, BR-018, BR-021, BR-022, BR-023) không? | Chốt phạm vi MVP | Quản lý dự án | 2026-11-06 | Open | — |
+
+---
+
+## 13. Thuật ngữ và tài liệu tham khảo
+
+### 13.1 Thuật ngữ
+
+| Thuật ngữ | Định nghĩa |
+|---|---|
+| BRD | Business Requirements Document — tài liệu yêu cầu nghiệp vụ |
+| MVP | Minimum Viable Product — sản phẩm khả dụng tối thiểu để kiểm chứng giá trị |
+| PDF | Định dạng tài liệu Portable Document Format |
+| PDF có lớp văn bản | PDF mà văn bản có thể chọn/sao chép được, khác với PDF chỉ chứa ảnh scan |
+| Tài liệu sẵn sàng | Tài liệu đã tải lên thành công và có thể được sử dụng làm nguồn trả lời |
+| Trích dẫn nguồn | Thông tin chỉ ra tên tài liệu và số trang mà câu trả lời dựa vào |
+| Bộ câu hỏi chuẩn | Tập câu hỏi kèm đáp án đúng và vị trí nguồn, do đội kinh doanh soạn, dùng để nghiệm thu (DEP-002) |
+| Câu trả lời đúng | Câu trả lời mà người kiểm định đánh giá là khớp nội dung với đáp án trong bộ câu hỏi chuẩn |
+| Phiên hội thoại | Chuỗi câu hỏi/câu trả lời liên tiếp của một người dùng từ khi bắt đầu đến khi kết thúc hoặc bắt đầu cuộc hội thoại mới |
+| Người dùng hoạt động | Người dùng đặt ít nhất 1 câu hỏi trong kỳ đo |
+| phải / nên / có thể | Tương ứng *shall* / *should* / *may* theo IEEE 29148 |
+| Must / Should / Could / Won't | Thang ưu tiên MoSCoW |
+
+### 13.2 Tài liệu tham khảo
+
+| Tên | Phiên bản | Vị trí | Ngày truy cập |
+|---|---|---|---|
+| IEEE 29148-2018 Systems and software engineering — Requirements engineering | 2018 | IEEE Xplore | 2026-10-27 |
+| Prompt BRD theo IEEE | 1.0 | [docs/BRD_Prompt_IEEE_standard.md](../BRD_Prompt_IEEE_standard.md) | 2026-10-27 |
+
+---
+
+## 14. Phê duyệt
+
+| Vai trò | Tên | Quyết định | Chữ ký / ngày |
+|---|---|---|---|
+| Executive sponsor | [TBD: OQ-001] | [Approve / Approve with conditions / Reject] | |
+| Business owner | [TBD: OQ-001] | [Approve / Reject] | |
+| Product manager / Product owner | [TBD: OQ-001] | [Approve / Reject] | |
+| IT / Bảo mật | [TBD: OQ-006] | [Approve / Reject] | |
+
+**Phiên bản đề nghị phê duyệt:** 0.1 (Draft).
+**Điều kiện phê duyệt:** OQ-001, OQ-005, OQ-006, OQ-012 phải được giải quyết và các ngưỡng [TBD] trong BR-001, BR-012, BR-013 phải được điền trước khi baseline.
+
+---
+
+## 15. Phụ lục
+
+### 15.1 Kết quả rà soát theo checklist (mục 5 của prompt)
+
+**Chất lượng yêu cầu**
+
+| Kiểm tra | Kết quả | Ghi chú |
+|---|---|---|
+| Mỗi yêu cầu dùng cú pháp phải/nên/có thể và một nghĩa vụ | Đạt | |
+| Không chứa ngôn ngữ giải pháp/thiết kế | Đạt | Công nghệ chỉ xuất hiện dưới dạng ràng buộc (CON-001, CON-002) |
+| Định lượng khi số lượng ảnh hưởng nghiệm thu | **Chưa đạt** | BR-001, BR-012, BR-013 còn [TBD] — OQ-005, OQ-011, OQ-012 |
+| Không còn từ mơ hồ (nhanh, dễ, ổn định…) | Đạt | |
+| Thuật ngữ chuyên biệt có trong glossary | Đạt | |
+| Không trùng lặp/mâu thuẫn | Đạt | |
+| ID duy nhất, cố định | Đạt | |
+
+**Tính đầy đủ và truy vết**
+
+| Kiểm tra | Kết quả | Ghi chú |
+|---|---|---|
+| Mỗi mục tiêu có ít nhất một yêu cầu | Đạt | |
+| Mỗi yêu cầu truy vết về mục tiêu/nhu cầu | Đạt | |
+| Mỗi yêu cầu có AC | Đạt | |
+| Mỗi yêu cầu có phương pháp kiểm chứng | Đạt | |
+| Mỗi nhóm stakeholder có nhu cầu | Đạt | STK-005 chưa được xác nhận |
+| Phạm vi, loại trừ, giả định, phụ thuộc, rủi ro đầy đủ | Đạt | |
+| Mỗi câu hỏi mở có người chịu trách nhiệm và hạn | Đạt | Người chịu trách nhiệm ghi theo vai trò, chưa có tên |
+
+**Xác nhận nghiệp vụ**
+
+| Kiểm tra | Kết quả | Ghi chú |
+|---|---|---|
+| Vấn đề có bằng chứng | **Một phần** | Chỉ có SRC-001, chưa định lượng — OQ-002, OQ-003 |
+| Baseline/target có nguồn và đo được | **Chưa đạt** | OQ-003, OQ-005 |
+| Lợi ích và chi phí nêu theo ngôn ngữ nghiệp vụ | **Một phần** | Chi phí chưa có — OQ-008 |
+| Sponsor xác nhận vấn đề và kết quả mong muốn | **Chưa đạt** | Chờ review |
+| Người đọc nghiệp vụ hiểu được không cần dịch kỹ thuật | Đạt | |
+
+### 15.2 Ghi chú cho PRD/SAD (không phải yêu cầu nghiệp vụ)
+
+- Các yêu cầu BR-008 đến BR-011 gợi ý một cách tiếp cận "truy xuất nội dung liên quan rồi sinh câu trả lời" có trích dẫn; lựa chọn kỹ thuật cụ thể thuộc phạm vi PRD/SAD.
+- Lựa chọn dịch vụ AI phụ thuộc kết quả OQ-006.
+
+---
+
+## Tuyên bố mức độ sẵn sàng
+
+**Ready with conditions** — Sẵn sàng để review với các bên liên quan; **chưa sẵn sàng để phê duyệt/baseline**.
+
+Các hạng mục đang chặn phê duyệt:
+- **OQ-001** — chưa xác định người phê duyệt.
+- **OQ-003, OQ-005** — thiếu baseline và target; ảnh hưởng BO-001..BO-003 và yêu cầu Must BR-012.
+- **OQ-006** — chưa rõ chính sách dữ liệu; ảnh hưởng yêu cầu Must BR-020.
+- **OQ-011, OQ-012** — thiếu ngưỡng định lượng cho yêu cầu Must BR-001, BR-013.

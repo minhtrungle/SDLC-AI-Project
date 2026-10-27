@@ -39,16 +39,10 @@ Your task is to author a Business Requirements Document for the initiative descr
 
 ### 2.1 Business foundation (fill in)
 
-- **Organization / Business unit:** [Insert]
-- **Initiative name:** [Insert]
-- **Executive sponsor / business owner:** [Insert]
-- **Problem owner:** [Insert]
-- **Target customers / affected users:** [Describe]
-- **Trigger for the initiative:** [e.g., regulation, revenue loss, cost pressure, competitive threat, operational incident]
-- **Target timeline / key dates:** [Insert]
-- **Budget or funding envelope (if known):** [Insert]
-- **Known constraints:** [Regulatory, contractual, budget, headcount, data residency, legacy systems, deadlines]
-- **Success definition in the sponsor's words:** [Quote or paraphrase]
+Bối cảnh giả sử: trong một dự án kinh doanh, có nhiều tài liệu PDF mà đội phát triển kinh doanh khó lòng nắm bắt đầu đủ, mỗi khi cần tìm một thông tin thường tốn thời gian tổng hợp từ nhiều file pdf.
+Bạn nhận được yêu cầu từ quản lý, phát triển một MVP cho một công cụ “Chat với tài liệu”. 
+Mục tiêu: một ứng dụng web cho phép người dùng upload pdf file và chat với AI để truy vấn về nội dung cả các tài liệu đã được upload. 
+Có thể có thêm tính năng theo gợi ý từ đội BA.
 
 ### 2.2 Source evidence (attach or list)
 
