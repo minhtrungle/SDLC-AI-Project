@@ -10,9 +10,11 @@ from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app import auth
 from app.config import Settings
 from app.db import init_schema
 from app.errors import install_handlers
+from app.security import LoginLimiter
 
 WEB_DIR = Path(__file__).with_name("web")
 access_log = logging.getLogger("cwd.access")
@@ -41,7 +43,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         openapi_url=None,
     )
     app.state.settings = settings
+    app.state.login_limiter = LoginLimiter()
     install_handlers(app)
+    app.include_router(auth.router)
 
     @app.middleware("http")
     async def headers_and_access_log(request: Request, call_next):

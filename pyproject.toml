@@ -25,3 +25,6 @@ ignore = [
 testpaths = ["tests"]
 addopts = "-q --cov=app --cov-report=term-missing --cov-report=xml:docs/07-verification/coverage.xml --cov-fail-under=70"
 filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.File", "fastapi.Header"]

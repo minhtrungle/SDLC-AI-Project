@@ -56,7 +56,6 @@ def client(app):
 def make_user(app, client):
     """Create a user directly in the database. `client` ensures the schema exists."""
     from app.auth import create_user
-
     from app.db import connect
 
     def _make(username="linh", password="matkhau-123", role="user"):
