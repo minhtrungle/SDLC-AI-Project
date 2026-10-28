@@ -1,0 +1,17 @@
+{
+  "id": 7,
+  "feature": "Đăng nhập và phiên",
+  "group": "US-101 Đăng nhập",
+  "title": "AC-101.4 gọi API trực tiếp khi chưa đăng nhập bị từ chối",
+  "criteria": "AC-101.4",
+  "spec": "app/e2e/tests/auth.spec.ts:29",
+  "status": "passed",
+  "duration_ms": 596,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:07.712Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

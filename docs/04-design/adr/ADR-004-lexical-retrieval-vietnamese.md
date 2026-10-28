@@ -29,6 +29,6 @@
 
 ## Hệ quả
 - (+) Tất định, giải thích được (vì sao chunk được chọn), test được không cần mạng.
-- (−) Không hiểu đồng nghĩa ("giá trị" vs "tổng tiền"). Giảm thiểu: bộ đánh giá `tests/eval` đo tỷ lệ bỏ sót; thêm embedding sau như một `Retriever` thứ hai khi OQ-006 cho phép.
+- (−) Không hiểu đồng nghĩa ("giá trị" vs "tổng tiền"). Giảm thiểu: bộ đánh giá `app/backend/tests/eval` đo tỷ lệ bỏ sót; thêm embedding sau như một `Retriever` thứ hai khi OQ-006 cho phép.
 - (−) Ngưỡng 0.6 phải hiệu chỉnh lại bằng bộ câu hỏi chuẩn thật (DEP-002).
 - **Khó đảo ngược:** Thấp — nằm sau interface `Retriever`.

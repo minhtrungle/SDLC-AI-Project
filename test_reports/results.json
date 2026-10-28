@@ -1,0 +1,1137 @@
+{
+  "config": {
+    "argv": [
+      "D:\\Nodejs\\node.exe",
+      "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\app\\e2e\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\app\\e2e\\playwright.config.ts",
+    "rootDir": "E:/SamsungSDS/Trainning_SDLC_AI/SDLC-AI-Project/app/e2e/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "E:/SamsungSDS/Trainning_SDLC_AI/SDLC-AI-Project/test_reports/.raw",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "E:/SamsungSDS/Trainning_SDLC_AI/SDLC-AI-Project/app/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium",
+        "testDir": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\app\\e2e\\tests",
+        "snapshotDir": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\app\\e2e\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:8799",
+          "locale": "vi-VN",
+          "trace": "retain-on-failure",
+          "screenshot": "on",
+          "video": {
+            "mode": "on",
+            "size": {
+              "width": 1280,
+              "height": 800
+            }
+          },
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium",
+          "channel": "chrome"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "../../test_reports/html",
+          "open": "never"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "../../test_reports/results.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../test_reports/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": {
+      "command": "\"../../.venv/Scripts/python.exe\" serve.py --port 8799",
+      "cwd": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\app\\e2e\\",
+      "url": "http://127.0.0.1:8799/api/health",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "stdout": "pipe",
+      "stderr": "pipe"
+    }
+  },
+  "suites": [
+    {
+      "title": "access.spec.ts",
+      "file": "access.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "NFR-004 Cô lập workspace",
+          "file": "access.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-NFR-004 người dùng khác không thấy và không hỏi được tài liệu của mình",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8775,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:25:49.260Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\\test-finished-2.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9e7a053a61b60e2af93d-bbfdbc7d6be06fc0c499",
+              "file": "access.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "US-502 Số liệu sử dụng",
+          "file": "access.spec.ts",
+          "line": 25,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-502.2 người dùng thường không có mục Số liệu sử dụng",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1189,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:25:58.493Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-US-502-Số-liệu-sử-d-803cd-hông-có-mục-Số-liệu-sử-dụng-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-US-502-Số-liệu-sử-d-803cd-hông-có-mục-Số-liệu-sử-dụng-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9e7a053a61b60e2af93d-df1841e63ba9c851a6c2",
+              "file": "access.spec.ts",
+              "line": 26,
+              "column": 3
+            },
+            {
+              "title": "AC-502.1 quản lý xem số liệu theo tuần",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4922,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:25:59.694Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\\test-finished-2.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9e7a053a61b60e2af93d-8b8f5cd3b301f5508dc3",
+              "file": "access.spec.ts",
+              "line": 32,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth.spec.ts",
+      "file": "auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "US-101 Đăng nhập",
+          "file": "auth.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-101.1 chưa đăng nhập chỉ thấy màn hình đăng nhập",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 686,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:04.654Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-ec9dc-chỉ-thấy-màn-hình-đăng-nhập-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-ec9dc-chỉ-thấy-màn-hình-đăng-nhập-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-2be63c9b6a7673c167f6",
+              "file": "auth.spec.ts",
+              "line": 6,
+              "column": 3
+            },
+            {
+              "title": "AC-101.3 sai mật khẩu hiển thị thông báo chung",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1020,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:05.358Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-bb93d-ẩu-hiển-thị-thông-báo-chung-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-bb93d-ẩu-hiển-thị-thông-báo-chung-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-da757d6e8ac850358974",
+              "file": "auth.spec.ts",
+              "line": 12,
+              "column": 3
+            },
+            {
+              "title": "AC-101.2 / AC-101.6 đăng nhập vào workspace, đăng xuất về màn hình đăng nhập",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1310,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:06.391Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-c3c53--xuất-về-màn-hình-đăng-nhập-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-c3c53--xuất-về-màn-hình-đăng-nhập-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-24d435c6fc2225ce9706",
+              "file": "auth.spec.ts",
+              "line": 20,
+              "column": 3
+            },
+            {
+              "title": "AC-101.4 gọi API trực tiếp khi chưa đăng nhập bị từ chối",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 596,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:07.712Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-fa465-i-chưa-đăng-nhập-bị-từ-chối-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-AC-1-fa465-i-chưa-đăng-nhập-bị-từ-chối-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-6f9c0176ce3de73637ae",
+              "file": "auth.spec.ts",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "EC-15 phiên hết hạn giữ lại câu hỏi đang soạn",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4054,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:08.319Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-EC-1-d877d-n-giữ-lại-câu-hỏi-đang-soạn-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\auth-US-101-Đăng-nhập-EC-1-d877d-n-giữ-lại-câu-hỏi-đang-soạn-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d748ac400d08b85935ef-449139397088f6d5a7d9",
+              "file": "auth.spec.ts",
+              "line": 37,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "chat.spec.ts",
+      "file": "chat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "US-301..US-501 Hỏi đáp có trích dẫn",
+          "file": "chat.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-301.1 / AC-305.1 câu trả lời kèm trích dẫn tên tài liệu và trang",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1515,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:12.400Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-72d4cb8dfbf439f3e406",
+              "file": "chat.spec.ts",
+              "line": 18,
+              "column": 3
+            },
+            {
+              "title": "AC-305.2 bấm trích dẫn mở đoạn gốc; Esc đóng và trả focus",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1567,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:17.291Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-8435f-n-gốc-Esc-đóng-và-trả-focus-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-8435f-n-gốc-Esc-đóng-và-trả-focus-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-f8c051c05cd114b79bb8",
+              "file": "chat.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "AC-301.2 câu hỏi không dấu vẫn tìm được nội dung có dấu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2588,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:18.872Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-476c2-ẫn-tìm-được-nội-dung-có-dấu-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-476c2-ẫn-tìm-được-nội-dung-có-dấu-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-feb7c1c21f5c5af07847",
+              "file": "chat.spec.ts",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "AC-304.1 / AC-303.1 câu hỏi ngoài tài liệu được báo không tìm thấy, không trích dẫn",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1593,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:21.475Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-0ee26-ng-tìm-thấy-không-trích-dẫn-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-0ee26-ng-tìm-thấy-không-trích-dẫn-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-4adb2480d5d672162ed1",
+              "file": "chat.spec.ts",
+              "line": 42,
+              "column": 3
+            },
+            {
+              "title": "AC-401.1 hỏi tiếp hiểu ngữ cảnh lượt trước",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1761,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:23.081Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c53e5-ếp-hiểu-ngữ-cảnh-lượt-trước-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c53e5-ếp-hiểu-ngữ-cảnh-lượt-trước-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-5ded38ce5dd05c710036",
+              "file": "chat.spec.ts",
+              "line": 50,
+              "column": 3
+            },
+            {
+              "title": "AC-402.1 / AC-402.2 giới hạn phạm vi vào một tài liệu",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1735,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:24.855Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-707ad-ạn-phạm-vi-vào-một-tài-liệu-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-707ad-ạn-phạm-vi-vào-một-tài-liệu-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-e652d85e8a4e250312d6",
+              "file": "chat.spec.ts",
+              "line": 56,
+              "column": 3
+            },
+            {
+              "title": "AC-403.1 / AC-403.2 hội thoại giữ thứ tự; cuộc hội thoại mới trống",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1950,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:26.614Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c3f51-tự-cuộc-hội-thoại-mới-trống-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c3f51-tự-cuộc-hội-thoại-mới-trống-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-e956fcb763bbe56abc7c",
+              "file": "chat.spec.ts",
+              "line": 65,
+              "column": 3
+            },
+            {
+              "title": "AC-501.1 đánh giá câu trả lời được ghi nhận",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1653,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:28.578Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c8a5a-á-câu-trả-lời-được-ghi-nhận-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-c8a5a-á-câu-trả-lời-được-ghi-nhận-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-f9985054d820fbd006ee",
+              "file": "chat.spec.ts",
+              "line": 75,
+              "column": 3
+            },
+            {
+              "title": "AC-301.4 câu hỏi rỗng không được gửi",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1203,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:30.246Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-d54d8-câu-hỏi-rỗng-không-được-gửi-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\chat-US-301-US-501-Hỏi-đáp-d54d8-câu-hỏi-rỗng-không-được-gửi-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6dac514d5d837ca37b9e-eb39d510ea24162f5077",
+              "file": "chat.spec.ts",
+              "line": 82,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "documents.spec.ts",
+      "file": "documents.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "US-201..US-205 Quản lý tài liệu",
+          "file": "documents.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-204.2 workspace trống hướng dẫn tải tài liệu và khóa ô hỏi",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1183,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:31.468Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-bd3ad--tải-tài-liệu-và-khóa-ô-hỏi-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-bd3ad--tải-tài-liệu-và-khóa-ô-hỏi-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9111b41e0f82b685c9ea-056d01cc1391bc7d77c9",
+              "file": "documents.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "AC-201.1 / AC-201.2 / AC-202.1 tải song song nhiều file, file sai định dạng bị từ chối riêng",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4368,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:32.664Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-f0cf5--định-dạng-bị-từ-chối-riêng-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-f0cf5--định-dạng-bị-từ-chối-riêng-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9111b41e0f82b685c9ea-913d9ea5d3f4a06960ca",
+              "file": "documents.spec.ts",
+              "line": 16,
+              "column": 3
+            },
+            {
+              "title": "AC-205.1 / AC-205.3 xóa tài liệu phải xác nhận; Hủy giữ nguyên",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1583,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-28T16:26:37.045Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-8fc6a-hải-xác-nhận-Hủy-giữ-nguyên-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "E:\\SamsungSDS\\Trainning_SDLC_AI\\SDLC-AI-Project\\test_reports\\.raw\\documents-US-201-US-205-Qu-8fc6a-hải-xác-nhận-Hủy-giữ-nguyên-chromium\\video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9111b41e0f82b685c9ea-33e7e01532acee26f246",
+              "file": "documents.spec.ts",
+              "line": 28,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-28T16:25:29.819Z",
+    "duration": 69849.853,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

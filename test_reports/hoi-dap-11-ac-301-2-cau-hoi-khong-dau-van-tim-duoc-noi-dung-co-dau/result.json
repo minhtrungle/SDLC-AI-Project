@@ -1,0 +1,17 @@
+{
+  "id": 11,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-301.2 câu hỏi không dấu vẫn tìm được nội dung có dấu",
+  "criteria": "AC-301.2",
+  "spec": "app/e2e/tests/chat.spec.ts:37",
+  "status": "passed",
+  "duration_ms": 2588,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:18.872Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

@@ -8,7 +8,7 @@
 - Không có API key nào trong môi trường hiện tại; CI phải chạy không cần mạng.
 
 ## Quyết định
-1. Mọi lời gọi sinh câu trả lời đi qua interface `AnswerGenerator` trong `app/generation.py`.
+1. Mọi lời gọi sinh câu trả lời đi qua interface `AnswerGenerator` trong `app/backend/cwd/generation.py`.
 2. Hai cài đặt:
    - `LocalExtractiveGenerator` (**mặc định**): chọn các câu liên quan nhất trong chunk đã truy xuất và ghép thành câu trả lời có đánh số trích dẫn. Không gửi dữ liệu ra ngoài, tất định, không thể bị prompt injection điều khiển vì không diễn giải chỉ thị.
    - `AnthropicGenerator`: gọi Anthropic Messages API (mô hình mặc định `claude-opus-5-5`, effort `low`, bật `fallbacks: "default"` cho trường hợp bị từ chối; đổi bằng `CWD_ANTHROPIC_MODEL`), chunk được bọc trong thẻ `<document>` và đánh dấu là dữ liệu; mô hình không có công cụ.

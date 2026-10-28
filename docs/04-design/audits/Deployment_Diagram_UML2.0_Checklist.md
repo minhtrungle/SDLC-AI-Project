@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/diagrams/deployment_diagram.drawio (trang "Deployment"); đối chiếu SAD §7, NFR-006, ADR-002/007 |
-| Checklist | docs/design/Deployment_Diagram_UML2.0_Checklist.xlsx |
+| Checklist | docs/checklists/Deployment_Diagram_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 
@@ -14,7 +14,7 @@
 | 4 | Device Nodes (<<device>>) | Done | shape=cube «device»: Máy trạm, Reverse proxy, Máy chủ ứng dụng, Console quản trị. |
 | 5 | Execution Environments (<<executionEnvironment>>) | In Progress | «execution env» Trình duyệt và Python/uvicorn vẽ bằng chữ nhật thường lồng trong node, không phải cube; stereotype viết tắt. |
 | 6 | Node Specifications | Pending | Không có CPU/RAM/đĩa/OS version cho máy chủ (cần cho 30 GB PDF tối đa, pypdf 300 trang). |
-| 7 | Artifacts (<<artifact>>) | In Progress | Dùng shape=note (biểu tượng tài liệu) cho app/, app/web/, cli.py, cwd.db, files/, backups/ nhưng không có stereotype «artifact». |
+| 7 | Artifacts (<<artifact>>) | In Progress | Dùng shape=note (biểu tượng tài liệu) cho app/, app/frontend/, cli.py, cwd.db, files/, backups/ nhưng không có stereotype «artifact». |
 | 8 | Deployment Relationships | N/A | Dùng lồng (row 10) thay cho «deploy». |
 | 9 | Manifestations | In Progress | Artifact ghi CMP-xx trong nhãn (ngầm manifest) nhưng không có quan hệ «manifest». «storage» CWD_DATA_DIR gán CMP-11 Persistence — sai: CMP-11 là code db.py chạy trong tiến trình, không phải thư mục dữ liệu. |
 | 10 | Nesting (Alternative) | Done | Artifact lồng trong execution env/node. |

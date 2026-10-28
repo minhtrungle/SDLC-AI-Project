@@ -17,7 +17,9 @@ from ruamel.yaml import YAML
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DESIGN = ROOT / "docs" / "04-design"
-sys.path.insert(0, str(ROOT))
+BACKEND = ROOT / "app" / "backend"
+CONTRACT = ROOT / "app" / "api-contract" / "openapi.yaml"
+sys.path.insert(0, str(BACKEND))
 yaml = YAML(typ="safe", pure=True)
 
 
@@ -74,7 +76,7 @@ def openapi_operations(spec):
 
 
 def app_routes():
-    from app.main import create_app  # noqa: PLC0415 — optional until Phase 6
+    from cwd.main import create_app  # noqa: PLC0415 — optional until Phase 6
 
     routes = set()
 
@@ -118,7 +120,7 @@ def main(write=False):
         if c["module"] not in sad:
             rep.check("SAD", f"{c['id']} module `{c['module']}` khớp", False, "module không có trong SAD")
 
-    spec = yaml.load((DESIGN / "openapi.yaml").read_text(encoding="utf-8"))
+    spec = yaml.load(CONTRACT.read_text(encoding="utf-8"))
     spec_ops = openapi_operations(spec)
     reg_ops = {(e["method"], e["path"], e["operationId"]) for e in el["endpoints"]}
     rep.check(
@@ -139,7 +141,7 @@ def main(write=False):
     bad_cmp = [e["operationId"] for e in el["endpoints"] if e["component"] not in cmp_ids]
     rep.check("Registry", "endpoint gán cho CMP tồn tại", not bad_cmp, ", ".join(bad_cmp))
 
-    schema = read("app/schema.sql")
+    schema = read("app/backend/cwd/schema.sql")
     model = read("docs/04-design/data/model.md")
     class_dia = read("docs/04-design/diagrams/class_diagram.drawio")
     tables_sql = set(re.findall(r"CREATE TABLE IF NOT EXISTS (\w+)", schema))
@@ -200,15 +202,15 @@ def main(write=False):
     proto_missing = [s["prototype"] for s in el["screens"] if not (DESIGN / s["prototype"]).exists()]
     rep.check("UI/UX", "mọi màn hình có prototype", not proto_missing, ", ".join(proto_missing))
 
-    if (ROOT / "app" / "main.py").exists():
+    if (BACKEND / "cwd" / "main.py").exists():
         mod_missing = [c["module"] for c in el["components"] if not (ROOT / c["module"]).exists()]
         rep.check("Code", "mọi module của CMP tồn tại", not mod_missing, ", ".join(mod_missing))
-        from app.errors import MESSAGES  # noqa: PLC0415
+        from cwd.errors import MESSAGES  # noqa: PLC0415
 
         enum = set(spec["components"]["schemas"]["Problem"]["properties"]["code"]["enum"])
         rep.check(
             "Code ↔ openapi.yaml",
-            "enum Problem.code = mã lỗi trong app/errors.py",
+            "enum Problem.code = mã lỗi trong cwd/errors.py",
             enum == set(MESSAGES),
             f"chỉ ở openapi {sorted(enum - set(MESSAGES))}, chỉ ở code {sorted(set(MESSAGES) - enum)}",
         )
@@ -221,7 +223,7 @@ def main(write=False):
             f"thiếu {sorted(reg_routes - routes)}, thừa {sorted(routes - reg_routes)}",
         )
     else:
-        rep.note("Code", "module và route khớp registry", "chưa có app/main.py (trước Phase 6)")
+        rep.note("Code", "module và route khớp registry", "chưa có app/backend/cwd/main.py (trước Phase 6)")
 
     report = rep.markdown()
     print(report)

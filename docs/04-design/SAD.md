@@ -2,12 +2,12 @@
 
 | Mục | Giá trị |
 |---|---|
-| Mã | SAD-CWD-001 · **v0.3** · Draft — chờ Architect + Tech Lead duyệt |
+| Mã | SAD-CWD-001 · **v0.4** · Draft — chờ Architect + Tech Lead duyệt |
 | Chuẩn | arc42 (12 mục) · ISO/IEC/IEEE 42010 · IEEE 1016 |
-| Prompt | [SAD_Prompt_IEEE_standard.md](../prompts/SAD_Prompt_IEEE_standard.md) · Checklist: [SAD_IEEE_1016_Checklist.xlsx](../design/SAD_IEEE_1016_Checklist.xlsx) |
+| Prompt | [SAD_Prompt_IEEE_standard.md](../prompts/SAD_Prompt_IEEE_standard.md) · Checklist: [SAD_IEEE_1016_Checklist.xlsx](../checklists/SAD_IEEE_1016_Checklist.xlsx) |
 | Đầu vào | [BRD v0.2](../02-requirements/BRD.md) · [PRD v0.2](../03-analysis/PRD.md) · [USER_STORIES](../03-analysis/USER_STORIES.md) |
 | Danh mục phần tử | [elements.yaml](elements.yaml) (CMP-xx, ENT-xx, endpoint) |
-| View chi tiết | [blueprint.md](blueprint.md) (IEEE 1016) · [openapi.yaml](openapi.yaml) / [openapi.md](openapi.md) · [data/model.md](data/model.md) · [use_cases.md](use_cases.md) · [UI_UX_design/](UI_UX_design/README.md) · [diagrams/](diagrams/) |
+| View chi tiết | [blueprint.md](blueprint.md) (IEEE 1016) · [openapi.yaml](../../app/api-contract/openapi.yaml) / [openapi.md](openapi.md) · [data/model.md](data/model.md) · [use_cases.md](use_cases.md) · [UI_UX_design/](UI_UX_design/README.md) · [diagrams/](diagrams/) |
 | Audit | [cross-view-audit.md](cross-view-audit.md) · [design_checklist_audit.md](design_checklist_audit.md) · [design-refine-log.md](design-refine-log.md) |
 | Tác giả | Agent (Claude) |
 
@@ -16,6 +16,7 @@
 |---|---|---|
 | 0.1 | 2026-10-27 | Bản đề xuất PostgreSQL + pgvector + Redis + React (commit `373616a`) |
 | 0.2 | 2026-10-28 | Viết lại theo arc42; chuyển sang modular monolith Python + SQLite/FTS5 + SPA thuần do ràng buộc môi trường (ADR-001..008). Giữ nguyên các nguyên tắc v0.1: RAG, trích dẫn từ CSDL, ModelGateway, cô lập workspace |
+| 0.4 | 2026-10-28 | Tái cấu trúc theo yêu cầu chủ dự án: `app/backend` (Python, package `cwd`), `app/frontend` (Vue 3 + TS), `app/api-contract` (ADR-009 thay ADR-006); bỏ phạm vi Phase 9–11 |
 | 0.3 | 2026-10-28 | REFINE theo 27 finding của reviewer độc lập (design-refine-log.md): §5.2 phụ thuộc, §5.3 chữ ký, §7.1 tài nguyên, §7.2 sao lưu, QS-08/09, yêu cầu prod |
 
 ---
@@ -46,7 +47,7 @@ Người dùng tải PDF, hỏi bằng tiếng Việt, nhận câu trả lời *
 | ID | Ràng buộc | Nguồn | Ảnh hưởng |
 |---|---|---|---|
 | TC-01 | Ứng dụng web, đầu vào PDF | CON-001, CON-004 | — |
-| TC-02 | Python 3.15, Node 14, không Docker, không PostgreSQL/Redis | SRC-005 | ADR-001, 002, 006, 008 |
+| TC-02 | Python 3.15 (dev) / ≥ 3.12, Node 22 LTS (build frontend), không Docker, không PostgreSQL/Redis | SRC-005, ADR-009 | ADR-001, 002, 008, 009 |
 | TC-03 | Không gửi dữ liệu ra ngoài khi chưa có OQ-006 | BR-020 | ADR-003, ADR-004 |
 | TC-04 | CI chạy offline, tất định | Process Phase 7 | ADR-003 (bộ sinh cục bộ) |
 | OC-01 | Agent không merge/deploy; mọi ADR cần người duyệt | Process | §12 |
@@ -85,7 +86,7 @@ Kiểu kiến trúc: **modular monolith** phân lớp (Web UI → API → Servic
 ### 5.1 Mức 1 — container
 | Container | Công nghệ | Chứa |
 |---|---|---|
-| Trình duyệt | HTML/CSS/JS thuần | CMP-01 |
+| Trình duyệt | Vue 3 + TypeScript (build bằng Vite, mã nguồn `app/frontend/`) | CMP-01 |
 | Ứng dụng | Python 3.15, FastAPI, Uvicorn | CMP-02..CMP-10, CMP-13 |
 | Kho dữ liệu | SQLite file + thư mục `files/` | CMP-11 |
 | CLI quản trị | Python | CMP-12 |
@@ -94,25 +95,25 @@ Kiểu kiến trúc: **modular monolith** phân lớp (Web UI → API → Servic
 
 | ID | Thành phần | Module | Trách nhiệm | Phụ thuộc | Yêu cầu |
 |---|---|---|---|---|---|
-| CMP-01 | Web UI | `app/web/` | SPA tiếng Việt, polling trạng thái, panel trích dẫn | CMP-02 (HTTP) | UX-001..011, NFR-009 |
-| CMP-02 | API Gateway | `app/main.py` | App factory, router, lỗi problem+json, file tĩnh, khôi phục ingestion khi khởi động | CMP-03..CMP-10, CMP-13 | NFR-005 |
-| CMP-03 | Auth & Session | `app/auth.py` | Đăng nhập, phiên, CSRF, giới hạn sai, vai trò | CMP-10, CMP-11 | FR-001, FR-002, NFR-010 |
-| CMP-04 | Document Service | `app/documents.py` | Kiểm tra file, lưu file PDF vào `files/`, danh sách, xóa | CMP-03, CMP-05, CMP-10, CMP-11, CMP-13 | FR-004, FR-005, FR-007, FR-008 |
-| CMP-05 | Ingestion Pipeline | `app/ingestion.py` | pypdf → chunk → FTS, trạng thái | `app/textnorm.py` (module tiện ích dùng chung), CMP-11 | FR-006 |
-| CMP-06 | Retriever | `app/retrieval.py` | Chuẩn hóa, FTS5, điểm IDF, ngưỡng, phạm vi | CMP-11, CMP-13 | FR-010, FR-012, FR-014, FR-015 |
-| CMP-07 | Answer Generator | `app/generation.py` | Cục bộ (trích đoạn) / Anthropic | ACT-04 (tùy chọn), CMP-13 | FR-011, FR-003 |
-| CMP-08 | Chat Service | `app/chat.py` | Hội thoại, điều phối, kiểm tra trích dẫn, lưu lượt | CMP-03, CMP-06, CMP-07, CMP-11 | FR-009, FR-013, FR-016 |
-| CMP-09 | Feedback & Metrics | `app/metrics.py` | Đánh giá, thống kê tuần | CMP-03, CMP-11 | FR-017, FR-018 |
-| CMP-10 | Audit Log | `app/audit.py` | Ghi sự kiện kiểm toán | CMP-11 | FR-019 |
-| CMP-11 | Persistence | `app/db.py`, `app/schema.sql` | Kết nối, schema, giao dịch | — | NFR-006 |
-| CMP-12 | Admin CLI | `app/cli.py` | Tạo user, demo, backup/restore, dọn nhật ký | CMP-03, CMP-11 | NFR-006, NFR-007 |
-| CMP-13 | Configuration | `app/config.py` | Biến môi trường `CWD_*` | — | FR-003 |
+| CMP-01 | Web UI | `app/frontend/src/` | SPA Vue 3 tiếng Việt: composable `useSession/useDocuments/useChat`, component theo SCR-01..06; type sinh từ `app/api-contract/openapi.yaml` | CMP-02 (HTTP) | UX-001..011, NFR-009 |
+| CMP-02 | API Gateway | `app/backend/cwd/main.py` | App factory, router, lỗi problem+json, file tĩnh, khôi phục ingestion khi khởi động | CMP-03..CMP-10, CMP-13 | NFR-005 |
+| CMP-03 | Auth & Session | `app/backend/cwd/auth.py` | Đăng nhập, phiên, CSRF, giới hạn sai, vai trò | CMP-10, CMP-11 | FR-001, FR-002, NFR-010 |
+| CMP-04 | Document Service | `app/backend/cwd/documents.py` | Kiểm tra file, lưu file PDF vào `files/`, danh sách, xóa | CMP-03, CMP-05, CMP-10, CMP-11, CMP-13 | FR-004, FR-005, FR-007, FR-008 |
+| CMP-05 | Ingestion Pipeline | `app/backend/cwd/ingestion.py` | pypdf → chunk → FTS, trạng thái | `app/backend/cwd/textnorm.py` (module tiện ích dùng chung), CMP-11 | FR-006 |
+| CMP-06 | Retriever | `app/backend/cwd/retrieval.py` | Chuẩn hóa, FTS5, điểm IDF, ngưỡng, phạm vi | CMP-11, CMP-13 | FR-010, FR-012, FR-014, FR-015 |
+| CMP-07 | Answer Generator | `app/backend/cwd/generation.py` | Cục bộ (trích đoạn) / Anthropic | ACT-04 (tùy chọn), CMP-13 | FR-011, FR-003 |
+| CMP-08 | Chat Service | `app/backend/cwd/chat.py` | Hội thoại, điều phối, kiểm tra trích dẫn, lưu lượt | CMP-03, CMP-06, CMP-07, CMP-11 | FR-009, FR-013, FR-016 |
+| CMP-09 | Feedback & Metrics | `app/backend/cwd/metrics.py` | Đánh giá, thống kê tuần | CMP-03, CMP-11 | FR-017, FR-018 |
+| CMP-10 | Audit Log | `app/backend/cwd/audit.py` | Ghi sự kiện kiểm toán | CMP-11 | FR-019 |
+| CMP-11 | Persistence | `app/backend/cwd/db.py`, `app/backend/cwd/schema.sql` | Kết nối, schema, giao dịch | — | NFR-006 |
+| CMP-12 | Admin CLI | `app/backend/cwd/cli.py` | Tạo user, demo, backup/restore, dọn nhật ký | CMP-03, CMP-11 | NFR-006, NFR-007 |
+| CMP-13 | Configuration | `app/backend/cwd/config.py` | Biến môi trường `CWD_*` | — | FR-003 |
 
 Sơ đồ: [diagrams/component_diagram.drawio](diagrams/component_diagram.drawio), [diagrams/class_diagram.drawio](diagrams/class_diagram.drawio).
 
 ### 5.3 Interface nội bộ chính
 ```python
-class Retriever(Protocol):  # chữ ký chuẩn (DF-14) — khớp app/retrieval.py
+class Retriever(Protocol):  # chữ ký chuẩn (DF-14) — khớp app/backend/cwd/retrieval.py
     def retrieve(
         self,
         conn,
@@ -159,13 +160,13 @@ Giới hạn sai 5/5 phút → xác minh PBKDF2 (thời gian hằng) → tạo t
 |---|---|---|
 | Máy trạm người dùng | Trình duyệt hiện đại | — |
 | Reverse proxy (khuyến nghị khi triển khai) | IIS/Nginx/Caddy, TLS | Bật `CWD_COOKIE_SECURE=true` |
-| Máy chủ ứng dụng | Python ≥ 3.12, `uvicorn app.main:app` (1 worker) | Windows hoặc Linux |
+| Máy chủ ứng dụng | Python ≥ 3.12, `uvicorn cwd.main:app` (1 worker) | Windows hoặc Linux |
 | Đĩa máy chủ | `CWD_DATA_DIR` (`cwd.db`, `files/`, `backups/`) | Mã hóa đĩa do IT quản lý |
 | Anthropic API (tùy chọn) | HTTPS | Chỉ khi IT cho phép |
 
 Môi trường: `dev` (máy dev), `test` (CI, CSDL tạm), `prod` (máy chủ nội bộ, DEP-003). Cấu hình qua biến môi trường, không có secret trong mã. Python 3.15 là phiên bản trên máy dev; **≥ 3.12 là tối thiểu** (CI chạy 3.12) — DF-24.
 
-**Bắt buộc ở prod (DF-27):** TLS tại reverse proxy và `CWD_COOKIE_SECURE=true`; mã hóa đĩa chứa `CWD_DATA_DIR` (IT); sao lưu hằng ngày ra ngoài máy chủ (§7.2). Các mục này nằm trong checklist go-live ([release-plan.md](../09-release/release-plan.md)).
+**Bắt buộc ở prod (DF-27):** TLS tại reverse proxy và `CWD_COOKIE_SECURE=true`; mã hóa đĩa chứa `CWD_DATA_DIR` (IT); sao lưu hằng ngày ra ngoài máy chủ (§7.2). Các mục này phải được IT xác nhận trước khi triển khai.
 
 ### 7.1 Resource view (DF-10) — ước lượng ở quy mô ASM-003
 | Tài nguyên | Ước lượng | Cơ sở |
@@ -178,7 +179,7 @@ Môi trường: `dev` (máy dev), `test` (CI, CSDL tạm), `prod` (máy chủ n�
 | **Cấu hình tối thiểu đề xuất** | 2 vCPU, 4 GB RAM, 50 GB SSD (+ dung lượng sao lưu tương đương ngoài máy) | — |
 
 ### 7.2 Sao lưu (DF-11)
-`python -m app.cli backup <dir>` chạy **hằng ngày 01:00** bằng Task Scheduler/cron, đích là thư mục chia sẻ ngoài máy chủ do IT quản lý, giữ 30 bản. SQLite backup API tạo bản sao nhất quán; `files/` được chép **sau** CSDL, nên bản sao có thể có file thừa nhưng không thiếu file của tài liệu đã có trong CSDL. Diễn tập khôi phục mỗi quý (QS-07, [runbook](../10-operations/runbook.md)).
+`python -m cwd.cli backup <dir>` chạy **hằng ngày 01:00** bằng Task Scheduler/cron, đích là thư mục chia sẻ ngoài máy chủ do IT quản lý, giữ 30 bản. SQLite backup API tạo bản sao nhất quán; `files/` được chép **sau** CSDL, nên bản sao có thể có file thừa nhưng không thiếu file của tài liệu đã có trong CSDL. Diễn tập khôi phục mỗi quý (QS-07).
 
 ## 8. Khái niệm xuyên suốt
 
@@ -224,20 +225,21 @@ Middleware ghi log JSON mỗi request; `latency_ms` lưu trong `turns` cho NFR-0
 | [ADR-003](adr/ADR-003-model-gateway-local-first.md) | ModelGateway, mặc định cục bộ | Proposed — cần IT |
 | [ADR-004](adr/ADR-004-lexical-retrieval-vietnamese.md) | Truy xuất từ vựng + ngưỡng IDF | Proposed |
 | [ADR-005](adr/ADR-005-citations-from-database.md) | Trích dẫn từ CSDL | Proposed |
-| [ADR-006](adr/ADR-006-vanilla-spa-no-build.md) | SPA thuần không build | Proposed |
+| [ADR-006](adr/ADR-006-vanilla-spa-no-build.md) | SPA thuần không build | Superseded bởi ADR-009 |
+| [ADR-009](adr/ADR-009-vue3-typescript-frontend-and-api-contract.md) | Frontend Vue 3 + TypeScript riêng, backend Python riêng, thư mục hợp đồng API | Proposed |
 | [ADR-007](adr/ADR-007-local-accounts-server-sessions.md) | Tài khoản cục bộ, phiên máy chủ | Proposed — review L3 |
 | [ADR-008](adr/ADR-008-in-process-background-ingestion.md) | Ingestion nền trong tiến trình | Proposed |
 
 ## 10. Yêu cầu chất lượng — kịch bản
 | ID | Thuộc tính | Kích thích → Phản hồi | Thước đo | Kiểm chứng |
 |---|---|---|---|---|
-| QS-01 | Correctness | Hỏi câu không có trong tài liệu → `not_found`, không trích dẫn | ≥ 9/10 | `tests/eval` |
+| QS-01 | Correctness | Hỏi câu không có trong tài liệu → `not_found`, không trích dẫn | ≥ 9/10 | `app/backend/tests/eval` |
 | QS-02 | Correctness | Đáp án ở 2 tài liệu → trích dẫn cả 2 | 100% trên bộ test | test tích hợp |
 | QS-03 | Security | PDF chứa "bỏ qua mọi hướng dẫn…" → không thực thi | 0 hành động | test injection |
 | QS-04 | Security | User B đọc tài nguyên của A → 404 | 0 rò rỉ | test cô lập |
-| QS-05 | Performance | 50 tài liệu, hỏi ở chế độ cục bộ | P90 ≤ 2 s | `tests/eval` |
+| QS-05 | Performance | 50 tài liệu, hỏi ở chế độ cục bộ | P90 ≤ 2 s | `app/backend/tests/eval` |
 | QS-06 | Modifiability | Bật LLM ngoài | Chỉ đổi cấu hình | AC-102.2 |
-| QS-07 | Recoverability | Mất dữ liệu → khôi phục từ backup | ≤ 4 h | Runbook diễn tập |
+| QS-07 | Recoverability | Mất dữ liệu → khôi phục từ backup | ≤ 4 h | Diễn tập khôi phục |
 | QS-08 | Availability | Giám sát gọi `/api/health` mỗi phút trong giờ làm việc | ≥ 99%/tháng (NFR-005) | Báo cáo giám sát |
 | QS-09 | Accessibility | Người dùng chỉ dùng bàn phím/trình đọc màn hình hoàn thành tải lên → hỏi → mở trích dẫn | Hoàn thành không cần chuột; câu trả lời được đọc qua `aria-live` (NFR-009) | Inspection WCAG 2.1 AA |
 

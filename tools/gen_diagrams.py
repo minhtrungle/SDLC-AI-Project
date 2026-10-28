@@ -609,18 +609,30 @@ def deployment(el):
     ws = p.vertex("«device» Máy trạm người dùng", 40, 80, 300, 200, S_NODE)
     p.vertex("«execution env» Trình duyệt", 20, 50, 260, 130, S_BOX, parent=ws)
     p.vertex(
-        "CMP-01 Web UI<br>index.html, app.js, api.js, styles.css", 50, 110, 220, 50, S_ARTIFACT, parent=ws
+        "CMP-01 Web UI<br>bản build Vue 3 (index.html, assets/*.js, *.css)",
+        50,
+        110,
+        220,
+        50,
+        S_ARTIFACT,
+        parent=ws,
     )
     px = p.vertex(
         "«device» Reverse proxy (khuyến nghị)<br>IIS / Nginx / Caddy — TLS", 420, 120, 260, 120, S_NODE
     )
     srv = p.vertex("«device» Máy chủ ứng dụng (Windows/Linux)", 760, 40, 520, 520, S_NODE)
     env = p.vertex(
-        "«execution env» Python ≥ 3.12 — uvicorn app.main:app (1 worker)", 20, 40, 480, 250, S_BOX, parent=srv
+        "«execution env» Python ≥ 3.12 — cd app/backend && uvicorn cwd.main:app (1 worker)",
+        20,
+        40,
+        480,
+        250,
+        S_BOX,
+        parent=srv,
     )
-    p.vertex("app/ (CMP-02..CMP-10, CMP-13)", 20, 50, 220, 50, S_ARTIFACT, parent=env)
-    p.vertex("app/web/ (CMP-01, tĩnh)", 250, 50, 210, 50, S_ARTIFACT, parent=env)
-    p.vertex("app/cli.py (CMP-12)", 20, 120, 220, 50, S_ARTIFACT, parent=env)
+    p.vertex("app/backend/cwd (CMP-02..CMP-10, CMP-13)", 20, 50, 220, 50, S_ARTIFACT, parent=env)
+    p.vertex("app/frontend/dist (CMP-01, bản build Vue)", 250, 50, 210, 50, S_ARTIFACT, parent=env)
+    p.vertex("app/backend/cwd/cli.py (CMP-12)", 20, 120, 220, 50, S_ARTIFACT, parent=env)
     p.vertex("«config» biến môi trường CWD_*", 250, 120, 210, 50, S_ARTIFACT, parent=env)
     disk = p.vertex(
         "«storage» CWD_DATA_DIR — do CMP-11 (cwd.db) và CMP-04 (files/) quản lý",

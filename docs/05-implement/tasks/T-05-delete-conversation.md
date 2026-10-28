@@ -15,14 +15,14 @@
 - [ ] AC-403.1..2
 
 ## Test (viết trước)
-- `tests/test_documents.py`
-- `tests/test_conversation.py`
+- `app/backend/tests/test_documents.py`
+- `app/backend/tests/test_conversation.py`
 
 ## File chạm
-- `app/documents.py`
-- `app/chat.py`
-- `app/retrieval.py`
-- `app/web/*`
+- `app/backend/cwd/documents.py`
+- `app/backend/cwd/chat.py`
+- `app/backend/cwd/retrieval.py`
+- `app/frontend/*`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

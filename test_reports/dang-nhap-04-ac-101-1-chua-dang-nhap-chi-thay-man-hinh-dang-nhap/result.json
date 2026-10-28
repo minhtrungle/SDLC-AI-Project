@@ -1,0 +1,17 @@
+{
+  "id": 4,
+  "feature": "Đăng nhập và phiên",
+  "group": "US-101 Đăng nhập",
+  "title": "AC-101.1 chưa đăng nhập chỉ thấy màn hình đăng nhập",
+  "criteria": "AC-101.1",
+  "spec": "app/e2e/tests/auth.spec.ts:6",
+  "status": "passed",
+  "duration_ms": 686,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:04.654Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

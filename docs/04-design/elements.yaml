@@ -21,55 +21,55 @@ actors:
 components:
   - id: CMP-01
     name: Web UI
-    module: app/web
-    responsibility: SPA tiếng Việt — đăng nhập, workspace, panel trích dẫn, dashboard
+    module: app/frontend/src
+    responsibility: SPA Vue 3 + TypeScript tiếng Việt — đăng nhập, workspace, panel trích dẫn, dashboard
   - id: CMP-02
     name: API Gateway
-    module: app/main.py
+    module: app/backend/cwd/main.py
     responsibility: Tạo ứng dụng, định tuyến, lỗi problem+json, phục vụ file tĩnh
   - id: CMP-03
     name: Auth & Session
-    module: app/auth.py
+    module: app/backend/cwd/auth.py
     responsibility: Đăng nhập, phiên, CSRF, giới hạn đăng nhập sai, phân quyền vai trò
   - id: CMP-04
     name: Document Service
-    module: app/documents.py
+    module: app/backend/cwd/documents.py
     responsibility: Tải lên, kiểm tra file, danh sách, xóa tài liệu
   - id: CMP-05
     name: Ingestion Pipeline
-    module: app/ingestion.py
+    module: app/backend/cwd/ingestion.py
     responsibility: Trích văn bản PDF, cắt chunk, lập chỉ mục FTS, cập nhật trạng thái
   - id: CMP-06
     name: Retriever
-    module: app/retrieval.py
+    module: app/backend/cwd/retrieval.py
     responsibility: Chuẩn hóa tiếng Việt, truy vấn FTS5, tính điểm liên quan IDF, lọc phạm vi
   - id: CMP-07
     name: Answer Generator
-    module: app/generation.py
+    module: app/backend/cwd/generation.py
     responsibility: ModelGateway — LocalExtractiveGenerator (mặc định) và AnthropicGenerator
   - id: CMP-08
     name: Chat Service
-    module: app/chat.py
+    module: app/backend/cwd/chat.py
     responsibility: Hội thoại, điều phối truy xuất và sinh, kiểm tra trích dẫn, lưu lượt hỏi đáp
   - id: CMP-09
     name: Feedback & Metrics
-    module: app/metrics.py
+    module: app/backend/cwd/metrics.py
     responsibility: Ghi đánh giá câu trả lời, thống kê sử dụng theo tuần
   - id: CMP-10
     name: Audit Log
-    module: app/audit.py
+    module: app/backend/cwd/audit.py
     responsibility: Ghi nhật ký kiểm toán không chứa nội dung
   - id: CMP-11
     name: Persistence
-    module: app/db.py
+    module: app/backend/cwd/db.py
     responsibility: Kết nối SQLite, schema, file PDF trên đĩa
   - id: CMP-12
     name: Admin CLI
-    module: app/cli.py
+    module: app/backend/cwd/cli.py
     responsibility: Tạo người dùng, dữ liệu demo, sao lưu, khôi phục, dọn nhật ký
   - id: CMP-13
     name: Configuration
-    module: app/config.py
+    module: app/backend/cwd/config.py
     responsibility: Đọc biến môi trường CWD_*
 
 entities:

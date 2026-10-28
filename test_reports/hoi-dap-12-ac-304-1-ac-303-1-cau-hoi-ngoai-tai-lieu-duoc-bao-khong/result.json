@@ -1,0 +1,17 @@
+{
+  "id": 12,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-304.1 / AC-303.1 câu hỏi ngoài tài liệu được báo không tìm thấy, không trích dẫn",
+  "criteria": "AC-304.1, AC-303.1",
+  "spec": "app/e2e/tests/chat.spec.ts:42",
+  "status": "passed",
+  "duration_ms": 1593,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:21.475Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

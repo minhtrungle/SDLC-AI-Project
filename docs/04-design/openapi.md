@@ -1,6 +1,6 @@
 # API Design — Chat với tài liệu (MVP)
 
-> **Prompt:** [apiDesign_prompt.md](../prompts/apiDesign_prompt.md) · **Hợp đồng máy đọc được:** [openapi.yaml](openapi.yaml) (OpenAPI 3.1) · **Checklist:** [API_Design_IEEE-1016-2009Checklist.xlsx](../design/API_Design_IEEE-1016-2009Checklist.xlsx)
+> **Prompt:** [apiDesign_prompt.md](../prompts/apiDesign_prompt.md) · **Hợp đồng máy đọc được:** [openapi.yaml](../../app/api-contract/openapi.yaml) (OpenAPI 3.1) · **Checklist:** [API_Design_IEEE-1016-2009Checklist.xlsx](../checklists/API_Design_IEEE-1016-2009Checklist.xlsx)
 
 ## 1. Người dùng API
 | Persona | Dùng API qua | Nhu cầu |
@@ -79,7 +79,7 @@ Content-Type: application/json
 {"type": "about:blank", "title": "Câu hỏi phải có từ 1 đến 2000 ký tự.", "status": 422, "code": "chat.invalid_question"}
 ```
 
-## 4.1 Bảng mã lỗi (nguồn duy nhất của thông điệp: `app/errors.py`, `app/documents.py`)
+## 4.1 Bảng mã lỗi (nguồn duy nhất của thông điệp: `app/backend/cwd/errors.py`, `app/backend/cwd/documents.py`)
 | Mã | HTTP | Nơi xuất hiện | Thông điệp tiếng Việt |
 |---|---|---|---|
 | auth.required | 401 | Mọi endpoint bảo vệ | Bạn cần đăng nhập để tiếp tục. |

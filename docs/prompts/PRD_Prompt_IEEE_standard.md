@@ -38,4 +38,4 @@ Organize the requirements into a structured epic/feature matrix. For each major 
 
 Begin your response by validating the product pillars, then output the formal PRD.
 
-@docs/BRD.md
+@docs/requirements/BRD.md

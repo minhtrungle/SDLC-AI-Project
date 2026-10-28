@@ -15,10 +15,10 @@
 - [ ] Test bằng client giả, không gọi mạng
 
 ## Test (viết trước)
-- `tests/test_generation.py`
+- `app/backend/tests/test_generation.py`
 
 ## File chạm
-- `app/generation.py`
+- `app/backend/cwd/generation.py`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

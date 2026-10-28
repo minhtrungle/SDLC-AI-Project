@@ -370,7 +370,7 @@ Mỗi FR/NFR là một phát biểu kiểm thử được, gắn với BR gốc 
 | ID | Đặc tính 25010 | Yêu cầu | Ngưỡng (mặc định) | BR | Kiểm chứng |
 |---|---|---|---|---|---|
 | NFR-001 | Performance efficiency | Thời gian từ gửi câu hỏi tới có câu trả lời hoàn chỉnh | P90 ≤ 15 s với LLM ngoài; P90 ≤ 2 s với bộ sinh cục bộ trên 50 tài liệu | BR-013 | Test (đo trong CI cho chế độ cục bộ) |
-| NFR-002 | Functional suitability | Độ chính xác trên bộ câu hỏi chuẩn | ≥ 85% đúng, ≥ 90% trích dẫn đúng, ≥ 9/10 `not_found` đúng | BR-012 | Analysis (bộ đánh giá `tests/eval`) |
+| NFR-002 | Functional suitability | Độ chính xác trên bộ câu hỏi chuẩn | ≥ 85% đúng, ≥ 90% trích dẫn đúng, ≥ 9/10 `not_found` đúng | BR-012 | Analysis (bộ đánh giá `app/backend/tests/eval`) |
 | NFR-003 | Usability | Toàn bộ giao diện và thông báo bằng tiếng Việt; tìm kiếm hỗ trợ tiếng Việt có dấu và không dấu | 100% chuỗi UI tiếng Việt | BR-014 | Test + Inspection |
 | NFR-004 | Security — confidentiality | Cô lập workspace: truy cập tài nguyên của người khác trả 404 như không tồn tại | 0 rò rỉ trong test | BR-028 | Test |
 | NFR-005 | Reliability — availability | Sẵn sàng trong giờ làm việc; endpoint `/api/health` cho giám sát | ≥ 99%/tháng | BR-024 | Analysis |
@@ -393,7 +393,7 @@ Mỗi FR/NFR là một phát biểu kiểm thử được, gắn với BR gốc 
 | Khả năng mở rộng | Kho dữ liệu và bộ truy xuất nằm sau interface (ADR-002, ADR-004) để chuyển sang PostgreSQL + pgvector khi vượt quy mô trên mà không đổi API |
 | Giao diện người dùng | Ứng dụng web một trang: màn hình đăng nhập, workspace hai vùng (tài liệu / hội thoại), panel trích dẫn, dashboard số liệu (§4) |
 | Giao diện phần cứng | Không có |
-| Giao diện phần mềm | REST API JSON (OpenAPI 3.1, `docs/04-design/openapi.yaml`); tùy chọn Anthropic Messages API khi `CWD_ALLOW_EXTERNAL_AI=true` |
+| Giao diện phần mềm | REST API JSON (OpenAPI 3.1, `app/api-contract/openapi.yaml`); tùy chọn Anthropic Messages API khi `CWD_ALLOW_EXTERNAL_AI=true` |
 | Giao diện truyền thông | HTTPS (TLS do reverse proxy đầu cuối đảm nhận khi triển khai); upload `multipart/form-data`; phiên qua cookie |
 
 ---

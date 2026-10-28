@@ -2,8 +2,8 @@
 
 | Mục | Giá trị |
 |---|---|
-| Tài liệu được audit | docs/04-design/data/model.md, app/schema.sql, ADR-002, ADR-005, ADR-007 |
-| Checklist | docs/design/Database_Design_Checklist.xlsx |
+| Tài liệu được audit | docs/04-design/data/model.md, app/backend/cwd/schema.sql, ADR-002, ADR-005, ADR-007 |
+| Checklist | docs/checklists/Database_Design_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

@@ -1,0 +1,17 @@
+{
+  "id": 5,
+  "feature": "Đăng nhập và phiên",
+  "group": "US-101 Đăng nhập",
+  "title": "AC-101.3 sai mật khẩu hiển thị thông báo chung",
+  "criteria": "AC-101.3",
+  "spec": "app/e2e/tests/auth.spec.ts:12",
+  "status": "passed",
+  "duration_ms": 1020,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:05.358Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

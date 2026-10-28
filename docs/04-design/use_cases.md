@@ -1,6 +1,6 @@
 # Đặc tả Use Case — Chat với tài liệu (MVP)
 
-> Bổ sung theo finding DF-08. Sơ đồ: [diagrams/use_case_diagram.drawio](diagrams/use_case_diagram.drawio). Checklist: [UseCase_Document_UML2.0_Checklist.xlsx](../design/UseCase_Document_UML2.0_Checklist.xlsx).
+> Bổ sung theo finding DF-08. Sơ đồ: [diagrams/use_case_diagram.drawio](diagrams/use_case_diagram.drawio). Checklist: [UseCase_Document_UML2.0_Checklist.xlsx](../checklists/UseCase_Document_UML2.0_Checklist.xlsx).
 > Tiền điều kiện chung (trừ UC-01): người dùng đã đăng nhập, phiên còn hạn; mọi bước lỗi 401 đưa về SCR-06 và giữ câu hỏi đang soạn.
 
 ## UC-01 Đăng nhập / đăng xuất
@@ -75,7 +75,7 @@
 ## UC-11 Quản trị qua CLI
 | Actor | ACT-03 · US-103 · NFR-006, NFR-007 |
 |---|---|
-| Luồng | `create-user`, `seed-demo`, `backup <dir>`, `restore <dir>`, `prune-audit --days ≥ 90`. Đọc nhật ký kiểm toán: `sqlite3 data/cwd.db "SELECT * FROM audit_log ORDER BY id DESC LIMIT 100"` (runbook §4). |
+| Luồng | `create-user`, `seed-demo`, `backup <dir>`, `restore <dir>`, `prune-audit --days ≥ 90`. Đọc nhật ký kiểm toán: `sqlite3 data/cwd.db "SELECT * FROM audit_log ORDER BY id DESC LIMIT 100"`. |
 
 ## UC-12 Truy xuất và kiểm tra trích dẫn · UC-13 Sinh bằng LLM ngoài
 Xem SAD §6.1 và blueprint §3.9 (thuật toán). UC-13 chỉ khả dụng khi `CWD_ALLOW_EXTERNAL_AI=true` + có API key (ADR-003); không có UC riêng cho US-102 vì đó là ràng buộc cấu hình, được kiểm chứng ở AC-102.1/102.2.

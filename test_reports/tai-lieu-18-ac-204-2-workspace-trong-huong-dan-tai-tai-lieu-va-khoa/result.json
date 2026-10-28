@@ -1,0 +1,17 @@
+{
+  "id": 18,
+  "feature": "Quản lý tài liệu",
+  "group": "US-201..US-205 Quản lý tài liệu",
+  "title": "AC-204.2 workspace trống hướng dẫn tải tài liệu và khóa ô hỏi",
+  "criteria": "AC-204.2",
+  "spec": "app/e2e/tests/documents.spec.ts:10",
+  "status": "passed",
+  "duration_ms": 1183,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:31.468Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

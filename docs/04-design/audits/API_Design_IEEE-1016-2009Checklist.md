@@ -2,8 +2,8 @@
 
 | Mục | Giá trị |
 |---|---|
-| Tài liệu được audit | docs/04-design/openapi.yaml (OpenAPI 3.1, v0.2.0), docs/04-design/openapi.md |
-| Checklist | docs/design/API_Design_IEEE-1016-2009Checklist.xlsx |
+| Tài liệu được audit | app/api-contract/openapi.yaml (OpenAPI 3.1, v0.2.0), docs/04-design/openapi.md |
+| Checklist | docs/checklists/API_Design_IEEE-1016-2009Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

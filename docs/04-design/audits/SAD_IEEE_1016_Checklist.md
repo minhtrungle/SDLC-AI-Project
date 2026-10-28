@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/SAD.md (v0.2), kèm adr/ADR-001..008, diagrams/*.drawio |
-| Checklist | docs/design/SAD_IEEE_1016_Checklist.xlsx |
+| Checklist | docs/checklists/SAD_IEEE_1016_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

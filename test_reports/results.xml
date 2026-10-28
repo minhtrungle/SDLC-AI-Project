@@ -1,0 +1,196 @@
+<testsuites id="" name="" tests="20" failures="0" skipped="0" errors="0" time="69.849853">
+<testsuite name="access.spec.ts" timestamp="2026-10-28T16:25:48.406Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.886" errors="0">
+<testcase name="NFR-004 Cô lập workspace › AC-NFR-004 người dùng khác không thấy và không hỏi được tài liệu của mình" classname="access.spec.ts" time="8.775">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\video.webm]]
+
+[[ATTACHMENT|.raw\access-NFR-004-Cô-lập-work-29c75--hỏi-được-tài-liệu-của-mình-chromium\test-finished-2.png]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-502 Số liệu sử dụng › AC-502.2 người dùng thường không có mục Số liệu sử dụng" classname="access.spec.ts" time="1.189">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\access-US-502-Số-liệu-sử-d-803cd-hông-có-mục-Số-liệu-sử-dụng-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\access-US-502-Số-liệu-sử-d-803cd-hông-có-mục-Số-liệu-sử-dụng-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-502 Số liệu sử dụng › AC-502.1 quản lý xem số liệu theo tuần" classname="access.spec.ts" time="4.922">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\video.webm]]
+
+[[ATTACHMENT|.raw\access-US-502-Số-liệu-sử-d-86cb0-ản-lý-xem-số-liệu-theo-tuần-chromium\test-finished-2.png]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="auth.spec.ts" timestamp="2026-10-28T16:25:48.406Z" hostname="chromium" tests="5" failures="0" skipped="0" time="7.666" errors="0">
+<testcase name="US-101 Đăng nhập › AC-101.1 chưa đăng nhập chỉ thấy màn hình đăng nhập" classname="auth.spec.ts" time="0.686">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-ec9dc-chỉ-thấy-màn-hình-đăng-nhập-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-ec9dc-chỉ-thấy-màn-hình-đăng-nhập-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-101 Đăng nhập › AC-101.3 sai mật khẩu hiển thị thông báo chung" classname="auth.spec.ts" time="1.02">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-bb93d-ẩu-hiển-thị-thông-báo-chung-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-bb93d-ẩu-hiển-thị-thông-báo-chung-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-101 Đăng nhập › AC-101.2 / AC-101.6 đăng nhập vào workspace, đăng xuất về màn hình đăng nhập" classname="auth.spec.ts" time="1.31">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-c3c53--xuất-về-màn-hình-đăng-nhập-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-c3c53--xuất-về-màn-hình-đăng-nhập-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-101 Đăng nhập › AC-101.4 gọi API trực tiếp khi chưa đăng nhập bị từ chối" classname="auth.spec.ts" time="0.596">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-fa465-i-chưa-đăng-nhập-bị-từ-chối-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-AC-1-fa465-i-chưa-đăng-nhập-bị-từ-chối-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-101 Đăng nhập › EC-15 phiên hết hạn giữ lại câu hỏi đang soạn" classname="auth.spec.ts" time="4.054">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-EC-1-d877d-n-giữ-lại-câu-hỏi-đang-soạn-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\auth-US-101-Đăng-nhập-EC-1-d877d-n-giữ-lại-câu-hỏi-đang-soạn-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="chat.spec.ts" timestamp="2026-10-28T16:25:48.406Z" hostname="chromium" tests="9" failures="0" skipped="0" time="15.565" errors="0">
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-301.1 / AC-305.1 câu trả lời kèm trích dẫn tên tài liệu và trang" classname="chat.spec.ts" time="1.515">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\test-finished-2.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-8a73f-h-dẫn-tên-tài-liệu-và-trang-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-305.2 bấm trích dẫn mở đoạn gốc; Esc đóng và trả focus" classname="chat.spec.ts" time="1.567">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-8435f-n-gốc-Esc-đóng-và-trả-focus-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-8435f-n-gốc-Esc-đóng-và-trả-focus-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-301.2 câu hỏi không dấu vẫn tìm được nội dung có dấu" classname="chat.spec.ts" time="2.588">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-476c2-ẫn-tìm-được-nội-dung-có-dấu-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-476c2-ẫn-tìm-được-nội-dung-có-dấu-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-304.1 / AC-303.1 câu hỏi ngoài tài liệu được báo không tìm thấy, không trích dẫn" classname="chat.spec.ts" time="1.593">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-0ee26-ng-tìm-thấy-không-trích-dẫn-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-0ee26-ng-tìm-thấy-không-trích-dẫn-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-401.1 hỏi tiếp hiểu ngữ cảnh lượt trước" classname="chat.spec.ts" time="1.761">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c53e5-ếp-hiểu-ngữ-cảnh-lượt-trước-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c53e5-ếp-hiểu-ngữ-cảnh-lượt-trước-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-402.1 / AC-402.2 giới hạn phạm vi vào một tài liệu" classname="chat.spec.ts" time="1.735">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-707ad-ạn-phạm-vi-vào-một-tài-liệu-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-707ad-ạn-phạm-vi-vào-một-tài-liệu-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-403.1 / AC-403.2 hội thoại giữ thứ tự; cuộc hội thoại mới trống" classname="chat.spec.ts" time="1.95">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c3f51-tự-cuộc-hội-thoại-mới-trống-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c3f51-tự-cuộc-hội-thoại-mới-trống-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-501.1 đánh giá câu trả lời được ghi nhận" classname="chat.spec.ts" time="1.653">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c8a5a-á-câu-trả-lời-được-ghi-nhận-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-c8a5a-á-câu-trả-lời-được-ghi-nhận-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-301..US-501 Hỏi đáp có trích dẫn › AC-301.4 câu hỏi rỗng không được gửi" classname="chat.spec.ts" time="1.203">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-d54d8-câu-hỏi-rỗng-không-được-gửi-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\chat-US-301-US-501-Hỏi-đáp-d54d8-câu-hỏi-rỗng-không-được-gửi-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="documents.spec.ts" timestamp="2026-10-28T16:25:48.406Z" hostname="chromium" tests="3" failures="0" skipped="0" time="7.134" errors="0">
+<testcase name="US-201..US-205 Quản lý tài liệu › AC-204.2 workspace trống hướng dẫn tải tài liệu và khóa ô hỏi" classname="documents.spec.ts" time="1.183">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-bd3ad--tải-tài-liệu-và-khóa-ô-hỏi-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-bd3ad--tải-tài-liệu-và-khóa-ô-hỏi-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-201..US-205 Quản lý tài liệu › AC-201.1 / AC-201.2 / AC-202.1 tải song song nhiều file, file sai định dạng bị từ chối riêng" classname="documents.spec.ts" time="4.368">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-f0cf5--định-dạng-bị-từ-chối-riêng-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-f0cf5--định-dạng-bị-từ-chối-riêng-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="US-201..US-205 Quản lý tài liệu › AC-205.1 / AC-205.3 xóa tài liệu phải xác nhận; Hủy giữ nguyên" classname="documents.spec.ts" time="1.583">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-8fc6a-hải-xác-nhận-Hủy-giữ-nguyên-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|.raw\documents-US-201-US-205-Qu-8fc6a-hải-xác-nhận-Hủy-giữ-nguyên-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

@@ -1,7 +1,7 @@
 # Audit PRD v0.2 theo checklist IEEE 29148
 
 - **Tài liệu:** [PRD.md](PRD.md) v0.2 + [USER_STORIES.md](USER_STORIES.md)
-- **Checklist:** [PRD_IEEE_29148_Checklist.xlsx](../requirements/PRD_IEEE_29148_Checklist.xlsx) → bản đã điền `PRD_IEEE_29148_Checklist_v0.2.xlsx`
+- **Checklist:** [PRD_IEEE_29148_Checklist.xlsx](../checklists/PRD_IEEE_29148_Checklist.xlsx) → bản đã điền `PRD_IEEE_29148_Checklist_v0.2.xlsx`
 - **Người audit:** Agent (Claude), tự kiểm tra. PO và Tech Lead phải review độc lập.
 - **Ngày:** 2026-10-28
 

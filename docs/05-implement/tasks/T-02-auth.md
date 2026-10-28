@@ -16,15 +16,15 @@
 - [ ] SCR-01, SCR-06 trên Web UI
 
 ## Test (viết trước)
-- `tests/test_auth.py`
-- `tests/test_cli.py`
+- `app/backend/tests/test_auth.py`
+- `app/backend/tests/test_cli.py`
 
 ## File chạm
-- `app/security.py`
-- `app/auth.py`
-- `app/audit.py`
-- `app/cli.py`
-- `app/web/*`
+- `app/backend/cwd/security.py`
+- `app/backend/cwd/auth.py`
+- `app/backend/cwd/audit.py`
+- `app/backend/cwd/cli.py`
+- `app/frontend/*`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

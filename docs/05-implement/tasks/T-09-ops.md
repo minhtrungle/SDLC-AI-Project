@@ -1,4 +1,4 @@
-# T-09 — Sao lưu, khôi phục, dọn nhật ký; runbook
+# T-09 — Sao lưu, khôi phục, dọn nhật ký
 
 | Mục | Giá trị |
 |---|---|
@@ -11,14 +11,12 @@
 ## Tiêu chí hoàn thành (AC đích)
 - [ ] `cli backup <dir>` / `cli restore <dir>` khôi phục đủ dữ liệu
 - [ ] `cli prune-audit --days N` chỉ xóa bản ghi cũ hơn N ngày (mặc định 90, không cho < 90)
-- [ ] Runbook vận hành, sao lưu, sự cố
 
 ## Test (viết trước)
-- `tests/test_cli.py`
+- `app/backend/tests/test_cli.py`
 
 ## File chạm
-- `app/cli.py`
-- `docs/10-operations/*`
+- `app/backend/cwd/cli.py`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

@@ -16,15 +16,15 @@
 - [ ] `recover_pending()` khi khởi động (ADR-008)
 
 ## Test (viết trước)
-- `tests/test_documents.py`
-- `tests/test_ingestion.py`
-- `tests/test_textnorm.py`
+- `app/backend/tests/test_documents.py`
+- `app/backend/tests/test_ingestion.py`
+- `app/backend/tests/test_textnorm.py`
 
 ## File chạm
-- `app/documents.py`
-- `app/ingestion.py`
-- `app/textnorm.py`
-- `app/web/*`
+- `app/backend/cwd/documents.py`
+- `app/backend/cwd/ingestion.py`
+- `app/backend/cwd/textnorm.py`
+- `app/frontend/*`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

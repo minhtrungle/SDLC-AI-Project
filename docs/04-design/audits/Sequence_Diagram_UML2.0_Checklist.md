@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/diagrams/sequence_diagram.drawio (trang "Hỏi đáp", "Đăng nhập"); đối chiếu SAD §6.1, §6.4, openapi.yaml |
-| Checklist | docs/design/Sequence_Diagram_UML2.0_Checklist.xlsx |
+| Checklist | docs/checklists/Sequence_Diagram_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

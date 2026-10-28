@@ -123,7 +123,7 @@
 
 ### US-306
 **Là** Hùng, **tôi muốn** câu trả lời đạt chất lượng và tốc độ cam kết, **để** quyết định mở rộng.
-- **AC-306.1** Bộ đánh giá `tests/eval` chạy được lặp lại, báo tỷ lệ đúng, trích dẫn đúng, `not_found` đúng; ngưỡng mặc định 85% / 90% / 9 trên 10.
+- **AC-306.1** Bộ đánh giá `app/backend/tests/eval` chạy được lặp lại, báo tỷ lệ đúng, trích dẫn đúng, `not_found` đúng; ngưỡng mặc định 85% / 90% / 9 trên 10.
 - **AC-306.2** Chế độ cục bộ: P90 thời gian trả lời ≤ 2 s trên bộ đánh giá.
 
 ## Epic E4 — Hội thoại

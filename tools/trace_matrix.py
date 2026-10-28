@@ -4,7 +4,8 @@ Sources of truth:
 - rows (BR, FR/NFR, story, AC range): ROWS below, copied from PRD §3.9 / USER_STORIES.md
 - design: components whose endpoints list the FR (elements.yaml) or SAD §5.2 rows mentioning it
 - code: module paths of those components
-- tests: test functions whose docstring mentions an AC id of the row
+- tests: backend test functions whose docstring mentions an AC id of the row, and frontend
+  Vitest cases (app/frontend/src/**/*.spec.ts) whose describe/it title mentions it
 
 Usage: python tools/trace_matrix.py   (exit 1 if an in-scope row has no test)
 """
@@ -47,26 +48,50 @@ ROWS = [
 ]
 # Non-functional rows whose design lives in a cross-cutting module rather than an endpoint.
 EXTRA_MODULES = {
-    "NFR-001": ["app/retrieval.py"],
-    "NFR-002": ["app/retrieval.py", "app/generation.py"],
-    "NFR-003": ["app/textnorm.py"],
-    "NFR-004": ["app/auth.py"],
-    "NFR-006": ["app/cli.py"],
-    "NFR-007": ["app/audit.py", "app/cli.py"],
-    "NFR-008": ["app/main.py"],
-    "NFR-010": ["app/security.py"],
+    "NFR-001": ["app/backend/cwd/retrieval.py"],
+    "NFR-002": ["app/backend/cwd/retrieval.py", "app/backend/cwd/generation.py"],
+    "NFR-003": ["app/backend/cwd/textnorm.py"],
+    "NFR-004": ["app/backend/cwd/auth.py"],
+    "NFR-006": ["app/backend/cwd/cli.py"],
+    "NFR-007": ["app/backend/cwd/audit.py", "app/backend/cwd/cli.py"],
+    "NFR-008": ["app/backend/cwd/main.py"],
+    "NFR-010": ["app/backend/cwd/security.py", "app/frontend/src/api/client.ts"],
 }
 DEFERRED = [("BR-018", "US-404"), ("BR-023", "US-601")]
 
 
 def collect_tests():
     found = []  # (test id, docstring)
-    for path in sorted((ROOT / "tests").rglob("test_*.py")):
+    for path in sorted((ROOT / "app" / "backend" / "tests").rglob("test_*.py")):
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
                 doc = ast.get_docstring(node) or ""
                 found.append((f"{path.relative_to(ROOT).as_posix()}::{node.name}", doc))
+    # Frontend: describe("... AC-xxx ...") applies to every it() inside it; it("... AC-xxx ...") to itself.
+    for path in sorted((ROOT / "app" / "frontend" / "src").rglob("*.spec.ts")):
+        current = ""
+        for line in path.read_text(encoding="utf-8").splitlines():
+            d = re.match(r'\s*describe\("([^"]+)"', line)
+            if d:
+                current = d.group(1)
+            t = re.match(r'\s*it\("([^"]+)"', line)
+            if t:
+                found.append(
+                    (f"{path.relative_to(ROOT).as_posix()}::{t.group(1)}", f"{current} {t.group(1)}")
+                )
+    # E2E: Playwright test.describe("...") / test("... AC-xxx ...") in app/e2e/tests.
+    for path in sorted((ROOT / "app" / "e2e" / "tests").glob("*.spec.ts")):
+        current = ""
+        for line in path.read_text(encoding="utf-8").splitlines():
+            d = re.match(r'\s*test\.describe\("([^"]+)"', line)
+            if d:
+                current = d.group(1)
+            t = re.match(r'\s*test\("([^"]+)"', line)
+            if t:
+                found.append(
+                    (f"{path.relative_to(ROOT).as_posix()}::{t.group(1)}", f"{current} {t.group(1)}")
+                )
     return found
 
 
@@ -109,7 +134,11 @@ def main():
             )
             or "—"
         )
-        test_cell = "<br>".join(f"`{h.split('::')[1]}`" for h in hits) or "**THIẾU**"
+
+        def tag(h):
+            return " (E2E)" if "/e2e/" in h else " (FE)" if "/frontend/" in h else ""
+
+        test_cell = "<br>".join(f"`{h.split('::')[1]}`{tag(h)}" for h in hits) or "**THIẾU**"
         lines.append(
             f"| {br} | {', '.join(reqs)} | {story} | {acs} | {', '.join(cmps) or '—'} | "
             f"{'<br>'.join(f'`{m}`' for m in code) or '—'} | {test_cell} |"
@@ -122,9 +151,10 @@ def main():
         f"- Hàng trong phạm vi: {len(ROWS)}; thiếu test: {', '.join(missing) if missing else 'không có'}.",
         f"- Tổng số test function: {len(tests)}; có ID AC/NFR trong docstring: "
         f"{sum(1 for _, d in tests if re.search(r'AC-|NFR-', d))}.",
+        "- (FE) = test frontend Vitest trong `app/frontend/src/**/*.spec.ts`; (E2E) = Playwright trong "
+        "`app/e2e/tests/*.spec.ts` (báo cáo: `test_reports/`).",
         "- AC chỉ kiểm chứng bằng review (không tự động hóa): AC-102.3 (IT ký luồng dữ liệu), "
-        "AC-201.3 / AC-204.2 / AC-305.2 / AC-402.2 phần giao diện (kiểm chứng bằng UI E2E thủ công, "
-        "xem test-report §4), NFR-009 (inspection WCAG).",
+        "NFR-009 (inspection WCAG; một phần qua test bàn phím/aria của component).",
         "",
     ]
     OUT.write_text("\n".join(lines), encoding="utf-8")

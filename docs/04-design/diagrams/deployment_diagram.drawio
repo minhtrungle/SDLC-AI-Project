@@ -10,7 +10,7 @@
         <mxCell id="c3" value="«execution env» Trình duyệt" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="c2">
           <mxGeometry x="20" y="50" width="260" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="c4" value="CMP-01 Web UI&lt;br&gt;index.html, app.js, api.js, styles.css" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c2">
+        <mxCell id="c4" value="CMP-01 Web UI&lt;br&gt;bản build Vue 3 (index.html, assets/*.js, *.css)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c2">
           <mxGeometry x="50" y="110" width="220" height="50" as="geometry" />
         </mxCell>
         <mxCell id="c5" value="«device» Reverse proxy (khuyến nghị)&lt;br&gt;IIS / Nginx / Caddy — TLS" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
@@ -19,16 +19,16 @@
         <mxCell id="c6" value="«device» Máy chủ ứng dụng (Windows/Linux)" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="760" y="40" width="520" height="520" as="geometry" />
         </mxCell>
-        <mxCell id="c7" value="«execution env» Python ≥ 3.12 — uvicorn app.main:app (1 worker)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="c6">
+        <mxCell id="c7" value="«execution env» Python ≥ 3.12 — cd app/backend &amp;&amp; uvicorn cwd.main:app (1 worker)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="c6">
           <mxGeometry x="20" y="40" width="480" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="c8" value="app/ (CMP-02..CMP-10, CMP-13)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
+        <mxCell id="c8" value="app/backend/cwd (CMP-02..CMP-10, CMP-13)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
           <mxGeometry x="20" y="50" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="c9" value="app/web/ (CMP-01, tĩnh)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
+        <mxCell id="c9" value="app/frontend/dist (CMP-01, bản build Vue)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
           <mxGeometry x="250" y="50" width="210" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="c10" value="app/cli.py (CMP-12)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
+        <mxCell id="c10" value="app/backend/cwd/cli.py (CMP-12)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
           <mxGeometry x="20" y="120" width="220" height="50" as="geometry" />
         </mxCell>
         <mxCell id="c11" value="«config» biến môi trường CWD_*" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">

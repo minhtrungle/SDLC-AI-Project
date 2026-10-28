@@ -1,7 +1,7 @@
 # Audit BRD v0.2 theo checklist IEEE 29148
 
 - **Tài liệu được audit:** [BRD.md](BRD.md) v0.2
-- **Checklist:** [BRD_IEEE_29148_Checklist.xlsx](../requirements/BRD_IEEE_29148_Checklist.xlsx) → bản đã điền: `BRD_IEEE_29148_Checklist_v0.2.xlsx`
+- **Checklist:** [BRD_IEEE_29148_Checklist.xlsx](../checklists/BRD_IEEE_29148_Checklist.xlsx) → bản đã điền: `BRD_IEEE_29148_Checklist_v0.2.xlsx`
 - **Người audit:** Agent (Claude). Agent sinh BRD v0.2 nên **không thể là người review độc lập**. Kết quả này là tự kiểm tra; PO/BA phải review lại.
 - **Ngày:** 2026-10-28
 

@@ -1,6 +1,6 @@
 # Design Blueprint (IEEE 1016-2009) — Chat với tài liệu (MVP)
 
-> **Prompt:** [bluePrint_design_prompt.md](../prompts/bluePrint_design_prompt.md) · **Checklist:** [BluePrint_Design_IEEE_1016_2009_Checklist.xlsx](../design/BluePrint_Design_IEEE_1016_2009_Checklist.xlsx)
+> **Prompt:** [bluePrint_design_prompt.md](../prompts/bluePrint_design_prompt.md) · **Checklist:** [BluePrint_Design_IEEE_1016_2009_Checklist.xlsx](../checklists/BluePrint_Design_IEEE_1016_2009_Checklist.xlsx)
 > **Quan hệ với SAD:** SAD mô tả kiến trúc (arc42). Blueprint mô tả thiết kế chi tiết theo các *design view* IEEE 1016 để dev hiện thực trực tiếp. ID phần tử theo [elements.yaml](elements.yaml).
 > **Phiên bản:** 0.2 · 2026-10-28 · Agent (Claude) · chờ Tech Lead duyệt
 
@@ -49,27 +49,43 @@ Xem SAD §10 (QS-01..QS-07).
 ### 3.1 Composition view
 ```
 app/
-├── main.py         CMP-02  create_app(settings) → FastAPI
-├── config.py       CMP-13  Settings (dataclass, đọc env)
-├── db.py           CMP-11  connect(), init_schema(), transaction()
-├── schema.sql      CMP-11
-├── errors.py       CMP-02  ProblemError, handlers, thông điệp tiếng Việt
-├── security.py     CMP-03  hash_password, verify_password, new_token, LoginLimiter
-├── auth.py         CMP-03  router /api/auth/*, current_user, require_csrf, require_manager
-├── audit.py        CMP-10  record(conn, action, user, target)
-├── documents.py    CMP-04  router /api/documents*, validate_upload
-├── ingestion.py    CMP-05  ingest_document(), extract_pages(), chunk_page(), recover_pending()
-├── textnorm.py     CMP-06  fold(), tokens(), content_terms()
-├── retrieval.py    CMP-06  FtsRetriever, RetrievedChunk
-├── generation.py   CMP-07  LocalExtractiveGenerator, AnthropicGenerator, build_generator()
-├── chat.py         CMP-08  router /api/conversations*, /api/chunks/*, ask()
-├── metrics.py      CMP-09  router /api/turns/*/feedback, /api/metrics/weekly
-├── cli.py          CMP-12  create-user, seed-demo, backup, restore, prune-audit
-└── web/            CMP-01  index.html, styles.css, api.js, app.js
+├── api-contract/
+│   └── openapi.yaml            Hợp đồng API (nguồn sự thật cho backend và frontend — ADR-009)
+├── backend/                    Python ≥ 3.12 · chạy: cd app/backend && uvicorn cwd.main:app
+│   ├── cwd/
+│   │   ├── main.py             CMP-02  create_app(settings), middleware, phục vụ frontend/dist
+│   │   ├── config.py           CMP-13  Settings (dataclass, đọc env CWD_*)
+│   │   ├── db.py               CMP-11  connect(), init_schema(), get_conn()
+│   │   ├── schema.sql          CMP-11
+│   │   ├── errors.py           CMP-02  ProblemError, handlers, thông điệp tiếng Việt
+│   │   ├── security.py         CMP-03  hash_password, verify_password, new_token, LoginLimiter
+│   │   ├── auth.py             CMP-03  router /api/auth/*, current_user, require_csrf, require_manager
+│   │   ├── audit.py            CMP-10  record(conn, action, user, target)
+│   │   ├── documents.py        CMP-04  router /api/documents*, kiểm tra upload
+│   │   ├── ingestion.py        CMP-05  ingest_document(), extract_pages(), chunk_page(), recover_pending()
+│   │   ├── textnorm.py         (tiện ích) fold(), tokens(), content_terms()
+│   │   ├── retrieval.py        CMP-06  FtsRetriever, RetrievedChunk
+│   │   ├── generation.py       CMP-07  LocalExtractiveGenerator, build_generator()
+│   │   ├── generation_external.py CMP-07 AnthropicGenerator
+│   │   ├── chat.py             CMP-08  router /api/conversations*, /api/chunks/*
+│   │   ├── metrics.py          CMP-09  router /api/turns/*/feedback, /api/metrics/weekly
+│   │   └── cli.py              CMP-12  create-user, seed-demo, backup, restore, prune-audit
+│   ├── tests/                  pytest (unit, API, bảo mật, eval/)
+│   ├── pyproject.toml, requirements.txt, requirements-dev.txt
+└── frontend/                   CMP-01 · Vue 3 + TypeScript + Vite · Node ≥ 22.12
+    ├── src/
+    │   ├── api/                client.ts (fetch + CSRF + upload tiến độ), schema.d.ts (sinh từ hợp đồng), types.ts
+    │   ├── composables/        useSession, useDocuments, useChat, useAnnouncer (trạng thái)
+    │   ├── components/         LoginView (SCR-01/06), WorkspaceView + DocumentPanel + ChatPanel + AnswerMessage (SCR-02),
+    │   │                       CitationDrawer (SCR-03), ConfirmDialog (SCR-04), UsageDashboard (SCR-05), AppHeader
+    │   ├── utils/              answer.ts (tách [n]), composer.ts (trạng thái ô hỏi §3.7), format.ts
+    │   └── *.spec.ts           Vitest + Vue Test Utils
+    ├── scripts/check-api.mjs   kiểm tra schema.d.ts khớp hợp đồng
+    └── package.json, vite.config.ts, tsconfig*.json, eslint.config.js
 ```
 
 ### 3.2 Dependency view
-Quy tắc phụ thuộc (kiểm tra trong review): `web → (HTTP) → main → {auth, documents, chat, metrics} → {retrieval, generation, ingestion, audit} → db`. `textnorm`, `config`, `errors` là lá. Không module nghiệp vụ nào import `main`. `generation` không import `db` (chỉ nhận chunk).
+Quy tắc phụ thuộc (kiểm tra trong review): `frontend → (HTTP, theo app/api-contract) → main → {auth, documents, chat, metrics} → {retrieval, generation, ingestion, audit} → db`. `textnorm`, `config`, `errors` là lá. Không module nghiệp vụ nào import `main`. `generation` không import `db` (chỉ nhận chunk).
 
 ### 3.3 Logical view (lớp chính) — [diagrams/class_diagram.drawio](diagrams/class_diagram.drawio)
 | Lớp / kiểu | Thuộc tính / phương thức | Ghi chú |
@@ -89,7 +105,7 @@ Quy tắc phụ thuộc (kiểm tra trong review): `web → (HTTP) → main → 
 Xem [data/model.md](data/model.md). Thông tin nhạy cảm: `documents/chunks/turns` (nội dung kinh doanh), `users.password_hash`, `sessions`. Không bảng nào lưu token thô.
 
 ### 3.5 Interface view
-- API ngoài: [openapi.yaml](openapi.yaml), giải thích ở [openapi.md](openapi.md).
+- API ngoài: [openapi.yaml](../../app/api-contract/openapi.yaml), giải thích ở [openapi.md](openapi.md).
 - Interface nội bộ: SAD §5.3.
 - Hợp đồng lỗi: problem+json, `code` cố định (enum trong openapi).
 

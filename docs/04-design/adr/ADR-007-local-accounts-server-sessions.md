@@ -8,7 +8,7 @@
 - Mặc định OQ-007: workspace riêng từng người.
 
 ## Quyết định
-1. Tài khoản do quản trị tạo bằng CLI (`python -m app.cli create-user`); không có tự đăng ký.
+1. Tài khoản do quản trị tạo bằng CLI (`python -m cwd.cli create-user`); không có tự đăng ký.
 2. Mật khẩu: PBKDF2-HMAC-SHA256, 210 000 vòng, salt 16 byte ngẫu nhiên (thư viện chuẩn `hashlib`); so sánh hằng thời gian.
 3. Phiên: token 32 byte ngẫu nhiên (`secrets`), chỉ lưu **băm SHA-256** trong bảng `sessions`; cookie `cwd_session` `HttpOnly; SameSite=Strict; Path=/` (+ `Secure` khi `CWD_COOKIE_SECURE=true`). Hết hạn sau 8 giờ không hoạt động.
 4. CSRF: token riêng mỗi phiên, trả về khi đăng nhập và tại `GET /api/auth/me`; mọi `POST/PUT/DELETE` (trừ login) phải gửi header `X-CSRF-Token` khớp.
@@ -20,9 +20,10 @@
 | Phương án | Lý do không chọn |
 |---|---|
 | JWT trong localStorage | Dễ bị XSS đánh cắp; khó thu hồi |
-| SSO (OIDC) | Chưa có thông tin IdP; thêm sau bằng cách thay `app/auth.py` |
+| SSO (OIDC) | Chưa có thông tin IdP; thêm sau bằng cách thay `app/backend/cwd/auth.py` |
 
 ## Hệ quả
 - (+) Thu hồi phiên tức thì (xóa dòng); không lộ token khi CSDL bị đọc.
 - (−) Giới hạn đăng nhập sai mất khi khởi động lại; chấp nhận cho MVP một tiến trình.
+- (−) **Rủi ro chờ inspection L3 (CR-12 / DF-18):** khóa chỉ theo tên đăng nhập nên người khác có thể cố tình nhập sai để khóa tài khoản của một người (khóa 5 phút), và không chặn được thử một mật khẩu trên nhiều tài khoản (password spraying). Phiên chỉ hết hạn theo thời gian không hoạt động, chưa có thời hạn tuyệt đối. Đề xuất cho L3: khóa theo (tên đăng nhập, IP) + giới hạn theo IP, thời hạn phiên tuyệt đối 24 h.
 - **Khó đảo ngược:** Trung bình — chuyển SSO cần đổi luồng đăng nhập, không đổi phân quyền.

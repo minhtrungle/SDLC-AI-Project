@@ -1,6 +1,6 @@
 # ADR-006 — Giao diện SPA bằng HTML/CSS/JavaScript thuần, không bước build
 
-- **Trạng thái:** Proposed · **Ngày:** 2026-10-28 · **Tác giả:** Agent (Claude)
+- **Trạng thái:** **Superseded** bởi [ADR-009](ADR-009-vue3-typescript-frontend-and-api-contract.md) (2026-10-28) · **Ngày:** 2026-10-28 · **Tác giả:** Agent (Claude)
 - **Thay thế:** AD-07 của SAD v0.1 (React 18 + TypeScript + Vite)
 
 ## Bối cảnh
@@ -9,7 +9,7 @@
 - Prototype HTML trong `UI_UX_design/` đã viết bằng HTML/CSS thuần với design token.
 
 ## Quyết định
-- Viết SPA bằng **ES2020 modules thuần** trong `app/web/` (một `index.html`, `app.js`, `api.js`, `styles.css`), FastAPI phục vụ dạng file tĩnh.
+- Viết SPA bằng **ES2020 modules thuần** trong `app/frontend/` (một `index.html`, `app.js`, `api.js`, `styles.css`), FastAPI phục vụ dạng file tĩnh.
 - Tái sử dụng design token và component CSS của prototype (`UI_UX_design/html_design/`).
 - **Không streaming** (UX-005) trong MVP: chế độ cục bộ trả lời ≤ 2 s (NFR-001); hiển thị chỉ báo "Đang trả lời…".
 - Cập nhật trạng thái tài liệu bằng polling 2 s khi còn tài liệu `processing` (AC-203.2).

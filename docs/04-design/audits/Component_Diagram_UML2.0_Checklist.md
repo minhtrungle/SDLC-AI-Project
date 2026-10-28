@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/diagrams/component_diagram.drawio (trang "Components"); đối chiếu SAD §5.2, blueprint §3.2, elements.yaml |
-| Checklist | docs/design/Component_Diagram_UML2.0_Checklist.xlsx |
+| Checklist | docs/checklists/Component_Diagram_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

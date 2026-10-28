@@ -2,8 +2,8 @@
 
 | Mục | Giá trị |
 |---|---|
-| Tài liệu được audit | docs/04-design/diagrams/class_diagram.drawio (trang "Domain (ENT)" và "Service classes"); đối chiếu blueprint §3.3, SAD §5.3, app/schema.sql |
-| Checklist | docs/design/Class_Diagram_UML2.0_Checklist.xlsx |
+| Tài liệu được audit | docs/04-design/diagrams/class_diagram.drawio (trang "Domain (ENT)" và "Service classes"); đối chiếu blueprint §3.3, SAD §5.3, app/backend/cwd/schema.sql |
+| Checklist | docs/checklists/Class_Diagram_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

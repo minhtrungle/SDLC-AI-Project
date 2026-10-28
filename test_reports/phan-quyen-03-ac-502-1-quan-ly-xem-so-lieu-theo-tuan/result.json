@@ -1,0 +1,17 @@
+{
+  "id": 3,
+  "feature": "Cô lập dữ liệu và phân quyền",
+  "group": "US-502 Số liệu sử dụng",
+  "title": "AC-502.1 quản lý xem số liệu theo tuần",
+  "criteria": "AC-502.1",
+  "spec": "app/e2e/tests/access.spec.ts:32",
+  "status": "passed",
+  "duration_ms": 4922,
+  "retry": 0,
+  "start_time": "2026-10-28T16:25:59.694Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

@@ -15,12 +15,12 @@
 - [ ] AC-303.2 injection
 
 ## Test (viết trước)
-- `tests/eval/test_eval.py`
-- `tests/test_isolation.py`
-- `tests/test_logging.py`
+- `app/backend/tests/eval/test_eval.py`
+- `app/backend/tests/test_isolation.py`
+- `app/backend/tests/test_logging.py`
 
 ## File chạm
-- `tests/eval/*`
+- `app/backend/tests/eval/*`
 - `tests/*`
 
 ## Definition of Done

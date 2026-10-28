@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/diagrams/use_case_diagram.drawio (UC-01..UC-13); đối chiếu docs/03-analysis/USER_STORIES.md và SAD §6 |
-| Checklist | docs/design/UseCase_Document_UML2.0_Checklist.xlsx |
+| Checklist | docs/checklists/UseCase_Document_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

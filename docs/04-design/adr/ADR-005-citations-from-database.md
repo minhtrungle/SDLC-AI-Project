@@ -8,7 +8,7 @@ Mô hình sinh có thể bịa tên tài liệu hoặc số trang. Trích dẫn 
 
 ## Quyết định
 - Bộ sinh chỉ được tham chiếu nguồn bằng chỉ số `[n]` ứng với chunk thứ *n* trong ngữ cảnh đã truy xuất.
-- Sau khi sinh, `app/chat.py` lọc: chỉ giữ `[n]` hợp lệ; tên tài liệu, số trang, đoạn trích lấy từ bảng `chunks`/`documents`.
+- Sau khi sinh, `app/backend/cwd/chat.py` lọc: chỉ giữ `[n]` hợp lệ; tên tài liệu, số trang, đoạn trích lấy từ bảng `chunks`/`documents`.
 - Câu trả lời `answered` không còn trích dẫn hợp lệ nào ⇒ hạ thành `not_found`.
 - `chunks.id` là `AUTOINCREMENT` để `chunk_id` trong trích dẫn đã lưu không bao giờ trỏ sang đoạn của tài liệu khác sau khi xóa (finding DF-01, test `test_chunk_ids_not_reused_after_delete`); `getChunk` luôn lọc theo chủ sở hữu.
 - Trích dẫn được lưu kèm lượt hỏi đáp (JSON). Khi đọc lại hội thoại, trích dẫn của tài liệu đã xóa được đánh dấu `document_deleted = true` (AC-205.4).

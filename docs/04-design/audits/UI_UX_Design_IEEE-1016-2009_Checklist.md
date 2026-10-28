@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/UI_UX_design/README.md, UIUX_Blueprint_Design.md, html_design/01..06 + index.html, blueprint.md §2.2–2.3, §3.7 |
-| Checklist | docs/design/UI_UX_Design_IEEE-1016-2009_Checklist.xlsx |
+| Checklist | docs/checklists/UI_UX_Design_IEEE-1016-2009_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

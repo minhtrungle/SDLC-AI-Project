@@ -1,0 +1,11 @@
+[project]
+name = "chat-with-docs-backend"
+version = "0.1.0"
+description = "Chat với tài liệu — backend FastAPI (hợp đồng API: ../api-contract/openapi.yaml)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q --cov=cwd --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=70"
+filterwarnings = ["ignore::DeprecationWarning"]

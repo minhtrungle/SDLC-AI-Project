@@ -18,15 +18,15 @@
 - [ ] Trích dẫn kiểm tra với CSDL (ADR-005)
 
 ## Test (viết trước)
-- `tests/test_retrieval.py`
-- `tests/test_generation.py`
-- `tests/test_chat.py`
+- `app/backend/tests/test_retrieval.py`
+- `app/backend/tests/test_generation.py`
+- `app/backend/tests/test_chat.py`
 
 ## File chạm
-- `app/retrieval.py`
-- `app/generation.py`
-- `app/chat.py`
-- `app/web/*`
+- `app/backend/cwd/retrieval.py`
+- `app/backend/cwd/generation.py`
+- `app/backend/cwd/chat.py`
+- `app/frontend/*`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

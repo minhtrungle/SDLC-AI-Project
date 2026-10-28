@@ -1,0 +1,17 @@
+{
+  "id": 19,
+  "feature": "Quản lý tài liệu",
+  "group": "US-201..US-205 Quản lý tài liệu",
+  "title": "AC-201.1 / AC-201.2 / AC-202.1 tải song song nhiều file, file sai định dạng bị từ chối riêng",
+  "criteria": "AC-201.1, AC-201.2, AC-202.1",
+  "spec": "app/e2e/tests/documents.spec.ts:16",
+  "status": "passed",
+  "duration_ms": 4368,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:32.664Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

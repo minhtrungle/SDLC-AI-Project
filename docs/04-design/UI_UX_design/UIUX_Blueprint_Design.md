@@ -3,14 +3,14 @@
 > ⚠️ **Đọc trước (v0.2, 2026-10-28 — DF-03/04/05/22/23):** tài liệu này là bản v0.1. Khi mâu thuẫn, các nguồn sau **thắng**:
 > - Trạng thái ô hỏi: [blueprint.md §3.7](../blueprint.md) (bộ tên chuẩn). Trạng thái tài liệu: chỉ `processing/ready/failed/no_text`; "uploading" là trạng thái phía client; "password" = `failed` + `pdf.encrypted`.
 > - Không có streaming, `cancelled`, `outcome = partial`, nút "Thử lại" tài liệu, SSO, workspace dùng chung, AnalyticsClient (xem [README.md](README.md) bảng Delta và blueprint §6).
-> - Thông điệp người dùng: nguồn duy nhất là `app/errors.py` và [openapi.md §4.1](../openapi.md); chuỗi trong §3.4.3 dưới đây chỉ là tham khảo.
+> - Thông điệp người dùng: nguồn duy nhất là `app/backend/cwd/errors.py` và [openapi.md §4.1](../openapi.md); chuỗi trong §3.4.3 dưới đây chỉ là tham khảo.
 > - Độ rộng tối thiểu hỗ trợ: **1280 px** (PRD §3.9.4); không làm ngăn kéo cho 1024 px.
 > - ID thành phần giao diện đã đổi từ `CMP-xx` sang `UIC-xx` để không trùng ID thành phần kiến trúc trong elements.yaml.
 > - Font: system stack (prototype đã gỡ Google Fonts theo CSP); prototype đăng nhập đã gỡ nút SSO.
 
 > **Chuẩn áp dụng:** IEEE 1016-2009 (Software Design Descriptions)
 > **Mã tài liệu:** SDD-UIUX-CWD-001 · **Phiên bản:** 0.1 · **Trạng thái:** Draft
-> **Đầu vào:** [PRD-CWD-001 v0.1](../requirements/PRD.md) · [BRD-CWD-001 v0.1](../requirements/BRD.md) · **Prompt nguồn:** [bluePrint_design_prompt.md](../prompts/bluePrint_design_prompt.md)
+> **Đầu vào:** [PRD-CWD-001 v0.1](../../03-analysis/PRD.md) · [BRD-CWD-001 v0.1](../../02-requirements/BRD.md) · **Prompt nguồn:** [bluePrint_design_prompt.md](../../prompts/bluePrint_design_prompt.md)
 > **Phạm vi:** Thiết kế **UI/UX** (lớp giao diện web). Kiến trúc backend, mô hình AI và hạ tầng thuộc SAD/SRS riêng.
 
 **Quy ước:** `[TBD: …]` = chưa có giá trị, đang chờ câu hỏi mở (OQ-xxx của BRD, PQ-xxx của PRD). `[Đề xuất]` = do đội Design đề xuất, **chưa được duyệt**. Mã `US-`, `AC-`, `UX-`, `EC-`, `LG-`, `BR-`, `RSK-` lấy từ PRD/BRD để truy vết. Mã `C-xx` (concern), `QA-xx`, `SCR-xx`, `UIC-xx`, `DT-xx` do tài liệu này định nghĩa.
@@ -835,8 +835,8 @@ Giá trị `[Đề xuất]`, **phải kiểm tra tương phản** trước khi c
 ### 7.2 Tài liệu tham chiếu
 
 - IEEE 1016-2009 — Software Design Descriptions
-- [PRD-CWD-001](../requirements/PRD.md), [BRD-CWD-001](../requirements/BRD.md)
-- [Use case diagram](use_case_diagram.drawio)
+- [PRD-CWD-001](../../03-analysis/PRD.md), [BRD-CWD-001](../../02-requirements/BRD.md)
+- [Use case diagram](../diagrams/use_case_diagram.drawio)
 - WCAG 2.1, WAI-ARIA Authoring Practices
 
 ---

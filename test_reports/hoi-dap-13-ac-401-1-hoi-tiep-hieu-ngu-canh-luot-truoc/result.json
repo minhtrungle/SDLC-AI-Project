@@ -1,0 +1,17 @@
+{
+  "id": 13,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-401.1 hỏi tiếp hiểu ngữ cảnh lượt trước",
+  "criteria": "AC-401.1",
+  "spec": "app/e2e/tests/chat.spec.ts:50",
+  "status": "passed",
+  "duration_ms": 1761,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:23.081Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": 14,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-402.1 / AC-402.2 giới hạn phạm vi vào một tài liệu",
+  "criteria": "AC-402.1, AC-402.2",
+  "spec": "app/e2e/tests/chat.spec.ts:56",
+  "status": "passed",
+  "duration_ms": 1735,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:24.855Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

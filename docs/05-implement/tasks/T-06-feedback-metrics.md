@@ -14,11 +14,11 @@
 - [ ] SCR-05
 
 ## Test (viết trước)
-- `tests/test_metrics.py`
+- `app/backend/tests/test_metrics.py`
 
 ## File chạm
-- `app/metrics.py`
-- `app/web/*`
+- `app/backend/cwd/metrics.py`
+- `app/frontend/*`
 
 ## Definition of Done
 Theo [PLAN.md §3](../PLAN.md#3-definition-of-done-mọi-task).

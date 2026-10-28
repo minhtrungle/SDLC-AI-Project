@@ -476,7 +476,7 @@ Agent đề xuất các giá trị dưới đây để đội có thể thiết 
 | Tên | Phiên bản | Vị trí | Ngày truy cập |
 |---|---|---|---|
 | IEEE 29148-2018 Systems and software engineering — Requirements engineering | 2018 | IEEE Xplore | 2026-10-27 |
-| Prompt BRD theo IEEE | 1.0 | [docs/BRD_Prompt_IEEE_standard.md](../BRD_Prompt_IEEE_standard.md) | 2026-10-27 |
+| Prompt BRD theo IEEE | 1.0 | [docs/BRD_Prompt_IEEE_standard.md](../prompts/BRD_Prompt_IEEE_standard.md) | 2026-10-27 |
 
 ---
 

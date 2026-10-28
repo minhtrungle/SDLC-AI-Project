@@ -18,13 +18,13 @@
 - [ ] CI: `.github/workflows/ci.yml` + `tools/ci_local.py`; `AGENTS.md`
 
 ## Test (viết trước)
-- `tests/test_app_basics.py`
+- `app/backend/tests/test_app_basics.py`
 
 ## File chạm
-- `app/main.py`
-- `app/config.py`
-- `app/db.py`
-- `app/errors.py`
+- `app/backend/cwd/main.py`
+- `app/backend/cwd/config.py`
+- `app/backend/cwd/db.py`
+- `app/backend/cwd/errors.py`
 - `AGENTS.md`
 - `pyproject.toml`
 - `.github/workflows/ci.yml`

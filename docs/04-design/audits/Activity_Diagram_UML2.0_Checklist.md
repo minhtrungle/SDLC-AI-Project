@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Tài liệu được audit | docs/04-design/diagrams/activity_diagram.drawio (trang "Tải lên và xử lý tài liệu"); đối chiếu SAD §6.2, ADR-008, FR-004..006 |
-| Checklist | docs/design/Activity_Diagram_UML2.0_Checklist.xlsx |
+| Checklist | docs/checklists/Activity_Diagram_UML2.0_Checklist.xlsx |
 | Reviewer | Independent reviewer agent |
 | Ngày | 2026-10-28 |
 

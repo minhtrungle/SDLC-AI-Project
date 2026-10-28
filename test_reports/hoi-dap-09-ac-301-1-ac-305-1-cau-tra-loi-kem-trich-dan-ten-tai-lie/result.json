@@ -1,0 +1,17 @@
+{
+  "id": 9,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-301.1 / AC-305.1 câu trả lời kèm trích dẫn tên tài liệu và trang",
+  "criteria": "AC-301.1, AC-305.1",
+  "spec": "app/e2e/tests/chat.spec.ts:18",
+  "status": "passed",
+  "duration_ms": 1515,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:12.400Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

@@ -12,7 +12,7 @@
 - Dùng **một file SQLite** (chế độ WAL, `foreign_keys=ON`) cho người dùng, phiên, tài liệu, chunk, hội thoại, phản hồi, nhật ký kiểm toán.
 - Tìm kiếm toàn văn bằng **FTS5** trên văn bản đã chuẩn hóa (bỏ dấu tiếng Việt, `đ→d`, chữ thường).
 - File PDF gốc lưu trên đĩa tại `CWD_DATA_DIR/files/<document_id>.pdf`.
-- Mọi truy cập dữ liệu đi qua module `app/db.py` + các hàm repository; bộ truy xuất đi qua interface `Retriever` (ADR-004).
+- Mọi truy cập dữ liệu đi qua module `app/backend/cwd/db.py` + các hàm repository; bộ truy xuất đi qua interface `Retriever` (ADR-004).
 
 ## Phương án đã cân nhắc
 | Phương án | Lý do không chọn cho MVP |
@@ -25,7 +25,7 @@
 Chuyển sang PostgreSQL + pgvector khi một trong các điều kiện sau xảy ra: > 5 câu hỏi đồng thời kéo dài; > 200 000 chunk; cần nhiều instance ứng dụng; IT yêu cầu CSDL được quản lý tập trung.
 
 ## Hệ quả
-- (+) Không phụ thuộc hạ tầng; sao lưu bằng một lệnh (`python -m app.cli backup`), đáp ứng NFR-006.
+- (+) Không phụ thuộc hạ tầng; sao lưu bằng một lệnh (`python -m cwd.cli backup`), đáp ứng NFR-006.
 - (+) Test chạy trên CSDL tạm, tất định.
 - (−) Một writer tại một thời điểm; đủ cho quy mô ASM-003.
 - (−) Không mã hóa khi lưu ở mức CSDL; dựa vào mã hóa đĩa của máy chủ (ghi vào rủi ro R-03 của SAD).
