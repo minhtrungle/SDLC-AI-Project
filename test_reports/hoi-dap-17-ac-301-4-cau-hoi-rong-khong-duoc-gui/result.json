@@ -1,0 +1,17 @@
+{
+  "id": 17,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-301.4 câu hỏi rỗng không được gửi",
+  "criteria": "AC-301.4",
+  "spec": "app/e2e/tests/chat.spec.ts:82",
+  "status": "passed",
+  "duration_ms": 1203,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:30.246Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

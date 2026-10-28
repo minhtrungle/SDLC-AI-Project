@@ -1,0 +1,17 @@
+{
+  "id": 15,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-403.1 / AC-403.2 hội thoại giữ thứ tự; cuộc hội thoại mới trống",
+  "criteria": "AC-403.1, AC-403.2",
+  "spec": "app/e2e/tests/chat.spec.ts:65",
+  "status": "passed",
+  "duration_ms": 1950,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:26.614Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

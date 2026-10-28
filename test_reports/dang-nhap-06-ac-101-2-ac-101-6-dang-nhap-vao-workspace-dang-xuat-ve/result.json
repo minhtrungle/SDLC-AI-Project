@@ -1,0 +1,17 @@
+{
+  "id": 6,
+  "feature": "Đăng nhập và phiên",
+  "group": "US-101 Đăng nhập",
+  "title": "AC-101.2 / AC-101.6 đăng nhập vào workspace, đăng xuất về màn hình đăng nhập",
+  "criteria": "AC-101.2, AC-101.6",
+  "spec": "app/e2e/tests/auth.spec.ts:20",
+  "status": "passed",
+  "duration_ms": 1310,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:06.391Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

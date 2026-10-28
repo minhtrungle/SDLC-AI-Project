@@ -1,0 +1,139 @@
+<mxfile host="tools/gen_diagrams.py" version="1">
+  <diagram name="Components" id="Components">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1654" pageHeight="1169">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" value="&lt;b&gt;CMP-01 Web UI&lt;/b&gt;&lt;br&gt;app/frontend/src" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="20" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="&lt;b&gt;CMP-02 API Gateway&lt;/b&gt;&lt;br&gt;app/backend/cwd/main.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="150" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="&lt;b&gt;CMP-03 Auth &amp; Session&lt;/b&gt;&lt;br&gt;app/backend/cwd/auth.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="&lt;b&gt;CMP-04 Document Service&lt;/b&gt;&lt;br&gt;app/backend/cwd/documents.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="300" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="&lt;b&gt;CMP-05 Ingestion Pipeline&lt;/b&gt;&lt;br&gt;app/backend/cwd/ingestion.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="460" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="&lt;b&gt;CMP-06 Retriever&lt;/b&gt;&lt;br&gt;app/backend/cwd/retrieval.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="460" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" value="&lt;b&gt;CMP-07 Answer Generator&lt;/b&gt;&lt;br&gt;app/backend/cwd/generation.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="460" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" value="&lt;b&gt;CMP-08 Chat Service&lt;/b&gt;&lt;br&gt;app/backend/cwd/chat.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="300" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" value="&lt;b&gt;CMP-09 Feedback &amp; Metrics&lt;/b&gt;&lt;br&gt;app/backend/cwd/metrics.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="300" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" value="&lt;b&gt;CMP-10 Audit Log&lt;/b&gt;&lt;br&gt;app/backend/cwd/audit.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" value="&lt;b&gt;CMP-11 Persistence&lt;/b&gt;&lt;br&gt;app/backend/cwd/db.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="620" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" value="&lt;b&gt;CMP-12 Admin CLI&lt;/b&gt;&lt;br&gt;app/backend/cwd/cli.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="620" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" value="&lt;b&gt;CMP-13 Configuration&lt;/b&gt;&lt;br&gt;app/backend/cwd/config.py" style="shape=component;align=left;spacingLeft=36;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="150" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" value="&lt;b&gt;ACT-04 Anthropic API&lt;/b&gt;&lt;br&gt;«external, tùy chọn»" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="460" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" value="HTTP/JSON" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c2" target="c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c17" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" value="recover_pending" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c3" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c4" target="c11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c24" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c4" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c25" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c26" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c27" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c28" value="textnorm.fold()" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c6" target="c7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c29" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c6" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c30" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c7" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c31" value="Retriever" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c9" target="c7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c32" value="AnswerGenerator" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c9" target="c8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c33" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c9" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c34" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c10" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c35" value="current_user" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c36" value="current_user" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c9" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c37" value="require_manager" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c10" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c38" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c39" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c7" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c40" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c8" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c41" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c11" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c42" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c43" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c44" value="HTTPS (chỉ khi CWD_ALLOW_EXTERNAL_AI=true)" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c8" target="c15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

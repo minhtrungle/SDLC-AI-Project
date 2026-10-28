@@ -1,0 +1,17 @@
+{
+  "id": 2,
+  "feature": "Cô lập dữ liệu và phân quyền",
+  "group": "US-502 Số liệu sử dụng",
+  "title": "AC-502.2 người dùng thường không có mục Số liệu sử dụng",
+  "criteria": "AC-502.2",
+  "spec": "app/e2e/tests/access.spec.ts:26",
+  "status": "passed",
+  "duration_ms": 1189,
+  "retry": 0,
+  "start_time": "2026-10-28T16:25:58.493Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

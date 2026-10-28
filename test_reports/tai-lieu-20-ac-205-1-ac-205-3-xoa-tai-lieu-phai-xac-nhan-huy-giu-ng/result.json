@@ -1,0 +1,17 @@
+{
+  "id": 20,
+  "feature": "Quản lý tài liệu",
+  "group": "US-201..US-205 Quản lý tài liệu",
+  "title": "AC-205.1 / AC-205.3 xóa tài liệu phải xác nhận; Hủy giữ nguyên",
+  "criteria": "AC-205.1, AC-205.3",
+  "spec": "app/e2e/tests/documents.spec.ts:28",
+  "status": "passed",
+  "duration_ms": 1583,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:37.045Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

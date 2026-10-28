@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "feature": "Cô lập dữ liệu và phân quyền",
+  "group": "NFR-004 Cô lập workspace",
+  "title": "AC-NFR-004 người dùng khác không thấy và không hỏi được tài liệu của mình",
+  "criteria": "AC-NFR-004",
+  "spec": "app/e2e/tests/access.spec.ts:6",
+  "status": "passed",
+  "duration_ms": 8775,
+  "retry": 0,
+  "start_time": "2026-10-28T16:25:49.260Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

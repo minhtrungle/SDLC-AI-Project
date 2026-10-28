@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danh mục màn hình — Chat với tài liệu</title>
+<meta name="description" content="Danh mục các màn hình thiết kế UI/UX.">
+<style>
+/* ===== Design tokens (SDD §3.8.1) ===== */
+:root{
+  --color-primary:#1D4ED8; --color-primary-hover:#1E40AF; --color-primary-soft:#DBEAFE;
+  --color-text:#111827; --color-text-muted:#4B5563;
+  --color-surface:#FFFFFF; --color-bg:#F3F4F6; --color-border:#D1D5DB; --color-border-soft:#E5E7EB;
+  --color-success:#047857; --color-success-soft:#D1FAE5;
+  --color-warning:#B45309; --color-warning-soft:#FEF3C7;
+  --color-danger:#B91C1C; --color-danger-soft:#FEE2E2;
+  --color-info-soft:#EFF6FF;
+  --focus-ring:2px solid #1D4ED8;
+  --font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-body:16px; --font-small:14px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px;
+  --radius-sm:6px; --radius-md:10px;
+  --motion-fast:150ms;
+  --shadow-sm:0 1px 2px rgba(17,24,39,.08); --shadow-lg:0 12px 32px rgba(17,24,39,.18);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;min-width:44px;padding:0 var(--space-4);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font-weight:600;cursor:pointer;transition:background var(--motion-fast),border-color var(--motion-fast)}
+.btn:hover{background:var(--color-bg)}
+.btn:active{background:var(--color-border-soft)}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--color-primary);border-color:var(--color-primary);color:#fff}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-primary:active{background:#1E3A8A}
+.btn-danger{background:var(--color-danger);border-color:var(--color-danger);color:#fff}
+.btn-danger:hover{background:#991B1B}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-sm{min-height:44px;font-size:var(--font-small);padding:0 var(--space-3)}
+.link{background:none;border:0;padding:0;color:var(--color-primary);font-weight:600;text-decoration:underline;cursor:pointer;min-height:44px}
+
+/* ===== Header ===== */
+.app-header{height:56px;background:var(--color-surface);border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-4);flex:none;position:relative;z-index:20}
+.brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700;font-size:18px;text-decoration:none;color:var(--color-text)}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--color-primary);color:#fff;display:grid;place-items:center;font-size:18px}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-3);background:none;border:1px solid transparent;border-radius:var(--radius-sm);cursor:pointer;font-weight:600}
+.user-btn:hover{background:var(--color-bg)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--color-primary-soft);color:var(--color-primary);display:grid;place-items:center;font-size:var(--font-small);font-weight:700}
+.menu{position:absolute;right:0;top:100%;min-width:220px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:var(--space-2);z-index:30}
+.menu a,.menu button{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:44px;padding:0 var(--space-3);background:none;border:0;border-radius:var(--radius-sm);text-align:left;text-decoration:none;color:var(--color-text);cursor:pointer}
+.menu a:hover,.menu button:hover{background:var(--color-bg)}
+
+/* ===== Badges (icon + chữ + màu) ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-small);font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.badge.ready{color:var(--color-success);background:var(--color-success-soft)}
+.badge.processing,.badge.uploading{color:var(--color-primary);background:var(--color-primary-soft)}
+.badge.error,.badge.no_text,.badge.password{color:var(--color-warning);background:var(--color-warning-soft)}
+.badge.error{color:var(--color-danger);background:var(--color-danger-soft)}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Banner / Toast ===== */
+.banner{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);border:1px solid;font-size:var(--font-small)}
+.banner .b-msg{flex:1}
+.banner.error{background:var(--color-danger-soft);border-color:#FCA5A5;color:#7F1D1D}
+.banner.warning{background:var(--color-warning-soft);border-color:#FCD34D;color:#78350F}
+.banner.info{background:var(--color-info-soft);border-color:#93C5FD;color:#1E3A8A}
+.banner.success{background:var(--color-success-soft);border-color:#6EE7B7;color:#064E3B}
+.banner .link{color:inherit;min-height:28px}
+.toasts{position:fixed;right:var(--space-4);bottom:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);z-index:100;max-width:380px}
+.toast{background:#111827;color:#fff;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);font-size:var(--font-small);display:flex;gap:var(--space-3);align-items:center}
+.toast.error{background:var(--color-danger)}
+.toast button{background:none;border:0;color:#fff;text-decoration:underline;cursor:pointer;min-height:28px}
+
+/* ===== Forms ===== */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-4)}
+.field label{font-weight:600;font-size:var(--font-small)}
+.input{min-height:44px;padding:0 var(--space-3);border:1px solid #6B7280;border-radius:var(--radius-sm);background:#fff;width:100%}
+.input:hover{border-color:var(--color-text)}
+.input[aria-invalid="true"]{border-color:var(--color-danger)}
+
+/* ===== Prototype toolbar (không thuộc sản phẩm) ===== */
+.proto-bar{background:#1F2937;color:#E5E7EB;font-size:13px;padding:6px var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center;flex:none}
+.proto-bar strong{color:#fff;margin-right:var(--space-2)}
+.proto-bar a{color:#93C5FD}
+.proto-bar button{background:#374151;color:#fff;border:1px solid #4B5563;border-radius:6px;padding:2px 10px;cursor:pointer;font-size:13px;min-height:28px}
+.proto-bar button:hover{background:#4B5563}
+.proto-bar button[aria-pressed="true"]{background:#2563EB;border-color:#60A5FA}
+.proto-bar .sep{opacity:.4}
+
+.wrap{max-width:900px;margin:0 auto;padding:var(--space-6) var(--space-4)}
+h1{margin:0 0 4px;font-size:28px}.sub{color:var(--color-text-muted);margin:0 0 var(--space-5)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:var(--space-4)}
+.tile{display:flex;flex-direction:column;gap:6px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);text-decoration:none;color:inherit;transition:box-shadow var(--motion-fast),border-color var(--motion-fast)}
+.tile:hover{box-shadow:var(--shadow-lg);border-color:var(--color-primary)}
+.tile .id{font-size:13px;font-weight:700;color:var(--color-primary)}
+.tile h2{margin:0;font-size:18px}.tile p{margin:0;font-size:var(--font-small);color:var(--color-text-muted)}
+.tile .pri{align-self:flex-start;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--color-bg)}
+.note{margin-top:var(--space-5);font-size:var(--font-small);color:var(--color-text-muted)}
+
+</style>
+</head>
+<body>
+<main class="wrap"><h1>Chat với tài liệu — Thiết kế màn hình</h1>
+<p class="sub">Bản mẫu HTML theo SDD-UIUX-CWD-001 v0.1 · Mỗi màn hình là một tệp độc lập, thao tác được, chỉ tiếng Việt.</p>
+<div class="grid">
+<a class="tile" href="01_login.html"><span class="id">SCR-01 · US-101</span><h2>Đăng nhập</h2><p>Form đăng nhập / SSO, thông báo lỗi không tiết lộ tài khoản.</p><span class="pri">P0</span></a>
+<a class="tile" href="02_workspace.html"><span class="id">SCR-02 · US-201..305</span><h2>Màn hình chính</h2><p>Hai vùng Tài liệu / Hội thoại, tải lên, hỏi đáp, trích dẫn, phản hồi, 10 kịch bản trạng thái.</p><span class="pri">P0</span></a>
+<a class="tile" href="03_source_panel.html"><span class="id">SCR-03 · US-305</span><h2>Panel trích đoạn nguồn</h2><p>Đoạn gốc + số trang; trạng thái loading, lỗi, tài liệu đã xóa.</p><span class="pri">P0</span></a>
+<a class="tile" href="04_confirm_delete.html"><span class="id">SCR-04 · US-205</span><h2>Xác nhận xóa tài liệu</h2><p>Hộp thoại phá hủy, focus mặc định ở nút Hủy.</p><span class="pri">P1</span></a>
+<a class="tile" href="05_usage_dashboard.html"><span class="id">SCR-05 · US-502</span><h2>Số liệu sử dụng</h2><p>WAU, câu hỏi/tuần, tỷ lệ hữu ích; biểu đồ + bảng thay thế.</p><span class="pri">P1</span></a>
+<a class="tile" href="06_session_expired.html"><span class="id">SCR-06 · EC-15</span><h2>Hết phiên / Lỗi toàn trang</h2><p>Hết phiên, mất kết nối, lỗi hệ thống; giữ bản nháp câu hỏi.</p><span class="pri">P0</span></a>
+</div>
+<p class="note">Thanh tối ở đầu mỗi trang là công cụ bản mẫu (chuyển trạng thái), không thuộc sản phẩm. Dữ liệu là dữ liệu minh họa. Giới hạn dung lượng/số tài liệu/ngưỡng chậm là biến cấu hình [TBD: OQ-011, OQ-012]. Đăng nhập thử: linh / demo.</p></main>
+<script>
+
+</script>
+</body>
+</html>

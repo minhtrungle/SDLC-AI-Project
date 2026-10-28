@@ -1,0 +1,17 @@
+{
+  "id": 10,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-305.2 bấm trích dẫn mở đoạn gốc; Esc đóng và trả focus",
+  "criteria": "AC-305.2",
+  "spec": "app/e2e/tests/chat.spec.ts:25",
+  "status": "passed",
+  "duration_ms": 1567,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:17.291Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

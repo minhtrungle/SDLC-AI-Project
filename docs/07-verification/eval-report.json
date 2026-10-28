@@ -1,0 +1,491 @@
+{
+  "summary": {
+    "questions": 32,
+    "accuracy": 1.0,
+    "citation_accuracy": 1.0,
+    "not_found_correct": 1.0,
+    "p90_latency_ms": 52.8,
+    "paraphrase_accuracy_ungated": 0.125,
+    "documents": 50,
+    "thresholds": {
+      "accuracy": 0.85,
+      "citation_accuracy": 0.9,
+      "not_found_correct": 0.9,
+      "p90_latency_ms": 2000
+    },
+    "ai_mode": "local",
+    "note": "Synthetic gold set (PD-04); re-run with DEP-002 before go-live."
+  },
+  "rows": [
+    {
+      "question": "Giá trị hợp đồng Alpha là bao nhiêu?",
+      "expected": [
+        "HopDong_Alpha.pdf",
+        2,
+        "2,5 tỷ"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "BangGia_2026.pdf",
+          1
+        ],
+        [
+          "HopDong_Alpha.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Hợp đồng Alpha ký ngày nào?",
+      "expected": [
+        "HopDong_Alpha.pdf",
+        1,
+        "05/01/2026"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "HopDong_Alpha.pdf",
+          1
+        ],
+        [
+          "HopDong_Alpha.pdf",
+          3
+        ]
+      ]
+    },
+    {
+      "question": "Thời hạn hợp đồng Alpha bao lâu?",
+      "expected": [
+        "HopDong_Alpha.pdf",
+        3,
+        "12 tháng"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "HopDong_Alpha.pdf",
+          3
+        ]
+      ]
+    },
+    {
+      "question": "Mức phạt giao hàng chậm của hợp đồng Alpha?",
+      "expected": [
+        "HopDong_Alpha.pdf",
+        3,
+        "5%"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "HopDong_Alpha.pdf",
+          3
+        ]
+      ]
+    },
+    {
+      "question": "Dự án Beta triển khai ở đâu?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        1,
+        "Đà Nẵng"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Khách hàng của dự án Beta là ai?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        1,
+        "Hải Âu"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Ngân sách dự án Beta là bao nhiêu?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        2,
+        "900 triệu"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Dự án Beta kéo dài bao lâu?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        2,
+        "6 tháng"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Ai là trưởng dự án Beta?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        3,
+        "Trần Minh Quân"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          3
+        ]
+      ]
+    },
+    {
+      "question": "Số điện thoại trưởng dự án Beta?",
+      "expected": [
+        "DuAn_Beta.pdf",
+        3,
+        "0905"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          3
+        ]
+      ]
+    },
+    {
+      "question": "Phí bảo trì hằng năm là bao nhiêu?",
+      "expected": [
+        "BangGia_2026.pdf",
+        1,
+        "120 triệu"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "BangGia_2026.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Phí đào tạo người dùng bao nhiêu một khóa?",
+      "expected": [
+        "BangGia_2026.pdf",
+        2,
+        "15 triệu"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "BangGia_2026.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Một khóa đào tạo tối đa bao nhiêu học viên?",
+      "expected": [
+        "BangGia_2026.pdf",
+        2,
+        "20 học viên"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "BangGia_2026.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Quy trình nghiệm thu gồm những bước nào?",
+      "expected": [
+        "QuyTrinh_NghiemThu.pdf",
+        1,
+        "ba bước"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "QuyTrinh_NghiemThu.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Biên bản nghiệm thu cần chữ ký của ai?",
+      "expected": [
+        "QuyTrinh_NghiemThu.pdf",
+        2,
+        "giám đốc kỹ thuật"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "QuyTrinh_NghiemThu.pdf",
+          1
+        ],
+        [
+          "QuyTrinh_NghiemThu.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Thời gian bảo hành phần cứng là bao lâu?",
+      "expected": [
+        "ChinhSach_BaoHanh.pdf",
+        1,
+        "24 tháng"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "ChinhSach_BaoHanh.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Yêu cầu bảo hành được phản hồi trong bao lâu?",
+      "expected": [
+        "ChinhSach_BaoHanh.pdf",
+        2,
+        "4 giờ"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "ChinhSach_BaoHanh.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Đề xuất Gamma xây dựng gì?",
+      "expected": [
+        "DeXuat_Gamma.pdf",
+        1,
+        "cổng thông tin"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DeXuat_Gamma.pdf",
+          1
+        ]
+      ]
+    },
+    {
+      "question": "Chi phí dự kiến của đề xuất Gamma?",
+      "expected": [
+        "DeXuat_Gamma.pdf",
+        2,
+        "1,2 tỷ"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DeXuat_Gamma.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Đề xuất Gamma dự kiến hoàn thành khi nào?",
+      "expected": [
+        "DeXuat_Gamma.pdf",
+        2,
+        "quý 3"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DeXuat_Gamma.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "gia tri hop dong alpha",
+      "expected": [
+        "HopDong_Alpha.pdf",
+        2,
+        "2,5 tỷ"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "BangGia_2026.pdf",
+          1
+        ],
+        [
+          "HopDong_Alpha.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "ngan sach du an beta",
+      "expected": [
+        "DuAn_Beta.pdf",
+        2,
+        "900 triệu"
+      ],
+      "outcome": "answered",
+      "correct": true,
+      "citation_ok": true,
+      "cited": [
+        [
+          "DuAn_Beta.pdf",
+          2
+        ]
+      ]
+    },
+    {
+      "question": "Thủ đô của nước Pháp là gì?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Lương giám đốc công ty là bao nhiêu?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Giá cổ phiếu hôm nay thế nào?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Ai phát minh ra bóng đèn điện?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Công thức hóa học của nước là gì?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Thời tiết Hà Nội ngày mai ra sao?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Kết quả trận bóng đá tối qua?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Hướng dẫn nấu phở bò?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Tỷ giá đô la Mỹ hôm nay?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    },
+    {
+      "question": "Dân số Việt Nam năm 2020 là bao nhiêu?",
+      "expected": null,
+      "outcome": "not_found",
+      "correct": true,
+      "citation_ok": true,
+      "cited": []
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCR-05 Số liệu sử dụng — Chat với tài liệu</title>
+<meta name="description" content="Dashboard WAU, câu hỏi theo tuần và tỷ lệ hữu ích cho quản lý dự án.">
+<style>
+/* ===== Design tokens (SDD §3.8.1) ===== */
+:root{
+  --color-primary:#1D4ED8; --color-primary-hover:#1E40AF; --color-primary-soft:#DBEAFE;
+  --color-text:#111827; --color-text-muted:#4B5563;
+  --color-surface:#FFFFFF; --color-bg:#F3F4F6; --color-border:#D1D5DB; --color-border-soft:#E5E7EB;
+  --color-success:#047857; --color-success-soft:#D1FAE5;
+  --color-warning:#B45309; --color-warning-soft:#FEF3C7;
+  --color-danger:#B91C1C; --color-danger-soft:#FEE2E2;
+  --color-info-soft:#EFF6FF;
+  --focus-ring:2px solid #1D4ED8;
+  --font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-body:16px; --font-small:14px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px;
+  --radius-sm:6px; --radius-md:10px;
+  --motion-fast:150ms;
+  --shadow-sm:0 1px 2px rgba(17,24,39,.08); --shadow-lg:0 12px 32px rgba(17,24,39,.18);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;min-width:44px;padding:0 var(--space-4);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font-weight:600;cursor:pointer;transition:background var(--motion-fast),border-color var(--motion-fast)}
+.btn:hover{background:var(--color-bg)}
+.btn:active{background:var(--color-border-soft)}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--color-primary);border-color:var(--color-primary);color:#fff}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-primary:active{background:#1E3A8A}
+.btn-danger{background:var(--color-danger);border-color:var(--color-danger);color:#fff}
+.btn-danger:hover{background:#991B1B}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-sm{min-height:44px;font-size:var(--font-small);padding:0 var(--space-3)}
+.link{background:none;border:0;padding:0;color:var(--color-primary);font-weight:600;text-decoration:underline;cursor:pointer;min-height:44px}
+
+/* ===== Header ===== */
+.app-header{height:56px;background:var(--color-surface);border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-4);flex:none;position:relative;z-index:20}
+.brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700;font-size:18px;text-decoration:none;color:var(--color-text)}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--color-primary);color:#fff;display:grid;place-items:center;font-size:18px}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-3);background:none;border:1px solid transparent;border-radius:var(--radius-sm);cursor:pointer;font-weight:600}
+.user-btn:hover{background:var(--color-bg)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--color-primary-soft);color:var(--color-primary);display:grid;place-items:center;font-size:var(--font-small);font-weight:700}
+.menu{position:absolute;right:0;top:100%;min-width:220px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:var(--space-2);z-index:30}
+.menu a,.menu button{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:44px;padding:0 var(--space-3);background:none;border:0;border-radius:var(--radius-sm);text-align:left;text-decoration:none;color:var(--color-text);cursor:pointer}
+.menu a:hover,.menu button:hover{background:var(--color-bg)}
+
+/* ===== Badges (icon + chữ + màu) ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-small);font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.badge.ready{color:var(--color-success);background:var(--color-success-soft)}
+.badge.processing,.badge.uploading{color:var(--color-primary);background:var(--color-primary-soft)}
+.badge.error,.badge.no_text,.badge.password{color:var(--color-warning);background:var(--color-warning-soft)}
+.badge.error{color:var(--color-danger);background:var(--color-danger-soft)}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Banner / Toast ===== */
+.banner{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);border:1px solid;font-size:var(--font-small)}
+.banner .b-msg{flex:1}
+.banner.error{background:var(--color-danger-soft);border-color:#FCA5A5;color:#7F1D1D}
+.banner.warning{background:var(--color-warning-soft);border-color:#FCD34D;color:#78350F}
+.banner.info{background:var(--color-info-soft);border-color:#93C5FD;color:#1E3A8A}
+.banner.success{background:var(--color-success-soft);border-color:#6EE7B7;color:#064E3B}
+.banner .link{color:inherit;min-height:28px}
+.toasts{position:fixed;right:var(--space-4);bottom:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);z-index:100;max-width:380px}
+.toast{background:#111827;color:#fff;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);font-size:var(--font-small);display:flex;gap:var(--space-3);align-items:center}
+.toast.error{background:var(--color-danger)}
+.toast button{background:none;border:0;color:#fff;text-decoration:underline;cursor:pointer;min-height:28px}
+
+/* ===== Forms ===== */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-4)}
+.field label{font-weight:600;font-size:var(--font-small)}
+.input{min-height:44px;padding:0 var(--space-3);border:1px solid #6B7280;border-radius:var(--radius-sm);background:#fff;width:100%}
+.input:hover{border-color:var(--color-text)}
+.input[aria-invalid="true"]{border-color:var(--color-danger)}
+
+/* ===== Prototype toolbar (không thuộc sản phẩm) ===== */
+.proto-bar{background:#1F2937;color:#E5E7EB;font-size:13px;padding:6px var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center;flex:none}
+.proto-bar strong{color:#fff;margin-right:var(--space-2)}
+.proto-bar a{color:#93C5FD}
+.proto-bar button{background:#374151;color:#fff;border:1px solid #4B5563;border-radius:6px;padding:2px 10px;cursor:pointer;font-size:13px;min-height:28px}
+.proto-bar button:hover{background:#4B5563}
+.proto-bar button[aria-pressed="true"]{background:#2563EB;border-color:#60A5FA}
+.proto-bar .sep{opacity:.4}
+
+body.dash{min-height:100vh}
+.wrap{max-width:1040px;margin:0 auto;padding:var(--space-5) var(--space-4)}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-4)}
+.top h1{margin:0;font-size:24px}
+.top .sub{margin:2px 0 0;color:var(--color-text-muted);font-size:var(--font-small)}
+.back{display:inline-flex;align-items:center;min-height:44px;color:var(--color-primary);font-weight:600;text-decoration:none}
+.back:hover{text-decoration:underline}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);margin-bottom:var(--space-4)}
+.stat{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4)}
+.stat .lbl{font-size:var(--font-small);color:var(--color-text-muted);font-weight:600}
+.stat .val{font-size:34px;font-weight:700;line-height:1.2;margin:4px 0}
+.stat .delta{font-size:var(--font-small);font-weight:600}
+.delta.up{color:var(--color-success)}.delta.down{color:var(--color-danger)}
+.panel{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-4)}
+.panel h2{margin:0 0 var(--space-1);font-size:18px}
+.panel .sub{margin:0 0 var(--space-3);font-size:var(--font-small);color:var(--color-text-muted)}
+.ctrl{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap}
+.ctrl select{min-height:44px;border:1px solid #6B7280;border-radius:var(--radius-sm);padding:0 var(--space-3);background:#fff}
+.seg{display:inline-flex;border:1px solid var(--color-border);border-radius:var(--radius-sm);overflow:hidden}
+.seg button{min-height:44px;padding:0 var(--space-4);background:#fff;border:0;cursor:pointer;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--color-primary);color:#fff}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font-family:var(--font-family);fill:var(--color-text-muted);font-size:12px}
+.chart .v{fill:var(--color-text);font-weight:700}
+.chart .bar{fill:var(--color-primary)}
+.chart .bar.cur{fill:#1E3A8A}
+.chart line{stroke:var(--color-border-soft)}
+table{width:100%;border-collapse:collapse;font-size:var(--font-small)}
+th,td{text-align:right;padding:10px 12px;border-bottom:1px solid var(--color-border-soft)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--color-text-muted);font-weight:600}
+.note{font-size:13px;color:var(--color-text-muted)}
+.denied{text-align:center;padding:var(--space-6) var(--space-4)}
+.denied .em-ico{font-size:40px}
+.skel{height:14px;border-radius:4px;background:linear-gradient(90deg,#E5E7EB 25%,#F3F4F6 50%,#E5E7EB 75%);background-size:200% 100%;animation:sk 1.2s infinite;margin-bottom:10px}@keyframes sk{to{background-position:-200% 0}}
+</style>
+</head>
+<body class="dash">
+
+<div class="proto-bar"><strong>Bản mẫu SCR-05 · Số liệu sử dụng (P1)</strong><span>Trạng thái:</span>
+<button type="button" data-s="ok" aria-pressed="true">Có dữ liệu</button><button type="button" data-s="loading" aria-pressed="false">Đang tải</button><button type="button" data-s="empty" aria-pressed="false">Chưa có dữ liệu</button><button type="button" data-s="denied" aria-pressed="false">Không có quyền</button>
+<span class="sep">|</span><a href="index.html">Danh mục màn hình</a></div>
+<header class="app-header"><a class="brand" href="02_workspace.html"><span class="logo" aria-hidden="true">💬</span><span>Chat với tài liệu</span></a>
+<div class="user-btn" style="cursor:default"><span class="avatar" aria-hidden="true">H</span><span>Hùng · Quản lý</span></div></header>
+<main class="wrap">
+ <a class="back" href="02_workspace.html">← Quay lại màn hình chính</a>
+ <div class="top"><div><h1>Số liệu sử dụng</h1><p class="sub">Dữ liệu minh họa · không chứa nội dung câu hỏi hoặc tài liệu · chỉ dành cho vai trò quản lý [TBD: phân quyền, OQ-007]</p></div>
+  <div class="ctrl"><label for="range" class="sr-only">Khoảng thời gian</label><select id="range" data-testid="range"><option value="8">8 tuần gần nhất</option><option value="4">4 tuần gần nhất</option></select></div></div>
+ <div id="content"></div>
+</main>
+<script>
+
+(function(){
+function $(i){return document.getElementById(i)}
+var WEEKS=['04/09','11/09','18/09','25/09','02/10','09/10','16/10','23/10'];
+var WAU=[4,6,9,11,14,15,18,21],Q=[38,64,102,131,168,190,224,262],HELP=[null,62,66,71,74,73,78,81];
+var state='ok',range=8,view='chart';
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function chart(n){
+ var w=WEEKS.slice(-n),q=Q.slice(-n),max=Math.ceil(Math.max.apply(null,q)/50)*50;
+ var W=720,H=280,L=44,B=36,T=20,pw=(W-L-10)/n,bw=Math.min(52,pw*0.6);
+ var g='';
+ for(var i=0;i<=4;i++){var y=T+(H-T-B)*(1-i/4);g+='<line x1="'+L+'" x2="'+(W-10)+'" y1="'+y+'" y2="'+y+'"/><text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end">'+Math.round(max*i/4)+'</text>'}
+ q.forEach(function(v,i){
+  var h=(H-T-B)*v/max,x=L+pw*i+(pw-bw)/2,y=H-B-h;
+  g+='<rect class="bar'+(i===n-1?' cur':'')+'" x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" rx="4"/><text class="v" x="'+(x+bw/2)+'" y="'+(y-6)+'" text-anchor="middle">'+v+'</text><text x="'+(x+bw/2)+'" y="'+(H-B+18)+'" text-anchor="middle">'+w[i]+'</text>';
+ });
+ return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Biểu đồ cột số câu hỏi theo tuần, tăng từ '+q[0]+' lên '+q[n-1]+'">'+g+'</svg>';
+}
+function table(n){
+ var rows='';for(var i=WEEKS.length-n;i<WEEKS.length;i++)rows+='<tr><td>Tuần '+WEEKS[i]+'</td><td>'+WAU[i]+'</td><td>'+Q[i]+'</td><td>'+(HELP[i]==null?'—':HELP[i]+'%')+'</td></tr>';
+ return '<table><caption class="sr-only">Số liệu theo tuần</caption><thead><tr><th scope="col">Tuần bắt đầu</th><th scope="col">WAU</th><th scope="col">Câu hỏi</th><th scope="col">Tỷ lệ hữu ích</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+function render(){
+ var c=$('content');
+ if(state==='loading'){c.innerHTML='<div class="cards"><div class="stat"><div class="skel" style="width:60%"></div><div class="skel" style="height:32px;width:40%"></div></div><div class="stat"><div class="skel" style="width:60%"></div><div class="skel" style="height:32px;width:40%"></div></div><div class="stat"><div class="skel" style="width:60%"></div><div class="skel" style="height:32px;width:40%"></div></div></div><div class="panel" role="status" aria-label="Đang tải số liệu"><div class="skel" style="height:220px"></div></div>';return}
+ if(state==='denied'){c.innerHTML='<div class="panel denied" role="alert"><div class="em-ico" aria-hidden="true">🔒</div><h2>Bạn chưa có quyền xem số liệu</h2><p class="sub">Màn hình này chỉ dành cho vai trò quản lý. Vui lòng liên hệ quản trị hệ thống nếu bạn cần quyền truy cập.</p><a class="btn btn-primary" href="02_workspace.html">Về màn hình chính</a></div>';return}
+ if(state==='empty'){c.innerHTML='<div class="panel denied"><div class="em-ico" aria-hidden="true">📊</div><h2>Chưa có dữ liệu sử dụng</h2><p class="sub">Số liệu sẽ xuất hiện sau khi có người dùng đặt câu hỏi đầu tiên.</p></div>';return}
+ var n=range,l=WEEKS.length-1;
+ c.innerHTML='<div class="cards">'+
+  card('Người dùng hoạt động tuần (WAU)',WAU[l],'▲ +'+(WAU[l]-WAU[l-1])+' so với tuần trước','up')+
+  card('Câu hỏi tuần này',Q[l],'▲ +'+Math.round((Q[l]/Q[l-1]-1)*100)+'% so với tuần trước','up')+
+  card('Tỷ lệ câu trả lời hữu ích',HELP[l]+'%','▲ +'+(HELP[l]-HELP[l-1])+' điểm % so với tuần trước','up')+'</div>'+
+  '<section class="panel" aria-labelledby="h2"><div class="top" style="margin-bottom:8px"><div><h2 id="h2">Câu hỏi theo tuần</h2><p class="sub" style="margin:0">Tổng số câu hỏi được gửi mỗi tuần</p></div>'+
+  '<div class="seg" role="group" aria-label="Kiểu hiển thị"><button type="button" data-v="chart" aria-pressed="'+(view==='chart')+'">Biểu đồ</button><button type="button" data-v="table" aria-pressed="'+(view==='table')+'">Bảng</button></div></div>'+
+  '<div class="chart">'+(view==='chart'?chart(n):table(n))+'</div></section>'+
+  '<p class="note">Tỷ lệ hữu ích = số đánh giá 👍 / tổng số đánh giá trong tuần. Số liệu tổng hợp, không chứa nội dung câu hỏi hay tài liệu (LG-16).</p>';
+}
+function card(l,v,d,k){return '<div class="stat" data-testid="stat"><div class="lbl">'+esc(l)+'</div><div class="val">'+v+'</div><div class="delta '+k+'">'+esc(d)+'</div></div>'}
+document.querySelector('.proto-bar').addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;state=b.dataset.s;var all=document.querySelectorAll('.proto-bar [data-s]');for(var i=0;i<all.length;i++)all[i].setAttribute('aria-pressed',all[i]===b);render()});
+$('content').addEventListener('click',function(e){var b=e.target.closest('[data-v]');if(b){view=b.dataset.v;render()}});
+$('range').onchange=function(){range=+this.value;render()};
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "id": 8,
+  "feature": "Đăng nhập và phiên",
+  "group": "US-101 Đăng nhập",
+  "title": "EC-15 phiên hết hạn giữ lại câu hỏi đang soạn",
+  "criteria": "EC-15",
+  "spec": "app/e2e/tests/auth.spec.ts:37",
+  "status": "passed",
+  "duration_ms": 4054,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:08.319Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}

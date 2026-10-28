@@ -1,0 +1,17 @@
+{
+  "id": 16,
+  "feature": "Hỏi đáp có trích dẫn",
+  "group": "US-301..US-501 Hỏi đáp có trích dẫn",
+  "title": "AC-501.1 đánh giá câu trả lời được ghi nhận",
+  "criteria": "AC-501.1",
+  "spec": "app/e2e/tests/chat.spec.ts:75",
+  "status": "passed",
+  "duration_ms": 1653,
+  "retry": 0,
+  "start_time": "2026-10-28T16:26:28.578Z",
+  "errors": [],
+  "evidence": {
+    "screenshot": "screenshot.png",
+    "video": "video.mp4"
+  }
+}
