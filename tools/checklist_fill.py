@@ -36,7 +36,7 @@ def parse_audit(path):
                     break  # only the first audit table counts
                 continue
             if header and ROW_RE.match(line):
-                rec = dict(zip(header, cells))
+                rec = dict(zip(header, cells, strict=False))
                 rows[int(cells[0])] = (rec["Status"], rec["Notes"])
     if not rows:
         raise SystemExit(f"no audit rows found in {path}")

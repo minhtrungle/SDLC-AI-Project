@@ -110,11 +110,14 @@ Sơ đồ: [diagrams/component_diagram.drawio](diagrams/component_diagram.drawio
 ### 5.3 Interface nội bộ chính
 ```python
 class Retriever(Protocol):
-    def retrieve(self, user_id: int, question: str, history: list[str],
-                 document_ids: list[str] | None) -> list[RetrievedChunk]: ...
+    def retrieve(
+        self, user_id: int, question: str, history: list[str], document_ids: list[str] | None
+    ) -> list[RetrievedChunk]: ...
+
 
 class AnswerGenerator(Protocol):
     mode: str  # "local" | "external"
+
     def generate(self, question: str, chunks: list[RetrievedChunk]) -> GeneratedAnswer: ...
 ```
 

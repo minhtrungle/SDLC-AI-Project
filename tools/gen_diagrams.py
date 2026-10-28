@@ -27,7 +27,9 @@ S_DECISION = "rhombus;whiteSpace=wrap;html=1;"
 S_START = "ellipse;html=1;fillColor=#000000;strokeColor=#000000;"
 S_END = "ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;"
 S_LANE = "swimlane;html=1;startSize=24;horizontal=1;"
-S_LIFELINE = "shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;"
+S_LIFELINE = (
+    "shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;"
+)
 S_CLASS = "swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;collapsible=0;html=1;"
 S_ATTR = "text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;html=1;"
 E_DEP = "endArrow=open;dashed=1;html=1;"
@@ -66,8 +68,9 @@ class Page:
 
     def to_xml(self, parent):
         diagram = ET.SubElement(parent, "diagram", name=self.name, id=self.name.replace(" ", "_"))
-        model = ET.SubElement(diagram, "mxGraphModel", grid="1", gridSize="10", page="1",
-                              pageWidth="1654", pageHeight="1169")
+        model = ET.SubElement(
+            diagram, "mxGraphModel", grid="1", gridSize="10", page="1", pageWidth="1654", pageHeight="1169"
+        )
         root = ET.SubElement(model, "root")
         ET.SubElement(root, "mxCell", id="0")
         ET.SubElement(root, "mxCell", id="1", parent="0")
@@ -75,10 +78,13 @@ class Page:
             if kind == "v":
                 cell = ET.SubElement(root, "mxCell", id=cid, value=label, style=style, vertex="1", parent=a)
                 x, y, w, h = b
-                ET.SubElement(cell, "mxGeometry", x=str(x), y=str(y), width=str(w), height=str(h), **{"as": "geometry"})
+                ET.SubElement(
+                    cell, "mxGeometry", x=str(x), y=str(y), width=str(w), height=str(h), **{"as": "geometry"}
+                )
             elif kind == "e":
-                cell = ET.SubElement(root, "mxCell", id=cid, value=label, style=style, edge="1",
-                                     parent="1", source=a, target=b)
+                cell = ET.SubElement(
+                    root, "mxCell", id=cid, value=label, style=style, edge="1", parent="1", source=a, target=b
+                )
                 ET.SubElement(cell, "mxGeometry", relative="1", **{"as": "geometry"})
             else:
                 cell = ET.SubElement(root, "mxCell", id=cid, value=label, style=style, edge="1", parent="1")
@@ -155,14 +161,67 @@ def class_diagram(el):
     def title(name):
         return f"{ent[name]['id']} {name}<br>«table {ent[name]['table']}»"
 
-    u = klass(dom, title("User"), ["+id: int", "+username: str", "-password_hash: str", "+role: user|manager", "+created_at: datetime"], 40, 40)
-    s = klass(dom, title("Session"), ["-token_hash: str", "+csrf_token: str", "+created_at: datetime", "+last_seen_at: datetime"], 40, 300)
-    a = klass(dom, title("AuditEvent"), ["+id: int", "+username: str", "+action: str", "+target: str", "+created_at: datetime"], 40, 540)
-    d = klass(dom, title("Document"), ["+id: str", "+filename: str", "+size_bytes: int", "+page_count: int", "+status: processing|ready|failed|no_text", "+error_code: str", "+created_at: datetime"], 440, 40, 320)
+    u = klass(
+        dom,
+        title("User"),
+        ["+id: int", "+username: str", "-password_hash: str", "+role: user|manager", "+created_at: datetime"],
+        40,
+        40,
+    )
+    s = klass(
+        dom,
+        title("Session"),
+        ["-token_hash: str", "+csrf_token: str", "+created_at: datetime", "+last_seen_at: datetime"],
+        40,
+        300,
+    )
+    a = klass(
+        dom,
+        title("AuditEvent"),
+        ["+id: int", "+username: str", "+action: str", "+target: str", "+created_at: datetime"],
+        40,
+        540,
+    )
+    d = klass(
+        dom,
+        title("Document"),
+        [
+            "+id: str",
+            "+filename: str",
+            "+size_bytes: int",
+            "+page_count: int",
+            "+status: processing|ready|failed|no_text",
+            "+error_code: str",
+            "+created_at: datetime",
+        ],
+        440,
+        40,
+        320,
+    )
     c = klass(dom, title("Chunk"), ["+id: int", "+page: int", "+ord: int", "+text: str"], 440, 330, 320)
     cv = klass(dom, title("Conversation"), ["+id: str", "+created_at: datetime"], 880, 40)
-    t = klass(dom, title("Turn"), ["+id: str", "+question: str", "+answer: str", "+outcome: answered|not_found", "+citations: Citation[]", "+scope: str[]", "+latency_ms: int"], 880, 220)
-    f = klass(dom, title("Feedback"), ["+rating: up|down", "+reason: str[0..500]", "+created_at: datetime"], 880, 500)
+    t = klass(
+        dom,
+        title("Turn"),
+        [
+            "+id: str",
+            "+question: str",
+            "+answer: str",
+            "+outcome: answered|not_found",
+            "+citations: Citation[]",
+            "+scope: str[]",
+            "+latency_ms: int",
+        ],
+        880,
+        220,
+    )
+    f = klass(
+        dom,
+        title("Feedback"),
+        ["+rating: up|down", "+reason: str[0..500]", "+created_at: datetime"],
+        880,
+        500,
+    )
     dom.edge(u, s, "1 — 0..*", E_COMPOSE)
     dom.edge(u, d, "1 — 0..*", E_COMPOSE)
     dom.edge(u, cv, "1 — 0..*", E_COMPOSE)
@@ -173,15 +232,85 @@ def class_diagram(el):
     dom.edge(f, u, "0..* — 1", E_ASSOC)
 
     svc = Page("Service classes")
-    st = klass(svc, "Settings «dataclass» (CMP-13)", ["+data_dir: Path", "+max_file_mb: int = 20", "+max_docs: int = 50", "+min_relevance: float = 0.6", "+top_k: int = 6", "+allow_external_ai: bool = False", "+from_env(): Settings"], 40, 40)
-    rc = klass(svc, "RetrievedChunk «dataclass»", ["+chunk_id: int", "+document_id: str", "+document_name: str", "+page: int", "+text: str", "+relevance: float"], 40, 330)
-    rt = klass(svc, "FtsRetriever (CMP-06)", ["+retrieve(conn, user_id, question, history, document_ids): RetrievedChunk[]", "-candidates(...)", "-idf(term): float"], 400, 330, 420)
-    gi = klass(svc, "«interface» AnswerGenerator (CMP-07)", ["+mode: str", "+generate(question, chunks): GeneratedAnswer"], 400, 40, 360)
-    lg = klass(svc, "LocalExtractiveGenerator", ["+mode = 'local'", "+generate(question, chunks)"], 400, 190, 240)
-    ag = klass(svc, "AnthropicGenerator", ["+mode = 'external'", "-model: str", "-timeout_s: float", "+generate(question, chunks)"], 680, 170, 260)
+    st = klass(
+        svc,
+        "Settings «dataclass» (CMP-13)",
+        [
+            "+data_dir: Path",
+            "+max_file_mb: int = 20",
+            "+max_docs: int = 50",
+            "+min_relevance: float = 0.6",
+            "+top_k: int = 6",
+            "+allow_external_ai: bool = False",
+            "+from_env(): Settings",
+        ],
+        40,
+        40,
+    )
+    rc = klass(
+        svc,
+        "RetrievedChunk «dataclass»",
+        [
+            "+chunk_id: int",
+            "+document_id: str",
+            "+document_name: str",
+            "+page: int",
+            "+text: str",
+            "+relevance: float",
+        ],
+        40,
+        330,
+    )
+    rt = klass(
+        svc,
+        "FtsRetriever (CMP-06)",
+        [
+            "+retrieve(conn, user_id, question, history, document_ids): RetrievedChunk[]",
+            "-candidates(...)",
+            "-idf(term): float",
+        ],
+        400,
+        330,
+        420,
+    )
+    gi = klass(
+        svc,
+        "«interface» AnswerGenerator (CMP-07)",
+        ["+mode: str", "+generate(question, chunks): GeneratedAnswer"],
+        400,
+        40,
+        360,
+    )
+    lg = klass(
+        svc, "LocalExtractiveGenerator", ["+mode = 'local'", "+generate(question, chunks)"], 400, 190, 240
+    )
+    ag = klass(
+        svc,
+        "AnthropicGenerator",
+        ["+mode = 'external'", "-model: str", "-timeout_s: float", "+generate(question, chunks)"],
+        680,
+        170,
+        260,
+    )
     ga = klass(svc, "GeneratedAnswer «dataclass»", ["+text: str", "+used_indices: int[]"], 1000, 40)
-    ch = klass(svc, "ChatService (CMP-08)", ["+ask(conn, user, conversation_id, question, document_ids): Turn", "-validate_citations(answer, chunks)"], 1000, 330, 420)
-    ll = klass(svc, "LoginLimiter (CMP-03)", ["-max_failures = 5", "-window_s = 300", "+check(key)", "+fail(key)", "+reset(key)"], 40, 560)
+    ch = klass(
+        svc,
+        "ChatService (CMP-08)",
+        [
+            "+ask(conn, user, conversation_id, question, document_ids): Turn",
+            "-validate_citations(answer, chunks)",
+        ],
+        1000,
+        330,
+        420,
+    )
+    ll = klass(
+        svc,
+        "LoginLimiter (CMP-03)",
+        ["-max_failures = 5", "-window_s = 300", "+check(key)", "+fail(key)", "+reset(key)"],
+        40,
+        560,
+    )
     pe = klass(svc, "ProblemError (CMP-02)", ["+status: int", "+code: str", "+detail: str"], 400, 560)
     svc.edge(lg, gi, "", E_GEN.replace("endArrow=block", "endArrow=block;dashed=1"))
     svc.edge(ag, gi, "", E_GEN.replace("endArrow=block", "endArrow=block;dashed=1"))
@@ -217,53 +346,84 @@ def sequence(el):
         return y
 
     ask = Page("Hỏi đáp")
-    names = ["ACT-01 Người dùng", "CMP-01 Web UI", "CMP-03 Auth & Session", "CMP-08 Chat Service",
-             "CMP-06 Retriever", "CMP-07 Answer Generator", "CMP-11 Persistence"]
+    names = [
+        "ACT-01 Người dùng",
+        "CMP-01 Web UI",
+        "CMP-03 Auth & Session",
+        "CMP-08 Chat Service",
+        "CMP-06 Retriever",
+        "CMP-07 Answer Generator",
+        "CMP-11 Persistence",
+    ]
     xs = lifelines(ask, names, 900)
     U, W, A, C, R, G, P = names
-    y = msgs(ask, xs, [
-        (U, W, "1: nhập câu hỏi, Enter", "m"),
-        (W, C, "2: POST /api/conversations/{id}/questions + X-CSRF-Token", "m"),
-        (C, A, "3: current_user() + require_csrf()", "m"),
-        (A, C, "4: CurrentUser | 401 / 403", "r"),
-        (C, P, "5: kiểm tra hội thoại thuộc user, có tài liệu ready", "m"),
-        (P, C, "6: OK | 404 / 409", "r"),
-        (C, R, "7: retrieve(question, 3 câu trước, phạm vi)", "m"),
-        (R, P, "8: FTS5 MATCH + df(t) lọc user_id/status/phạm vi", "m"),
-        (P, R, "9: ứng viên", "r"),
-        (R, C, "10: chunk có rel ≥ 0.6 (≤ 6, ≤ 2/tài liệu)", "r"),
-    ])
+    y = msgs(
+        ask,
+        xs,
+        [
+            (U, W, "1: nhập câu hỏi, Enter", "m"),
+            (W, C, "2: POST /api/conversations/{id}/questions + X-CSRF-Token", "m"),
+            (C, A, "3: current_user() + require_csrf()", "m"),
+            (A, C, "4: CurrentUser | 401 / 403", "r"),
+            (C, P, "5: kiểm tra hội thoại thuộc user, có tài liệu ready", "m"),
+            (P, C, "6: OK | 404 / 409", "r"),
+            (C, R, "7: retrieve(question, 3 câu trước, phạm vi)", "m"),
+            (R, P, "8: FTS5 MATCH + df(t) lọc user_id/status/phạm vi", "m"),
+            (P, R, "9: ứng viên", "r"),
+            (R, C, "10: chunk có rel ≥ 0.6 (≤ 6, ≤ 2/tài liệu)", "r"),
+        ],
+    )
     ask.vertex("alt [không có chunk]", 640, y, 800, 80, S_BOUNDARY)
     ask.free_edge(xs[C], y + 40, xs[C] + 60, y + 56, "11a: outcome = not_found, không gọi bộ sinh", E_MSG)
     y += 100
     ask.vertex("alt [có chunk]", 640, y, 800, 190, S_BOUNDARY)
-    y = msgs(ask, xs, [
-        (C, G, "11b: generate(question, chunks)", "m"),
-        (G, C, "12: text có [n]", "r"),
-        (C, C, "13: validate_citations — giữ [n] hợp lệ, tên/trang từ CSDL", "m"),
-    ], y0=y + 40)
+    y = msgs(
+        ask,
+        xs,
+        [
+            (C, G, "11b: generate(question, chunks)", "m"),
+            (G, C, "12: text có [n]", "r"),
+            (C, C, "13: validate_citations — giữ [n] hợp lệ, tên/trang từ CSDL", "m"),
+        ],
+        y0=y + 40,
+    )
     y += 10
-    msgs(ask, xs, [
-        (C, P, "14: INSERT turns (latency_ms, citations_json)", "m"),
-        (C, W, "15: 200 Turn {answer, outcome, citations, warning}", "r"),
-        (W, U, "16: hiển thị câu trả lời + trích dẫn [n]", "r"),
-    ], y0=y)
+    msgs(
+        ask,
+        xs,
+        [
+            (C, P, "14: INSERT turns (latency_ms, citations_json)", "m"),
+            (C, W, "15: 200 Turn {answer, outcome, citations, warning}", "r"),
+            (W, U, "16: hiển thị câu trả lời + trích dẫn [n]", "r"),
+        ],
+        y0=y,
+    )
 
     login = Page("Đăng nhập")
-    names2 = ["ACT-01 Người dùng", "CMP-01 Web UI", "CMP-03 Auth & Session", "CMP-10 Audit Log", "CMP-11 Persistence"]
+    names2 = [
+        "ACT-01 Người dùng",
+        "CMP-01 Web UI",
+        "CMP-03 Auth & Session",
+        "CMP-10 Audit Log",
+        "CMP-11 Persistence",
+    ]
     xs2 = lifelines(login, names2, 640)
     U, W, A, AU, P = names2
-    msgs(login, xs2, [
-        (U, W, "1: tên đăng nhập + mật khẩu", "m"),
-        (W, A, "2: POST /api/auth/login", "m"),
-        (A, A, "3: LoginLimiter.check(username) — 429 nếu ≥ 5 lần sai / 5 phút", "m"),
-        (A, P, "4: SELECT users WHERE username", "m"),
-        (A, A, "5: verify_password (PBKDF2, so sánh hằng thời gian)", "m"),
-        (A, AU, "6: record(auth.login_success | auth.login_failed)", "m"),
-        (A, P, "7: INSERT sessions(token_hash, csrf_token)", "m"),
-        (A, W, "8: 200 Me + Set-Cookie cwd_session (HttpOnly, SameSite=Strict) | 401", "r"),
-        (W, U, "9: chuyển tới workspace", "r"),
-    ])
+    msgs(
+        login,
+        xs2,
+        [
+            (U, W, "1: tên đăng nhập + mật khẩu", "m"),
+            (W, A, "2: POST /api/auth/login", "m"),
+            (A, A, "3: LoginLimiter.check(username) — 429 nếu ≥ 5 lần sai / 5 phút", "m"),
+            (A, P, "4: SELECT users WHERE username", "m"),
+            (A, A, "5: verify_password (PBKDF2, so sánh hằng thời gian)", "m"),
+            (A, AU, "6: record(auth.login_success | auth.login_failed)", "m"),
+            (A, P, "7: INSERT sessions(token_hash, csrf_token)", "m"),
+            (A, W, "8: 200 Me + Set-Cookie cwd_session (HttpOnly, SameSite=Strict) | 401", "r"),
+            (W, U, "9: chuyển tới workspace", "r"),
+        ],
+    )
     write("sequence_diagram.drawio", ask, login)
 
 
@@ -302,12 +462,36 @@ def activity(el):
     end2 = a("", 265, 760, bg, S_END, 30, 30)
 
     for s, t, lbl in [
-        (start, a1, ""), (a1, d0, ""), (d0, e0, "không"), (d0, d1, "có"), (d1, e1, "không"),
-        (d1, d2, "có"), (d2, e2, "không"), (d2, a2, "có"), (a2, a3, ""), (a3, d3, ""),
-        (e1, d3, ""), (e2, d3, ""), (d3, d1, "có"), (d3, a4, "không"), (e0, a4, ""), (a4, end1, ""),
-        (a3, b1, "BackgroundTasks"), (b1, bx, "không"), (b1, b2, "có"), (b2, d4, ""), (d4, b3, "có"),
-        (d4, d5, "không"), (d5, b4, "không"), (d5, b5, "có"), (b5, b6, ""), (b6, b7, ""),
-        (b7, end2, ""), (b3, end2, ""), (b4, end2, ""), (bx, end2, ""),
+        (start, a1, ""),
+        (a1, d0, ""),
+        (d0, e0, "không"),
+        (d0, d1, "có"),
+        (d1, e1, "không"),
+        (d1, d2, "có"),
+        (d2, e2, "không"),
+        (d2, a2, "có"),
+        (a2, a3, ""),
+        (a3, d3, ""),
+        (e1, d3, ""),
+        (e2, d3, ""),
+        (d3, d1, "có"),
+        (d3, a4, "không"),
+        (e0, a4, ""),
+        (a4, end1, ""),
+        (a3, b1, "BackgroundTasks"),
+        (b1, bx, "không"),
+        (b1, b2, "có"),
+        (b2, d4, ""),
+        (d4, b3, "có"),
+        (d4, d5, "không"),
+        (d5, b4, "không"),
+        (d5, b5, "có"),
+        (b5, b6, ""),
+        (b6, b7, ""),
+        (b7, end2, ""),
+        (b3, end2, ""),
+        (b4, end2, ""),
+        (bx, end2, ""),
     ]:
         p.edge(s, t, lbl, E_FLOW)
     write("activity_diagram.drawio", p)
@@ -316,22 +500,43 @@ def activity(el):
 # -------------------------------------------------------------- Development
 COMPONENT_DEPS = [
     ("CMP-01", "CMP-02", "HTTP/JSON"),
-    ("CMP-02", "CMP-03", ""), ("CMP-02", "CMP-04", ""), ("CMP-02", "CMP-08", ""),
-    ("CMP-02", "CMP-09", ""), ("CMP-02", "CMP-13", ""), ("CMP-02", "CMP-05", "recover_pending"),
-    ("CMP-03", "CMP-10", ""), ("CMP-03", "CMP-11", ""),
-    ("CMP-04", "CMP-05", ""), ("CMP-04", "CMP-10", ""), ("CMP-04", "CMP-11", ""),
-    ("CMP-05", "CMP-06", "fold()"), ("CMP-05", "CMP-11", ""),
+    ("CMP-02", "CMP-03", ""),
+    ("CMP-02", "CMP-04", ""),
+    ("CMP-02", "CMP-08", ""),
+    ("CMP-02", "CMP-09", ""),
+    ("CMP-02", "CMP-13", ""),
+    ("CMP-02", "CMP-05", "recover_pending"),
+    ("CMP-03", "CMP-10", ""),
+    ("CMP-03", "CMP-11", ""),
+    ("CMP-04", "CMP-05", ""),
+    ("CMP-04", "CMP-10", ""),
+    ("CMP-04", "CMP-11", ""),
+    ("CMP-05", "CMP-06", "fold()"),
+    ("CMP-05", "CMP-11", ""),
     ("CMP-06", "CMP-11", ""),
-    ("CMP-08", "CMP-06", "Retriever"), ("CMP-08", "CMP-07", "AnswerGenerator"), ("CMP-08", "CMP-11", ""),
-    ("CMP-09", "CMP-11", ""), ("CMP-10", "CMP-11", ""),
-    ("CMP-12", "CMP-03", ""), ("CMP-12", "CMP-11", ""),
+    ("CMP-08", "CMP-06", "Retriever"),
+    ("CMP-08", "CMP-07", "AnswerGenerator"),
+    ("CMP-08", "CMP-11", ""),
+    ("CMP-09", "CMP-11", ""),
+    ("CMP-10", "CMP-11", ""),
+    ("CMP-12", "CMP-03", ""),
+    ("CMP-12", "CMP-11", ""),
 ]
 
 COMPONENT_POS = {
-    "CMP-01": (560, 20), "CMP-02": (560, 150), "CMP-13": (960, 150),
-    "CMP-03": (60, 300), "CMP-04": (360, 300), "CMP-08": (760, 300), "CMP-09": (1100, 300),
-    "CMP-10": (60, 460), "CMP-05": (360, 460), "CMP-06": (660, 460), "CMP-07": (960, 460),
-    "CMP-11": (560, 620), "CMP-12": (60, 620),
+    "CMP-01": (560, 20),
+    "CMP-02": (560, 150),
+    "CMP-13": (960, 150),
+    "CMP-03": (60, 300),
+    "CMP-04": (360, 300),
+    "CMP-08": (760, 300),
+    "CMP-09": (1100, 300),
+    "CMP-10": (60, 460),
+    "CMP-05": (360, 460),
+    "CMP-06": (660, 460),
+    "CMP-07": (960, 460),
+    "CMP-11": (560, 620),
+    "CMP-12": (60, 620),
 }
 
 
@@ -341,7 +546,9 @@ def component(el):
     for c in el["components"]:
         x, y = COMPONENT_POS[c["id"]]
         ids[c["id"]] = p.vertex(f"<b>{c['id']} {c['name']}</b><br>{c['module']}", x, y, 260, 70, S_COMPONENT)
-    ext = p.vertex("<b>ACT-04 Anthropic API</b><br>«external, tùy chọn»", 1260, 460, 220, 70, S_BOX + "dashed=1;")
+    ext = p.vertex(
+        "<b>ACT-04 Anthropic API</b><br>«external, tùy chọn»", 1260, 460, 220, 70, S_BOX + "dashed=1;"
+    )
     for s, t, lbl in COMPONENT_DEPS:
         p.edge(ids[s], ids[t], lbl, E_DEP)
     p.edge(ids["CMP-07"], ext, "HTTPS (chỉ khi CWD_ALLOW_EXTERNAL_AI=true)", E_DEP)
@@ -353,10 +560,16 @@ def deployment(el):
     p = Page("Deployment")
     ws = p.vertex("«device» Máy trạm người dùng", 40, 80, 300, 200, S_NODE)
     p.vertex("«execution env» Trình duyệt", 20, 50, 260, 130, S_BOX, parent=ws)
-    p.vertex("CMP-01 Web UI<br>index.html, app.js, api.js, styles.css", 50, 110, 220, 50, S_ARTIFACT, parent=ws)
-    px = p.vertex("«device» Reverse proxy (khuyến nghị)<br>IIS / Nginx / Caddy — TLS", 420, 120, 260, 120, S_NODE)
+    p.vertex(
+        "CMP-01 Web UI<br>index.html, app.js, api.js, styles.css", 50, 110, 220, 50, S_ARTIFACT, parent=ws
+    )
+    px = p.vertex(
+        "«device» Reverse proxy (khuyến nghị)<br>IIS / Nginx / Caddy — TLS", 420, 120, 260, 120, S_NODE
+    )
     srv = p.vertex("«device» Máy chủ ứng dụng (Windows/Linux)", 760, 40, 520, 520, S_NODE)
-    env = p.vertex("«execution env» Python ≥ 3.12 — uvicorn app.main:app (1 worker)", 20, 40, 480, 250, S_BOX, parent=srv)
+    env = p.vertex(
+        "«execution env» Python ≥ 3.12 — uvicorn app.main:app (1 worker)", 20, 40, 480, 250, S_BOX, parent=srv
+    )
     p.vertex("app/ (CMP-02..CMP-10, CMP-13)", 20, 50, 220, 50, S_ARTIFACT, parent=env)
     p.vertex("app/web/ (CMP-01, tĩnh)", 250, 50, 210, 50, S_ARTIFACT, parent=env)
     p.vertex("app/cli.py (CMP-12)", 20, 120, 220, 50, S_ARTIFACT, parent=env)
@@ -365,7 +578,9 @@ def deployment(el):
     p.vertex("cwd.db (SQLite WAL)", 20, 50, 140, 50, S_ARTIFACT, parent=disk)
     p.vertex("files/&lt;id&gt;.pdf", 170, 50, 140, 50, S_ARTIFACT, parent=disk)
     p.vertex("backups/", 320, 50, 140, 50, S_ARTIFACT, parent=disk)
-    ext = p.vertex("«external» ACT-04 Anthropic API<br>api.anthropic.com", 1360, 200, 240, 100, S_NODE + "dashed=1;")
+    ext = p.vertex(
+        "«external» ACT-04 Anthropic API<br>api.anthropic.com", 1360, 200, 240, 100, S_NODE + "dashed=1;"
+    )
     adm = p.vertex("«device» Console quản trị (ACT-03)", 420, 420, 260, 100, S_NODE)
     p.edge(ws, px, "HTTPS", E_ASSOC)
     p.edge(px, srv, "HTTP 127.0.0.1:8000", E_ASSOC)

@@ -50,8 +50,12 @@ class Report:
         ]
         lines += [f"| {v} | {r} | {s} | {d or '—'} |" for v, r, s, d in self.rows]
         passed = sum(1 for r in self.rows if r[2] == "PASS")
-        lines += ["", f"**Tổng:** {passed} PASS · {len(self.failed)} FAIL · "
-                      f"{sum(1 for r in self.rows if r[2] == 'SKIP')} SKIP", ""]
+        lines += [
+            "",
+            f"**Tổng:** {passed} PASS · {len(self.failed)} FAIL · "
+            f"{sum(1 for r in self.rows if r[2] == 'SKIP')} SKIP",
+            "",
+        ]
         return "\n".join(lines)
 
 
@@ -92,10 +96,18 @@ def main(write=False):
     blueprint = read("docs/04-design/blueprint.md")
     comp_dia = read("docs/04-design/diagrams/component_diagram.drawio")
     rep.check("SAD", "mọi CMP có trong SAD §5.2", not missing(cmp_ids, sad), ", ".join(missing(cmp_ids, sad)))
-    rep.check("Blueprint", "mọi CMP có trong composition view", not missing(cmp_ids, blueprint),
-              ", ".join(missing(cmp_ids, blueprint)))
-    rep.check("Component diagram", "mọi CMP có trong sơ đồ", not missing(cmp_ids, comp_dia),
-              ", ".join(missing(cmp_ids, comp_dia)))
+    rep.check(
+        "Blueprint",
+        "mọi CMP có trong composition view",
+        not missing(cmp_ids, blueprint),
+        ", ".join(missing(cmp_ids, blueprint)),
+    )
+    rep.check(
+        "Component diagram",
+        "mọi CMP có trong sơ đồ",
+        not missing(cmp_ids, comp_dia),
+        ", ".join(missing(cmp_ids, comp_dia)),
+    )
     for c in el["components"]:
         if c["module"] not in sad:
             rep.check("SAD", f"{c['id']} module `{c['module']}` khớp", False, "module không có trong SAD")
@@ -103,10 +115,18 @@ def main(write=False):
     spec = yaml.load((DESIGN / "openapi.yaml").read_text(encoding="utf-8"))
     spec_ops = openapi_operations(spec)
     reg_ops = {(e["method"], e["path"], e["operationId"]) for e in el["endpoints"]}
-    rep.check("openapi.yaml", "endpoint trong registry ⊆ openapi", reg_ops <= spec_ops,
-              ", ".join(f"{m} {p}" for m, p, _ in sorted(reg_ops - spec_ops)))
-    rep.check("openapi.yaml", "không có endpoint ngoài registry", spec_ops <= reg_ops,
-              ", ".join(f"{m} {p}" for m, p, _ in sorted(spec_ops - reg_ops)))
+    rep.check(
+        "openapi.yaml",
+        "endpoint trong registry ⊆ openapi",
+        reg_ops <= spec_ops,
+        ", ".join(f"{m} {p}" for m, p, _ in sorted(reg_ops - spec_ops)),
+    )
+    rep.check(
+        "openapi.yaml",
+        "không có endpoint ngoài registry",
+        spec_ops <= reg_ops,
+        ", ".join(f"{m} {p}" for m, p, _ in sorted(spec_ops - reg_ops)),
+    )
     api_md = read("docs/04-design/openapi.md")
     op_missing = [e["operationId"] for e in el["endpoints"] if e["operationId"] not in api_md]
     rep.check("openapi.md", "mọi operationId được mô tả", not op_missing, ", ".join(op_missing))
@@ -118,31 +138,58 @@ def main(write=False):
     class_dia = read("docs/04-design/diagrams/class_diagram.drawio")
     tables_sql = set(re.findall(r"CREATE TABLE IF NOT EXISTS (\w+)", schema))
     reg_tables = {e["table"] for e in el["entities"]}
-    rep.check("schema.sql", "bảng trong registry = bảng trong DDL", reg_tables == tables_sql,
-              f"thiếu {sorted(reg_tables - tables_sql)}, thừa {sorted(tables_sql - reg_tables)}")
+    rep.check(
+        "schema.sql",
+        "bảng trong registry = bảng trong DDL",
+        reg_tables == tables_sql,
+        f"thiếu {sorted(reg_tables - tables_sql)}, thừa {sorted(tables_sql - reg_tables)}",
+    )
     for e in el["entities"]:
-        rep.check("data/model.md", f"{e['id']} `{e['table']}` được mô tả", e["id"] in model and e["table"] in model)
-        rep.check("Class diagram", f"{e['id']} {e['name']} có trong sơ đồ", e["id"] in class_dia and e["name"] in class_dia)
+        rep.check(
+            "data/model.md", f"{e['id']} `{e['table']}` được mô tả", e["id"] in model and e["table"] in model
+        )
+        rep.check(
+            "Class diagram",
+            f"{e['id']} {e['name']} có trong sơ đồ",
+            e["id"] in class_dia and e["name"] in class_dia,
+        )
 
     uc = read("docs/04-design/diagrams/use_case_diagram.drawio")
-    rep.check("Use case diagram", "mọi actor có trong sơ đồ", not missing(act_ids, uc), ", ".join(missing(act_ids, uc)))
+    rep.check(
+        "Use case diagram",
+        "mọi actor có trong sơ đồ",
+        not missing(act_ids, uc),
+        ", ".join(missing(act_ids, uc)),
+    )
     seq = read("docs/04-design/diagrams/sequence_diagram.drawio")
     for cid in ["CMP-03", "CMP-06", "CMP-07", "CMP-08", "CMP-11"]:
         rep.check("Sequence diagram", f"{cid} tham gia luồng hỏi đáp", cid in seq)
     dep = read("docs/04-design/diagrams/deployment_diagram.drawio")
-    rep.check("Deployment diagram", "CMP-01, CMP-11, CMP-12 và ACT-04 được triển khai",
-              not missing(["CMP-01", "CMP-11", "CMP-12", "ACT-04"], dep))
+    rep.check(
+        "Deployment diagram",
+        "CMP-01, CMP-11, CMP-12 và ACT-04 được triển khai",
+        not missing(["CMP-01", "CMP-11", "CMP-12", "ACT-04"], dep),
+    )
 
     prd = read("docs/03-analysis/PRD.md")
     frs = sorted(set(re.findall(r"\| (FR-\d{3}) \|", prd)))
     covered_text = sad + " ".join(r for e in el["endpoints"] for r in e["req"])
     fr_missing = [f for f in frs if f not in covered_text]
-    rep.check("PRD → Design", f"{len(frs)} FR đều có CMP/endpoint", bool(frs) and not fr_missing, ", ".join(fr_missing))
+    rep.check(
+        "PRD → Design",
+        f"{len(frs)} FR đều có CMP/endpoint",
+        bool(frs) and not fr_missing,
+        ", ".join(fr_missing),
+    )
 
     adrs = sorted(p.name for p in (DESIGN / "adr").glob("ADR-*.md"))
     adr_missing = [a for a in adrs if a not in sad]
-    rep.check("ADR", f"{len(adrs)} ADR (≥ 3) đều được SAD §9 tham chiếu", len(adrs) >= 3 and not adr_missing,
-              ", ".join(adr_missing))
+    rep.check(
+        "ADR",
+        f"{len(adrs)} ADR (≥ 3) đều được SAD §9 tham chiếu",
+        len(adrs) >= 3 and not adr_missing,
+        ", ".join(adr_missing),
+    )
 
     proto_missing = [s["prototype"] for s in el["screens"] if not (DESIGN / s["prototype"]).exists()]
     rep.check("UI/UX", "mọi màn hình có prototype", not proto_missing, ", ".join(proto_missing))
@@ -152,8 +199,12 @@ def main(write=False):
         rep.check("Code", "mọi module của CMP tồn tại", not mod_missing, ", ".join(mod_missing))
         routes = app_routes()
         reg_routes = {(m, p) for m, p, _ in reg_ops}
-        rep.check("Code", "route FastAPI = endpoint registry", routes == reg_routes,
-                  f"thiếu {sorted(reg_routes - routes)}, thừa {sorted(routes - reg_routes)}")
+        rep.check(
+            "Code",
+            "route FastAPI = endpoint registry",
+            routes == reg_routes,
+            f"thiếu {sorted(reg_routes - routes)}, thừa {sorted(routes - reg_routes)}",
+        )
     else:
         rep.note("Code", "module và route khớp registry", "chưa có app/main.py (trước Phase 6)")
 
