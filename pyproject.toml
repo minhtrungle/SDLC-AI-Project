@@ -13,6 +13,7 @@ extend-exclude = ["SDLC-Prompt-Checklist", "docs"]
 select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "PL"]
 ignore = [
     "PLR0913",  # FastAPI handlers take many injected params
+    "PLR0917",  # retriever/handler signatures mirror the documented interfaces
     "PLR2004",  # magic numbers are fine in tests and limits
     "S101",     # assert in tests
 ]

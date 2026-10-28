@@ -150,15 +150,16 @@ def ask_question(
     if "ready" not in statuses:
         raise ProblemError(409, "chat.no_ready_documents")
 
-    history = [
-        r[0]
-        for r in conn.execute(
-            "SELECT question FROM turns WHERE conversation_id = ? "
-            "ORDER BY created_at DESC, rowid DESC LIMIT ?",
-            (conversation_id, HISTORY_TURNS),
-        )
-    ][::-1]
-    chunks = FtsRetriever(settings).retrieve(conn, user.id, question, history, body.document_ids)
+    previous = conn.execute(
+        "SELECT question, citations_json FROM turns WHERE conversation_id = ? "
+        "ORDER BY created_at DESC, rowid DESC LIMIT ?",
+        (conversation_id, HISTORY_TURNS),
+    ).fetchall()[::-1]
+    history = [r["question"] for r in previous]
+    # The top-ranked source of the previous answer is the best referent for "nó" (FR-014, ADR-004 §6).
+    last_citations = json.loads(previous[-1]["citations_json"]) if previous else []
+    cited = {last_citations[0]["document_id"]} if last_citations else set()
+    chunks = FtsRetriever(settings).retrieve(conn, user.id, question, history, body.document_ids, cited)
 
     answer, citations, outcome = NOT_FOUND_ANSWER, [], "not_found"
     if chunks:  # FR-012: no relevant chunk -> the generator is not called at all

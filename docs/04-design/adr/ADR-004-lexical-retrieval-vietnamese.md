@@ -15,7 +15,11 @@
 3. **Điểm liên quan** của chunk *c* với tập token câu hỏi *T*: `rel(c) = Σ idf(t), t ∈ T ∩ c  /  Σ idf(t), t ∈ T`, với `idf(t) = ln(1 + N / df(t))` tính trong phạm vi workspace. Giá trị trong [0, 1].
 4. **Ngưỡng:** chunk có `rel ≥ CWD_MIN_RELEVANCE` (mặc định 0.6) mới được dùng. Không chunk nào đạt ⇒ `not_found` (không gọi bộ sinh).
 5. **Đa dạng nguồn:** giữ tối đa `CWD_TOP_K` (mặc định 6) chunk, tối đa 2 chunk mỗi tài liệu.
-6. **Hội thoại (FR-014):** token của tối đa 3 câu hỏi trước được dùng để **xếp hạng phụ** (cộng điểm nhỏ), không dùng để tính ngưỡng — tránh câu hỏi tiếp theo bị trả lời bằng ngữ cảnh cũ khi tài liệu không có thông tin mới.
+6. **Hội thoại (FR-014):** hai tín hiệu chỉ dùng để **xếp hạng phụ**, không dùng để tính ngưỡng — tránh câu hỏi tiếp theo bị trả lời bằng ngữ cảnh cũ khi tài liệu không có thông tin mới:
+   - token của tối đa 3 câu hỏi trước: +0.1 × tỷ lệ token khớp;
+   - tài liệu của **trích dẫn xếp hạng cao nhất** ở lượt trước: +0.1 (`CITED_DOC_BONUS`).
+
+   *Sửa đổi 2026-10-28 (Phase 6, T-05):* chỉ dùng token lịch sử thì thất bại với AC-401.1 — "Thời hạn của nó?" sau câu hỏi về hợp đồng Alpha lại chọn trang của Beta, vì trang Beta chứa nhiều từ "giá trị hợp đồng" hơn. Tài liệu được trích dẫn đầu tiên ở lượt trước là đối tượng mà "nó" chỉ tới.
 
 ## Phương án đã cân nhắc
 | Phương án | Lý do không chọn |

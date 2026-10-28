@@ -9,6 +9,7 @@ from app.textnorm import content_terms, tokens
 CANDIDATES = 50
 HISTORY_TURNS = 3
 HISTORY_BONUS = 0.1  # re-ranking only; never counts toward the threshold
+CITED_DOC_BONUS = 0.1  # follow-ups ("nó") most likely refer to what the previous answer cited
 
 
 @dataclass(frozen=True)
@@ -23,7 +24,13 @@ class RetrievedChunk:
 
 class Retriever(Protocol):
     def retrieve(
-        self, conn, user_id: int, question: str, history: list[str], document_ids: list[str] | None
+        self,
+        conn,
+        user_id: int,
+        question: str,
+        history: list[str],
+        document_ids: list[str] | None,
+        cited_documents: set[str] = frozenset(),
     ) -> list[RetrievedChunk]: ...
 
 
@@ -38,7 +45,7 @@ class FtsRetriever:
         self.top_k = settings.top_k
         self.per_doc_limit = settings.per_doc_limit
 
-    def retrieve(self, conn, user_id, question, history, document_ids):
+    def retrieve(self, conn, user_id, question, history, document_ids, cited_documents=frozenset()):
         terms = content_terms(question)
         if not terms:
             return []
@@ -79,6 +86,8 @@ class FtsRetriever:
             bonus = (
                 HISTORY_BONUS * (sum(t in present for t in hist_terms) / len(hist_terms)) if hist_terms else 0
             )
+            if r["document_id"] in cited_documents:
+                bonus += CITED_DOC_BONUS
             scored.append((rel + bonus, -r["rank"], r, rel))
         scored.sort(key=lambda x: (x[0], x[1]), reverse=True)
 
