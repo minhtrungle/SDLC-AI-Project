@@ -28,6 +28,7 @@ def filler_pages(i):
 
 
 def test_quality_and_latency(login):
+    """AC-306.1, AC-306.2: accuracy, citation accuracy, not-found rate and P90 latency over 50 documents."""
     c = login()
     files = [(name, make_pdf(pages)) for name, pages in gold.DOCUMENTS.items()]
     files += [(f"BienBan_{i:02d}.pdf", make_pdf(filler_pages(i))) for i in range(FILLER_DOCS)]

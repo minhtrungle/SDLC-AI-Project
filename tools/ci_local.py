@@ -19,6 +19,7 @@ STEPS = [
     ("secret-scan", [PY, "tools/secret_scan.py"]),
     ("dependency-audit", [PY, "-m", "pip_audit", "-r", "requirements.txt", "--progress-spinner", "off"]),
     ("cross-view-audit", [PY, "tools/cross_view_audit.py"]),
+    ("traceability", [PY, "tools/trace_matrix.py"]),
     (
         "tests+coverage",
         [PY, "-m", "pytest", "-p", "no:cacheprovider", "--junitxml=docs/07-verification/junit.xml"],
