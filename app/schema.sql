@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS documents (
 CREATE INDEX IF NOT EXISTS ix_documents_user_status ON documents(user_id, status);
 
 CREATE TABLE IF NOT EXISTS chunks (
-    id          INTEGER PRIMARY KEY,
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,  -- never reuse ids: citations keep chunk_id (DF-01)
     document_id TEXT    NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
     page        INTEGER NOT NULL CHECK (page >= 1),
     ord         INTEGER NOT NULL,
