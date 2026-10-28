@@ -17,6 +17,7 @@ from ruamel.yaml import YAML
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DESIGN = ROOT / "docs" / "04-design"
+sys.path.insert(0, str(ROOT))
 yaml = YAML(typ="safe", pure=True)
 
 
@@ -73,7 +74,6 @@ def openapi_operations(spec):
 
 
 def app_routes():
-    sys.path.insert(0, str(ROOT))
     from app.main import create_app  # noqa: PLC0415 — optional until Phase 6
 
     routes = set()
@@ -203,6 +203,15 @@ def main(write=False):
     if (ROOT / "app" / "main.py").exists():
         mod_missing = [c["module"] for c in el["components"] if not (ROOT / c["module"]).exists()]
         rep.check("Code", "mọi module của CMP tồn tại", not mod_missing, ", ".join(mod_missing))
+        from app.errors import MESSAGES  # noqa: PLC0415
+
+        enum = set(spec["components"]["schemas"]["Problem"]["properties"]["code"]["enum"])
+        rep.check(
+            "Code ↔ openapi.yaml",
+            "enum Problem.code = mã lỗi trong app/errors.py",
+            enum == set(MESSAGES),
+            f"chỉ ở openapi {sorted(enum - set(MESSAGES))}, chỉ ở code {sorted(set(MESSAGES) - enum)}",
+        )
         routes = app_routes()
         reg_routes = {(m, p) for m, p, _ in reg_ops}
         rep.check(

@@ -364,19 +364,36 @@ def sequence(el):
             (U, W, "1: nhập câu hỏi, Enter", "m"),
             (W, C, "2: POST /api/conversations/{id}/questions + X-CSRF-Token", "m"),
             (C, A, "3: current_user() + require_csrf()", "m"),
-            (A, C, "4: CurrentUser | 401 / 403", "r"),
-            (C, P, "5: kiểm tra hội thoại thuộc user, có tài liệu ready", "m"),
-            (P, C, "6: OK | 404 / 409", "r"),
-            (C, R, "7: retrieve(question, 3 câu trước, phạm vi)", "m"),
+            (A, C, "4: CurrentUser", "r"),
+            (C, P, "5: hội thoại thuộc user? tài liệu ready trong phạm vi? 3 lượt trước", "m"),
+            (P, C, "6: OK", "r"),
+        ],
+    )
+    # DF-07: error operands go back to the Web UI
+    ask.vertex("alt [lỗi kiểm tra]", 200, y, 1220, 150, S_BOUNDARY)
+    y = msgs(
+        ask,
+        xs,
+        [
+            (C, W, "6a: 401 auth.required | 403 csrf.invalid", "r"),
+            (C, W, "6b: 404 not_found | 422 chat.invalid_question | 409 chat.no_ready_documents", "r"),
+        ],
+        y0=y + 40,
+    )
+    y = msgs(
+        ask,
+        xs,
+        [
+            (C, R, "7: retrieve(question, history, phạm vi, tài liệu trích dẫn trước)", "m"),
             (R, P, "8: FTS5 MATCH + df(t) lọc user_id/status/phạm vi", "m"),
             (P, R, "9: ứng viên", "r"),
             (R, C, "10: chunk có rel ≥ 0.6 (≤ 6, ≤ 2/tài liệu)", "r"),
         ],
+        y0=y + 20,
     )
-    ask.vertex("alt [không có chunk]", 640, y, 800, 80, S_BOUNDARY)
+    ask.vertex("alt [không có chunk] / [có chunk] / [bộ sinh lỗi]", 640, y, 800, 330, S_BOUNDARY)
     ask.free_edge(xs[C], y + 40, xs[C] + 60, y + 56, "11a: outcome = not_found, không gọi bộ sinh", E_MSG)
-    y += 100
-    ask.vertex("alt [có chunk]", 640, y, 800, 190, S_BOUNDARY)
+    y += 90
     y = msgs(
         ask,
         xs,
@@ -384,10 +401,12 @@ def sequence(el):
             (C, G, "11b: generate(question, chunks)", "m"),
             (G, C, "12: text có [n]", "r"),
             (C, C, "13: validate_citations — giữ [n] hợp lệ, tên/trang từ CSDL", "m"),
+            (G, C, "12x: GeneratorUnavailable (timeout / lỗi / từ chối)", "r"),
+            (C, W, "12y: 503 chat.ai_unavailable — không lưu lượt", "r"),
         ],
-        y0=y + 40,
+        y0=y,
     )
-    y += 10
+    y += 20
     msgs(
         ask,
         xs,
@@ -407,22 +426,44 @@ def sequence(el):
         "CMP-10 Audit Log",
         "CMP-11 Persistence",
     ]
-    xs2 = lifelines(login, names2, 640)
+    xs2 = lifelines(login, names2, 760)
     U, W, A, AU, P = names2
-    msgs(
+    y = msgs(
         login,
         xs2,
         [
             (U, W, "1: tên đăng nhập + mật khẩu", "m"),
             (W, A, "2: POST /api/auth/login", "m"),
-            (A, A, "3: LoginLimiter.check(username) — 429 nếu ≥ 5 lần sai / 5 phút", "m"),
-            (A, P, "4: SELECT users WHERE username", "m"),
-            (A, A, "5: verify_password (PBKDF2, so sánh hằng thời gian)", "m"),
-            (A, AU, "6: record(auth.login_success | auth.login_failed)", "m"),
-            (A, P, "7: INSERT sessions(token_hash, csrf_token)", "m"),
-            (A, W, "8: 200 Me + Set-Cookie cwd_session (HttpOnly, SameSite=Strict) | 401", "r"),
-            (W, U, "9: chuyển tới workspace", "r"),
+            (A, A, "3: LoginLimiter.blocked(username)?", "m"),
         ],
+    )
+    login.vertex("alt [bị khóa]", 200, y, 620, 60, S_BOUNDARY)
+    login.free_edge(xs2[A], y + 35, xs2[W], y + 35, "3a: 429 auth.too_many_attempts", E_REPLY)
+    y = msgs(
+        login,
+        xs2,
+        [
+            (A, P, "4: SELECT users WHERE username", "m"),
+            (A, A, "5: verify_password (PBKDF2, hằng thời gian; user lạ → burn_password_check)", "m"),
+        ],
+        y0=y + 80,
+    )
+    login.vertex("alt [sai thông tin] / [đúng]", 200, y, 980, 270, S_BOUNDARY)
+    msgs(
+        login,
+        xs2,
+        [
+            (A, A, "6a: LoginLimiter.fail(username)", "m"),
+            (A, AU, "6b: record(auth.login_failed)", "m"),
+            (A, W, "6c: 401 auth.invalid_credentials", "r"),
+            (A, A, "7a: LoginLimiter.reset(username)", "m"),
+            (A, P, "7b: INSERT sessions(token_hash, csrf_token)", "m"),
+            (A, AU, "7c: record(auth.login_success)", "m"),
+            (A, W, "7d: 200 Me + Set-Cookie cwd_session (HttpOnly, SameSite=Strict)", "r"),
+            (W, U, "8: chuyển tới workspace", "r"),
+        ],
+        y0=y + 30,
+        dy=30,
     )
     write("sequence_diagram.drawio", ask, login)
 
@@ -436,9 +477,10 @@ def activity(el):
         return p.vertex(label, x, y, w, h, style, parent=parent)
 
     start = a("", 270, 40, req, S_START, 30, 30)
-    a1 = a("Nhận danh sách file (multipart)", 165, 100, req)
-    d0 = a("Workspace còn chỗ?<br>(< CWD_MAX_DOCS)", 175, 180, req, S_DECISION, 220, 90)
-    e0 = a("Kết quả: docs.limit_reached", 340, 300, req, S_ACTION, 200, 50)
+    a1 = a("Nhận danh sách file; đếm tài liệu hiện có", 165, 100, req)
+    # DF-02: the limit is checked per file, counting files accepted earlier in the same batch
+    d0 = a("[với mỗi file] Còn chỗ?<br>(đã có + đã nhận < CWD_MAX_DOCS)", 160, 180, req, S_DECISION, 250, 90)
+    e0 = a("Kết quả file: docs.limit_reached", 360, 300, req, S_ACTION, 190, 50)
     d1 = a("Bắt đầu bằng %PDF-?", 175, 300, req, S_DECISION, 160, 90)
     e1 = a("Kết quả: file.wrong_type", 20, 420, req, S_ACTION, 180, 50)
     d2 = a("≤ CWD_MAX_FILE_MB?", 175, 420, req, S_DECISION, 160, 90)
@@ -464,28 +506,28 @@ def activity(el):
     for s, t, lbl in [
         (start, a1, ""),
         (a1, d0, ""),
-        (d0, e0, "không"),
-        (d0, d1, "có"),
-        (d1, e1, "không"),
-        (d1, d2, "có"),
-        (d2, e2, "không"),
-        (d2, a2, "có"),
+        (d0, e0, "[không]"),
+        (d0, d1, "[có]"),
+        (d1, e1, "[không]"),
+        (d1, d2, "[có]"),
+        (d2, e2, "[không]"),
+        (d2, a2, "[có]"),
         (a2, a3, ""),
         (a3, d3, ""),
         (e1, d3, ""),
         (e2, d3, ""),
-        (d3, d1, "có"),
-        (d3, a4, "không"),
-        (e0, a4, ""),
+        (d3, d0, "[còn file]"),
+        (d3, a4, "[hết file]"),
+        (e0, d3, ""),
         (a4, end1, ""),
         (a3, b1, "BackgroundTasks"),
-        (b1, bx, "không"),
-        (b1, b2, "có"),
+        (b1, bx, "[không]"),
+        (b1, b2, "[có]"),
         (b2, d4, ""),
-        (d4, b3, "có"),
-        (d4, d5, "không"),
-        (d5, b4, "không"),
-        (d5, b5, "có"),
+        (d4, b3, "[có]"),
+        (d4, d5, "[không]"),
+        (d5, b4, "[không]"),
+        (d5, b5, "[có]"),
         (b5, b6, ""),
         (b6, b7, ""),
         (b7, end2, ""),
@@ -511,13 +553,19 @@ COMPONENT_DEPS = [
     ("CMP-04", "CMP-05", ""),
     ("CMP-04", "CMP-10", ""),
     ("CMP-04", "CMP-11", ""),
-    ("CMP-05", "CMP-06", "fold()"),
+    ("CMP-05", "CMP-06", "textnorm.fold()"),
     ("CMP-05", "CMP-11", ""),
     ("CMP-06", "CMP-11", ""),
     ("CMP-08", "CMP-06", "Retriever"),
     ("CMP-08", "CMP-07", "AnswerGenerator"),
     ("CMP-08", "CMP-11", ""),
     ("CMP-09", "CMP-11", ""),
+    ("CMP-04", "CMP-03", "current_user"),
+    ("CMP-08", "CMP-03", "current_user"),
+    ("CMP-09", "CMP-03", "require_manager"),
+    ("CMP-04", "CMP-13", ""),
+    ("CMP-06", "CMP-13", ""),
+    ("CMP-07", "CMP-13", ""),
     ("CMP-10", "CMP-11", ""),
     ("CMP-12", "CMP-03", ""),
     ("CMP-12", "CMP-11", ""),
@@ -574,18 +622,40 @@ def deployment(el):
     p.vertex("app/web/ (CMP-01, tĩnh)", 250, 50, 210, 50, S_ARTIFACT, parent=env)
     p.vertex("app/cli.py (CMP-12)", 20, 120, 220, 50, S_ARTIFACT, parent=env)
     p.vertex("«config» biến môi trường CWD_*", 250, 120, 210, 50, S_ARTIFACT, parent=env)
-    disk = p.vertex("«storage» CWD_DATA_DIR (CMP-11)", 20, 320, 480, 170, S_BOX, parent=srv)
+    disk = p.vertex(
+        "«storage» CWD_DATA_DIR — do CMP-11 (cwd.db) và CMP-04 (files/) quản lý",
+        20,
+        320,
+        480,
+        170,
+        S_BOX,
+        parent=srv,
+    )
     p.vertex("cwd.db (SQLite WAL)", 20, 50, 140, 50, S_ARTIFACT, parent=disk)
     p.vertex("files/&lt;id&gt;.pdf", 170, 50, 140, 50, S_ARTIFACT, parent=disk)
-    p.vertex("backups/", 320, 50, 140, 50, S_ARTIFACT, parent=disk)
+    p.vertex("backups/ (bản tạm trước khi chép ra ngoài)", 320, 50, 140, 50, S_ARTIFACT, parent=disk)
     ext = p.vertex(
         "«external» ACT-04 Anthropic API<br>api.anthropic.com", 1360, 200, 240, 100, S_NODE + "dashed=1;"
     )
     adm = p.vertex("«device» Console quản trị (ACT-03)", 420, 420, 260, 100, S_NODE)
+    bk = p.vertex(
+        "«device» Kho sao lưu ngoài máy chủ (NAS/share do IT quản lý)<br>backup hằng ngày, giữ 30 bản",
+        760,
+        620,
+        520,
+        90,
+        S_NODE,
+    )
     p.edge(ws, px, "HTTPS", E_ASSOC)
-    p.edge(px, srv, "HTTP 127.0.0.1:8000", E_ASSOC)
+    p.edge(px, srv, "HTTP (mạng nội bộ, cổng 8000)", E_ASSOC)
     p.edge(srv, ext, "HTTPS — chỉ khi được phép (ADR-003)", E_ASSOC + "dashed=1;")
     p.edge(adm, srv, "SSH / RDP → python -m app.cli", E_ASSOC)
+    p.edge(
+        srv,
+        bk,
+        "«schedule» 01:00 hằng ngày: python -m app.cli backup (DF-11, NFR-006)",
+        E_ASSOC + "dashed=1;",
+    )
     write("deployment_diagram.drawio", p)
 
 

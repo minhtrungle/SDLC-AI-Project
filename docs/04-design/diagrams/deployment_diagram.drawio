@@ -34,7 +34,7 @@
         <mxCell id="c11" value="«config» biến môi trường CWD_*" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c7">
           <mxGeometry x="250" y="120" width="210" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="c12" value="«storage» CWD_DATA_DIR (CMP-11)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="c6">
+        <mxCell id="c12" value="«storage» CWD_DATA_DIR — do CMP-11 (cwd.db) và CMP-04 (files/) quản lý" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="c6">
           <mxGeometry x="20" y="320" width="480" height="170" as="geometry" />
         </mxCell>
         <mxCell id="c13" value="cwd.db (SQLite WAL)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c12">
@@ -43,7 +43,7 @@
         <mxCell id="c14" value="files/&amp;lt;id&amp;gt;.pdf" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c12">
           <mxGeometry x="170" y="50" width="140" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="c15" value="backups/" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c12">
+        <mxCell id="c15" value="backups/ (bản tạm trước khi chép ra ngoài)" style="shape=note;whiteSpace=wrap;html=1;size=10;" vertex="1" parent="c12">
           <mxGeometry x="320" y="50" width="140" height="50" as="geometry" />
         </mxCell>
         <mxCell id="c16" value="«external» ACT-04 Anthropic API&lt;br&gt;api.anthropic.com" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;verticalAlign=top;fontStyle=1;dashed=1;" vertex="1" parent="1">
@@ -52,16 +52,22 @@
         <mxCell id="c17" value="«device» Console quản trị (ACT-03)" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="420" y="420" width="260" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="c18" value="HTTPS" style="endArrow=none;html=1;" edge="1" parent="1" source="c2" target="c5">
+        <mxCell id="c18" value="«device» Kho sao lưu ngoài máy chủ (NAS/share do IT quản lý)&lt;br&gt;backup hằng ngày, giữ 30 bản" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;verticalAlign=top;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="620" width="520" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" value="HTTPS" style="endArrow=none;html=1;" edge="1" parent="1" source="c2" target="c5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c19" value="HTTP 127.0.0.1:8000" style="endArrow=none;html=1;" edge="1" parent="1" source="c5" target="c6">
+        <mxCell id="c20" value="HTTP (mạng nội bộ, cổng 8000)" style="endArrow=none;html=1;" edge="1" parent="1" source="c5" target="c6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c20" value="HTTPS — chỉ khi được phép (ADR-003)" style="endArrow=none;html=1;dashed=1;" edge="1" parent="1" source="c6" target="c16">
+        <mxCell id="c21" value="HTTPS — chỉ khi được phép (ADR-003)" style="endArrow=none;html=1;dashed=1;" edge="1" parent="1" source="c6" target="c16">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c21" value="SSH / RDP → python -m app.cli" style="endArrow=none;html=1;" edge="1" parent="1" source="c17" target="c6">
+        <mxCell id="c22" value="SSH / RDP → python -m app.cli" style="endArrow=none;html=1;" edge="1" parent="1" source="c17" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" value="«schedule» 01:00 hằng ngày: python -m app.cli backup (DF-11, NFR-006)" style="endArrow=none;html=1;dashed=1;" edge="1" parent="1" source="c6" target="c18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>

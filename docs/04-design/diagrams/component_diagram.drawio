@@ -82,7 +82,7 @@
         <mxCell id="c27" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c28" value="fold()" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c6" target="c7">
+        <mxCell id="c28" value="textnorm.fold()" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c6" target="c7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c29" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c6" target="c12">
@@ -103,16 +103,34 @@
         <mxCell id="c34" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c10" target="c12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c35" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c11" target="c12">
+        <mxCell id="c35" value="current_user" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c36" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c4">
+        <mxCell id="c36" value="current_user" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c9" target="c4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c37" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c12">
+        <mxCell id="c37" value="require_manager" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c10" target="c4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c38" value="HTTPS (chỉ khi CWD_ALLOW_EXTERNAL_AI=true)" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c8" target="c15">
+        <mxCell id="c38" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c5" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c39" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c7" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c40" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c8" target="c14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c41" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c11" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c42" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c43" value="" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c13" target="c12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c44" value="HTTPS (chỉ khi CWD_ALLOW_EXTERNAL_AI=true)" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1" source="c8" target="c15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>

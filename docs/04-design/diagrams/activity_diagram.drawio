@@ -13,14 +13,14 @@
         <mxCell id="c4" value="" style="ellipse;html=1;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="c2">
           <mxGeometry x="270" y="40" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="c5" value="Nhận danh sách file (multipart)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;" vertex="1" parent="c2">
+        <mxCell id="c5" value="Nhận danh sách file; đếm tài liệu hiện có" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;" vertex="1" parent="c2">
           <mxGeometry x="165" y="100" width="240" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="c6" value="Workspace còn chỗ?&lt;br&gt;(&lt; CWD_MAX_DOCS)" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="c2">
-          <mxGeometry x="175" y="180" width="220" height="90" as="geometry" />
+        <mxCell id="c6" value="[với mỗi file] Còn chỗ?&lt;br&gt;(đã có + đã nhận &lt; CWD_MAX_DOCS)" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="c2">
+          <mxGeometry x="160" y="180" width="250" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="c7" value="Kết quả: docs.limit_reached" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;" vertex="1" parent="c2">
-          <mxGeometry x="340" y="300" width="200" height="50" as="geometry" />
+        <mxCell id="c7" value="Kết quả file: docs.limit_reached" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;" vertex="1" parent="c2">
+          <mxGeometry x="360" y="300" width="190" height="50" as="geometry" />
         </mxCell>
         <mxCell id="c8" value="Bắt đầu bằng %PDF-?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="c2">
           <mxGeometry x="175" y="300" width="160" height="90" as="geometry" />
@@ -88,22 +88,22 @@
         <mxCell id="c29" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c5" target="c6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c30" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c6" target="c7">
+        <mxCell id="c30" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c6" target="c7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c31" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c6" target="c8">
+        <mxCell id="c31" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c6" target="c8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c32" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c8" target="c9">
+        <mxCell id="c32" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c8" target="c9">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c33" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c8" target="c10">
+        <mxCell id="c33" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c8" target="c10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c34" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c10" target="c11">
+        <mxCell id="c34" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c10" target="c11">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c35" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c10" target="c12">
+        <mxCell id="c35" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c10" target="c12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c36" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c12" target="c13">
@@ -118,13 +118,13 @@
         <mxCell id="c39" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c11" target="c14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c40" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c14" target="c8">
+        <mxCell id="c40" value="[còn file]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c14" target="c6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c41" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c14" target="c15">
+        <mxCell id="c41" value="[hết file]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c14" target="c15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c42" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c7" target="c15">
+        <mxCell id="c42" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c7" target="c14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c43" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c15" target="c16">
@@ -133,25 +133,25 @@
         <mxCell id="c44" value="BackgroundTasks" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c13" target="c17">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c45" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c17" target="c18">
+        <mxCell id="c45" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c17" target="c18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c46" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c17" target="c19">
+        <mxCell id="c46" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c17" target="c19">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c47" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c19" target="c20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c48" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c20" target="c21">
+        <mxCell id="c48" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c20" target="c21">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c49" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c20" target="c22">
+        <mxCell id="c49" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c20" target="c22">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c50" value="không" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c22" target="c23">
+        <mxCell id="c50" value="[không]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c22" target="c23">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c51" value="có" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c22" target="c24">
+        <mxCell id="c51" value="[có]" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c22" target="c24">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c52" value="" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1" source="c24" target="c25">

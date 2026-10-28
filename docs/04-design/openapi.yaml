@@ -244,11 +244,12 @@ paths:
               type: object
               required: [question]
               properties:
-                question: {type: string, description: "1–2000 ký tự sau khi bỏ khoảng trắng"}
+                question: {type: string, maxLength: 4000, description: "1–2000 ký tự sau khi bỏ khoảng trắng (kiểm tra ở máy chủ, lỗi chat.invalid_question)"}
                 document_ids:
                   type: array
                   description: Phạm vi tài liệu (FR-015); bỏ trống = tất cả tài liệu sẵn sàng
-                  items: {type: string}
+                  maxItems: 50
+                  items: {type: string, pattern: "^[0-9a-f]{32}$"}
       responses:
         "200":
           description: Lượt hỏi đáp đã lưu
@@ -363,6 +364,7 @@ components:
             - chat.ai_unavailable
             - feedback.invalid
             - validation.error
+            - internal
         detail: {type: string}
     PublicConfig:
       type: object
@@ -389,7 +391,7 @@ components:
         size_bytes: {type: integer}
         page_count: {type: [integer, "null"]}
         status: {type: string, enum: [processing, ready, failed, no_text]}
-        error_code: {type: [string, "null"]}
+        error_code: {type: [string, "null"], enum: [pdf.corrupt, pdf.encrypted, ingest.interrupted, null]}
         error_message: {type: [string, "null"], description: Lý do tiếng Việt khi failed/no_text}
         created_at: {type: string, format: date-time}
     UploadResult:

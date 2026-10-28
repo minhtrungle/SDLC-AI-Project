@@ -1,11 +1,19 @@
 # Blueprint Design UI/UX (SDD) — Công cụ "Chat với tài liệu" (MVP)
 
+> ⚠️ **Đọc trước (v0.2, 2026-10-28 — DF-03/04/05/22/23):** tài liệu này là bản v0.1. Khi mâu thuẫn, các nguồn sau **thắng**:
+> - Trạng thái ô hỏi: [blueprint.md §3.7](../blueprint.md) (bộ tên chuẩn). Trạng thái tài liệu: chỉ `processing/ready/failed/no_text`; "uploading" là trạng thái phía client; "password" = `failed` + `pdf.encrypted`.
+> - Không có streaming, `cancelled`, `outcome = partial`, nút "Thử lại" tài liệu, SSO, workspace dùng chung, AnalyticsClient (xem [README.md](README.md) bảng Delta và blueprint §6).
+> - Thông điệp người dùng: nguồn duy nhất là `app/errors.py` và [openapi.md §4.1](../openapi.md); chuỗi trong §3.4.3 dưới đây chỉ là tham khảo.
+> - Độ rộng tối thiểu hỗ trợ: **1280 px** (PRD §3.9.4); không làm ngăn kéo cho 1024 px.
+> - ID thành phần giao diện đã đổi từ `CMP-xx` sang `UIC-xx` để không trùng ID thành phần kiến trúc trong elements.yaml.
+> - Font: system stack (prototype đã gỡ Google Fonts theo CSP); prototype đăng nhập đã gỡ nút SSO.
+
 > **Chuẩn áp dụng:** IEEE 1016-2009 (Software Design Descriptions)
 > **Mã tài liệu:** SDD-UIUX-CWD-001 · **Phiên bản:** 0.1 · **Trạng thái:** Draft
 > **Đầu vào:** [PRD-CWD-001 v0.1](../requirements/PRD.md) · [BRD-CWD-001 v0.1](../requirements/BRD.md) · **Prompt nguồn:** [bluePrint_design_prompt.md](../prompts/bluePrint_design_prompt.md)
 > **Phạm vi:** Thiết kế **UI/UX** (lớp giao diện web). Kiến trúc backend, mô hình AI và hạ tầng thuộc SAD/SRS riêng.
 
-**Quy ước:** `[TBD: …]` = chưa có giá trị, đang chờ câu hỏi mở (OQ-xxx của BRD, PQ-xxx của PRD). `[Đề xuất]` = do đội Design đề xuất, **chưa được duyệt**. Mã `US-`, `AC-`, `UX-`, `EC-`, `LG-`, `BR-`, `RSK-` lấy từ PRD/BRD để truy vết. Mã `C-xx` (concern), `QA-xx`, `SCR-xx`, `CMP-xx`, `DT-xx` do tài liệu này định nghĩa.
+**Quy ước:** `[TBD: …]` = chưa có giá trị, đang chờ câu hỏi mở (OQ-xxx của BRD, PQ-xxx của PRD). `[Đề xuất]` = do đội Design đề xuất, **chưa được duyệt**. Mã `US-`, `AC-`, `UX-`, `EC-`, `LG-`, `BR-`, `RSK-` lấy từ PRD/BRD để truy vết. Mã `C-xx` (concern), `QA-xx`, `SCR-xx`, `UIC-xx`, `DT-xx` do tài liệu này định nghĩa.
 
 > **Ghi chú về prompt nguồn:** Prompt chỉ mô tả chi tiết Mục 1, 2 và View 3.1 (Composition) dù nêu "tám view". Tài liệu này giữ nguyên các mục đó và hoàn thiện **8 view** theo viewpoint IEEE 1016-2009: Composition, Dependency, Logical, Information, Interface, Interaction, State Dynamics, Patterns Use.
 
@@ -282,18 +290,18 @@ flowchart LR
 
 | ID | Component | Props / đầu vào chính | Sự kiện phát ra | Trạng thái nội bộ | Truy vết |
 |---|---|---|---|---|---|
-| CMP-01 | UploadZone | `maxSizeMB`, `maxDocs`, `disabled` | `onFilesSelected`, `onReject(file, reason)` | idle / dragOver | US-201, 202, UX-003 |
-| CMP-02 | DocumentItem | `doc{id,name,uploadedAt,status,reason}`, `selected?` | `onRetry`, `onDelete`, `onToggleScope` | hover/focus | US-203, 204, UX-002 |
-| CMP-03 | StatusBadge | `status` | — | — | UX-002, UX-011 |
-| CMP-04 | MessageBubble | `message{role,content,status,citations,outcome}` | `onRetry`, `onCancel` | — | US-301, 304, UX-005 |
-| CMP-05 | CitationChip | `citation{index,docName,page,docDeleted}` | `onOpen(citation)` | — | US-305, AC-305.4 |
-| CMP-06 | SourcePanel | `citation`, `excerpt`, `loading`, `error` | `onClose` | open/closed | AC-305.2, UX-004 |
-| CMP-07 | Composer | `disabledReason`, `maxLength`, `sending` | `onSubmit(text)`, `onCancel` | text (giữ khi lỗi) | AC-301.3..5, UX-009, EC-04/07/08 |
-| CMP-08 | ScopeSelector (P1) | `docs`, `selectedIds` | `onChange` | — | US-402, UX-006 |
-| CMP-09 | FeedbackBar (P1) | `messageId`, `rating?` | `onRate(rating, reason?)` | reasonOpen | US-501, UX-007 |
-| CMP-10 | ConfirmDialog | `title`, `body`, `confirmLabel` | `onConfirm`, `onCancel` | — | EC-13, US-205 |
-| CMP-11 | EmptyState | `title`, `body`, `cta?` | `onCta` | — | EC-01, EC-02 |
-| CMP-12 | Banner / Toast | `severity`, `message`, `action?` | `onAction`, `onDismiss` | — | UX-008, EC-03..06 |
+| UIC-01 | UploadZone | `maxSizeMB`, `maxDocs`, `disabled` | `onFilesSelected`, `onReject(file, reason)` | idle / dragOver | US-201, 202, UX-003 |
+| UIC-02 | DocumentItem | `doc{id,name,uploadedAt,status,reason}`, `selected?` | `onRetry`, `onDelete`, `onToggleScope` | hover/focus | US-203, 204, UX-002 |
+| UIC-03 | StatusBadge | `status` | — | — | UX-002, UX-011 |
+| UIC-04 | MessageBubble | `message{role,content,status,citations,outcome}` | `onRetry`, `onCancel` | — | US-301, 304, UX-005 |
+| UIC-05 | CitationChip | `citation{index,docName,page,docDeleted}` | `onOpen(citation)` | — | US-305, AC-305.4 |
+| UIC-06 | SourcePanel | `citation`, `excerpt`, `loading`, `error` | `onClose` | open/closed | AC-305.2, UX-004 |
+| UIC-07 | Composer | `disabledReason`, `maxLength`, `sending` | `onSubmit(text)`, `onCancel` | text (giữ khi lỗi) | AC-301.3..5, UX-009, EC-04/07/08 |
+| UIC-08 | ScopeSelector (P1) | `docs`, `selectedIds` | `onChange` | — | US-402, UX-006 |
+| UIC-09 | FeedbackBar (P1) | `messageId`, `rating?` | `onRate(rating, reason?)` | reasonOpen | US-501, UX-007 |
+| UIC-10 | ConfirmDialog | `title`, `body`, `confirmLabel` | `onConfirm`, `onCancel` | — | EC-13, US-205 |
+| UIC-11 | EmptyState | `title`, `body`, `cta?` | `onCta` | — | EC-01, EC-02 |
+| UIC-12 | Banner / Toast | `severity`, `message`, `action?` | `onAction`, `onDismiss` | — | UX-008, EC-03..06 |
 
 #### 3.3.2 Lớp dữ liệu phía giao diện (Store)
 
@@ -748,16 +756,16 @@ Giá trị `[Đề xuất]`, **phải kiểm tra tương phản** trước khi c
 
 | Mối quan tâm | Yêu cầu PRD | View/phần tử thiết kế | Màn hình / Component | Kiểm chứng |
 |---|---|---|---|---|
-| C-01 Kiểm chứng | US-305, UX-004, AC-305.1..4 | 3.3, 3.4, 3.5, 3.6.2, 3.8 (DP-04) | CMP-04, CMP-05, CMP-06, SCR-03 | Test UI: bấm chip → thấy đoạn gốc |
-| C-02 Trạng thái tài liệu | US-203, UX-002, AC-203.1..5 | 3.4, 3.7.1 | CMP-02, CMP-03 | Test cập nhật trạng thái không tải lại |
+| C-01 Kiểm chứng | US-305, UX-004, AC-305.1..4 | 3.3, 3.4, 3.5, 3.6.2, 3.8 (DP-04) | UIC-04, UIC-05, UIC-06, SCR-03 | Test UI: bấm chip → thấy đoạn gốc |
+| C-02 Trạng thái tài liệu | US-203, UX-002, AC-203.1..5 | 3.4, 3.7.1 | UIC-02, UIC-03 | Test cập nhật trạng thái không tải lại |
 | C-03 Tối thiểu thao tác | UX-001, P-2 | 3.1, 3.5.2, 3.8 (DP-01) | SCR-02 | Đo UQ-01 (≤ 4 thao tác) |
-| C-04 Lỗi hồi phục | UX-008, EC-03..05, 15, US-202 | 3.4.3, 3.6.3, 3.7 | CMP-07, CMP-12, SCR-06 | Test mô phỏng lỗi, giữ draft |
+| C-04 Lỗi hồi phục | UX-008, EC-03..05, 15, US-202 | 3.4.3, 3.6.3, 3.7 | UIC-07, UIC-12, SCR-06 | Test mô phỏng lỗi, giữ draft |
 | C-05 Tiếng Việt | UX-008, AC-301.2, P-4 | 3.4.3 | i18n/Copy | Rà soát chuỗi, không mã thô |
-| C-06 Chờ phản hồi | UX-005, EC-06, LG-09 | 3.6.2, 3.7.2, 3.8 (DP-05, DP-06) | CMP-04, CMP-07 | Đo ≤ 300 ms chỉ báo; P90 |
-| C-07 Phạm vi tài liệu | UX-006, US-402 | 3.5.2 (L-04), 3.3 | CMP-08 | Test phạm vi hiển thị/giới hạn trích dẫn |
+| C-06 Chờ phản hồi | UX-005, EC-06, LG-09 | 3.6.2, 3.7.2, 3.8 (DP-05, DP-06) | UIC-04, UIC-07 | Đo ≤ 300 ms chỉ báo; P90 |
+| C-07 Phạm vi tài liệu | UX-006, US-402 | 3.5.2 (L-04), 3.3 | UIC-08 | Test phạm vi hiển thị/giới hạn trích dẫn |
 | C-08 Bảo mật qua UI | US-101, US-303, AC-101.1, AC-303.2, LG-14, LG-16 | 3.4.2, 3.7.4, 3.8 (DP-12) | SCR-01, mọi nơi render nội dung | Test route guard; test escape nội dung |
 | C-09 Đo hành vi | PRD §5.2 | 3.6.4 | AnalyticsClient | Test phát đúng sự kiện |
-| C-10 Phản hồi chất lượng | US-501, UX-007 | 3.3, 3.8 (DP-11) | CMP-09 | Test đánh giá ghi nhận |
+| C-10 Phản hồi chất lượng | US-501, UX-007 | 3.3, 3.8 (DP-11) | UIC-09 | Test đánh giá ghi nhận |
 | C-11 Tiếp cận | UX-009, UX-011, PQ-003 | 3.8 (DP-13), 2.5 | Toàn bộ | axe/Lighthouse + thủ công bàn phím, SR |
 | C-12 Nhất quán/Bảo trì | — | 3.1, 3.2, 3.8 (DP-09, DP-10) | Design System | Rà soát: 0 giá trị cứng |
 | C-13 Kiểm thử | LG-18 | 3.3, 3.7 | Tất cả | Mỗi P0 có ≥ 1 test |
@@ -769,16 +777,16 @@ Giá trị `[Đề xuất]`, **phải kiểm tra tương phản** trước khi c
 |---|---|
 | US-101 | SCR-01, SCR-06, Auth, Session |
 | US-102 | (Không có UI trực tiếp; yêu cầu tài liệu/ký duyệt) |
-| US-201, US-202 | UploadZone (CMP-01), CMP-12 |
-| US-203, US-204 | DocumentList, CMP-02, CMP-03, EmptyState (CMP-11) |
-| US-205 (P1) | CMP-10, SCR-04 |
-| US-301 | Composer (CMP-07), MessageList, CMP-04 |
-| US-302 | CMP-04, CMP-05 |
-| US-303, US-304 | CMP-04 (outcome `not_found`/`partial`), `chat.notfound` |
-| US-305 | CMP-05, CMP-06, SCR-03 |
+| US-201, US-202 | UploadZone (UIC-01), UIC-12 |
+| US-203, US-204 | DocumentList, UIC-02, UIC-03, EmptyState (UIC-11) |
+| US-205 (P1) | UIC-10, SCR-04 |
+| US-301 | Composer (UIC-07), MessageList, UIC-04 |
+| US-302 | UIC-04, UIC-05 |
+| US-303, US-304 | UIC-04 (outcome `not_found`/`partial`), `chat.notfound` |
+| US-305 | UIC-05, UIC-06, SCR-03 |
 | US-306 | (Đo lường — không thuộc giao diện) |
-| US-401..403 (P1) | ConversationStore, CMP-08, NewConversationButton |
-| US-501, US-502 (P1) | CMP-09, SCR-05 |
+| US-401..403 (P1) | ConversationStore, UIC-08, NewConversationButton |
+| US-501, US-502 (P1) | UIC-09, SCR-05 |
 | US-404, US-601 (P2) | Ngoài phạm vi thiết kế chi tiết của MVP |
 
 ---

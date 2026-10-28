@@ -117,14 +117,17 @@ stateDiagram-v2
     processing --> [*] : xóa (tác vụ nền bỏ kết quả)
 ```
 
-**Ô hỏi trên UI (SCR-02)**
+**Ô hỏi trên UI (SCR-02)** — bộ tên **chuẩn duy nhất** (DF-04); UIUX_Blueprint §3.7.3 tham chiếu bảng này.
 | Trạng thái | Điều kiện | Hiển thị |
 |---|---|---|
-| `disabled_empty` | 0 tài liệu | "Hãy tải tài liệu để bắt đầu hỏi" |
-| `disabled_processing` | 0 `ready`, ≥ 1 `processing` | "Đang xử lý n tài liệu…" |
-| `ready` | ≥ 1 `ready` | Cho nhập |
+| `disabled_empty` | 0 tài liệu | "Hãy tải tài liệu để bắt đầu hỏi." |
+| `disabled_processing` | 0 `ready`, ≥ 1 `processing` | "Đang xử lý n tài liệu, bạn có thể hỏi khi có ít nhất một tài liệu sẵn sàng." |
+| `disabled_no_ready` | 0 `ready`, 0 `processing` (chỉ còn `failed`/`no_text`) | "Chưa có tài liệu nào sẵn sàng để hỏi." |
+| `ready` | ≥ 1 `ready`, ô nhập có nội dung | Bộ đếm "n/2000 ký tự", nút Gửi bật |
+| `ready_empty` | ≥ 1 `ready`, ô rỗng | Nút Gửi tắt |
+| `over_limit` | Không thể xảy ra: `maxlength=2000` trên ô nhập (EC-08) | — |
 | `sending` | Đã gửi, chờ phản hồi | "Đang trả lời…", khóa nút gửi |
-| `error` | Lỗi mạng/AI | Giữ câu hỏi, nút "Gửi lại" |
+| `error` | Lỗi mạng / 503 | Giữ câu hỏi, nút "Gửi lại" |
 
 ### 3.8 Patterns use view
 | Mẫu | Nơi dùng | Lý do |
@@ -134,6 +137,48 @@ stateDiagram-v2
 | Repository (hàm truy vấn tập trung) | `db.py` + từng service | Cô lập SQL |
 | App factory | `create_app(settings)` | Test với cấu hình riêng |
 | Double-submit CSRF token | CMP-03 | Cookie SameSite + header |
+
+### 3.9 Algorithm view (bổ sung theo DF-09)
+
+**3.9.1 Cắt chunk** (`app/ingestion.chunk_page`, mỗi trang độc lập — chunk không vắt qua trang để số trang trích dẫn luôn đúng)
+```
+text ← gộp khoảng trắng của trang
+câu ← tách tại [.!?;:…] + khoảng trắng; câu > 800 ký tự bị cắt cứng mỗi 800
+với mỗi câu s:
+    nếu chunk hiện tại + s > 800: đóng chunk; mang sang các câu cuối (mỗi câu ≤ 100 ký tự, tổng ≤ 100 + độ dài câu) làm phần chồng lấn
+    thêm s
+tài liệu no_text nếu tổng văn bản các trang < 20 ký tự
+```
+
+**3.9.2 Truy xuất** (`app/retrieval.FtsRetriever`, ADR-004)
+```
+T ← content_terms(câu hỏi)                 # fold + bỏ stopword + bỏ trùng
+nếu T rỗng → []
+H ← content_terms(3 câu hỏi trước) \ T
+phạm vi ← tài liệu ready của user (∩ document_ids nếu có)
+N ← số chunk trong phạm vi;  idf(t) = ln(1 + N / max(df(t),1))
+ứng viên ← FTS5 MATCH ("t1" OR … OR "h1" …) trong phạm vi, 50 kết quả theo bm25
+rel(c) = Σ idf(t ∈ T ∩ c) / Σ idf(t ∈ T)          ∈ [0,1]
+giữ c nếu rel(c) ≥ 0.6
+xếp hạng theo rel + 0.1·|H ∩ c|/|H| + 0.1·[c thuộc tài liệu được trích dẫn đầu tiên ở lượt trước], rồi −bm25
+lấy ≤ 6 chunk, ≤ 2 chunk mỗi tài liệu
+```
+
+**3.9.3 Bộ sinh cục bộ và kiểm tra trích dẫn**
+```
+LocalExtractiveGenerator: với chunk thứ i (theo hạng): câu có tỷ lệ |T ∩ câu|/|T| cao nhất (> 0) → "- câu [i]"; bỏ câu trùng; tối đa 4 câu
+validate_citations(text): với mỗi [n]: giữ nếu 1 ≤ n ≤ số chunk, ngược lại xóa khỏi text;
+    citation = (n, chunk_id, document_id, tên, trang, 300 ký tự đầu) lấy từ chunk n trong CSDL
+không còn citation nào → outcome = not_found, answer = thông điệp FR-012
+```
+
+**3.9.4 Chỉ số theo tuần** (`app/metrics.weekly_metrics`) — tuần ISO (UTC) theo `turns.created_at`
+| Chỉ số | Định nghĩa SQL tương đương |
+|---|---|
+| active_users | `COUNT(DISTINCT conversations.user_id)` của các lượt trong tuần (người **hỏi**, không phải người đăng nhập) |
+| questions | `COUNT(turns)` trong tuần |
+| not_found_rate | `SUM(outcome='not_found') / questions`; 0 khi không có câu hỏi |
+| positive_feedback_rate | `up / (up + down)` của đánh giá trên các **lượt tạo trong tuần**; `null` nếu chưa có đánh giá |
 
 ## 4. Truy vết Stakeholder → Concern → Thiết kế → Yêu cầu
 | Concern | Thiết kế | Yêu cầu |
@@ -148,5 +193,14 @@ stateDiagram-v2
 2. Audit theo checklist IEEE 1016 / UML 2.0 bởi reviewer độc lập: [design_checklist_audit.md](design_checklist_audit.md).
 3. Test hợp đồng: test kiểm tra route FastAPI khớp `elements.yaml`/`openapi.yaml`.
 
-## 6. Rủi ro thiết kế
-Xem SAD §11.
+## 6. Rủi ro thiết kế và quyết định cho trường hợp biên (DF-12)
+Rủi ro: SAD §11.
+
+| Trường hợp (PRD §4.2) | Quyết định MVP | Owner |
+|---|---|---|
+| EC-06 phản hồi chậm + Hủy | Chế độ cục bộ P90 < 0,1 s nên không cần. Chế độ external: timeout cứng `CWD_ANSWER_TIMEOUT_S` = 15 s → 503 + "Gửi lại". Nút Hủy **hoãn** tới khi bật LLM ngoài | Tech Lead |
+| EC-09 câu hỏi không phải tiếng Việt | Truy xuất hoạt động với tiếng Anh (stopword Anh có sẵn); thông điệp hệ thống luôn tiếng Việt. Trả lời đúng ngôn ngữ câu hỏi chỉ có ở chế độ external | PO (OQ-010) |
+| EC-12 trùng tên file | Giữ cả hai (mỗi bản có id riêng, hiển thị thời điểm tải lên để phân biệt); không cảnh báo trong MVP | PO |
+| EC-15 phiên hết hạn | Giữ câu hỏi đang soạn trong `sessionStorage`, khôi phục sau khi đăng nhập (đã làm) | — |
+| EC-17 giới hạn chi phí | Không áp dụng ở chế độ cục bộ (không có chi phí theo câu hỏi). Khi bật external: thêm hạn mức và mã lỗi `usage.limit_reached` — **hoãn** | PO + IT |
+| Analytics PRD §5.2 | Ánh xạ sang dữ liệu sẵn có: `turns` (câu hỏi, outcome, độ trễ), `feedback`, `audit_log`, `documents` (trạng thái). Không có endpoint sự kiện riêng; `AnalyticsClient` trong UIUX v0.1 bị bỏ | PO |

@@ -68,10 +68,42 @@ Content-Type: application/json
 {"outcome": "not_found", "answer": "Không tìm thấy thông tin trong tài liệu đã tải lên. Bạn có thể thử diễn đạt khác hoặc kiểm tra tài liệu đã đủ chưa.", "citations": []}
 ```
 
-**Lỗi**
+**Lỗi của một file khi tải lên** (HTTP 200, lỗi nằm trong `results[]` — DF-06)
 ```json
-{"type": "about:blank", "title": "Sai định dạng, chỉ chấp nhận PDF.", "status": 422, "code": "file.wrong_type"}
+{"results": [{"filename": "ghi-chu.docx", "ok": false,
+              "error": {"code": "file.wrong_type", "message": "Sai định dạng, chỉ chấp nhận PDF."}}]}
 ```
+
+**Lỗi problem+json**
+```json
+{"type": "about:blank", "title": "Câu hỏi phải có từ 1 đến 2000 ký tự.", "status": 422, "code": "chat.invalid_question"}
+```
+
+## 4.1 Bảng mã lỗi (nguồn duy nhất của thông điệp: `app/errors.py`, `app/documents.py`)
+| Mã | HTTP | Nơi xuất hiện | Thông điệp tiếng Việt |
+|---|---|---|---|
+| auth.required | 401 | Mọi endpoint bảo vệ | Bạn cần đăng nhập để tiếp tục. |
+| auth.invalid_credentials | 401 | login | Tên đăng nhập hoặc mật khẩu không đúng. |
+| auth.too_many_attempts | 429 | login | Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau 5 phút. |
+| auth.forbidden | 403 | getWeeklyMetrics | Bạn không có quyền thực hiện thao tác này. |
+| csrf.invalid | 403 | Mọi POST/PUT/DELETE trừ login | Phiên làm việc không hợp lệ. Vui lòng tải lại trang. |
+| not_found | 404 | Tài nguyên không tồn tại hoặc của người khác | Không tìm thấy dữ liệu yêu cầu. |
+| file.wrong_type | 200 (trong results[]) | uploadDocuments | Sai định dạng, chỉ chấp nhận PDF. |
+| file.too_large | 200 (trong results[]) | uploadDocuments | Tệp vượt dung lượng cho phép (tối đa N MB). |
+| docs.limit_reached | 200 (trong results[]) | uploadDocuments | Đã đạt số lượng tài liệu tối đa của workspace. |
+| chat.invalid_question | 422 | askQuestion | Câu hỏi phải có từ 1 đến 2000 ký tự. |
+| chat.no_ready_documents | 409 | askQuestion | Chưa có tài liệu nào sẵn sàng để hỏi. |
+| chat.ai_unavailable | 503 | askQuestion (chế độ external) | Dịch vụ trả lời đang gặp sự cố. Vui lòng thử lại. |
+| feedback.invalid | 422 | setFeedback | Đánh giá không hợp lệ. |
+| validation.error | 422 | Body/query sai kiểu | Dữ liệu gửi lên không hợp lệ. |
+| internal | 500 | Lỗi không lường trước (mọi endpoint) | Đã có lỗi xảy ra. Vui lòng thử lại sau. |
+
+Mã trạng thái tài liệu (`Document.error_code`): `pdf.corrupt` (PDF hỏng), `pdf.encrypted` (có mật khẩu), `ingest.interrupted` (file gốc mất khi xử lý lại sau khởi động — DF-15).
+
+## 4.2 Ngoài phạm vi API MVP (DF-25)
+- Không có endpoint liệt kê hội thoại (US-404 hoãn). Web UI giữ `conversation_id` hiện tại trong `sessionStorage`.
+- Không có endpoint tóm tắt (US-601 hoãn), không có endpoint retry tài liệu (xóa và tải lại).
+- Không có idempotency key cho câu hỏi; "Gửi lại" sau lỗi mạng có thể tạo lượt trùng — chấp nhận ở MVP (DF-16).
 
 ## 5. Kịch bản chất lượng API
 | ID | Kịch bản | Thước đo |

@@ -39,6 +39,8 @@
 | PRD → Design | 19 FR đều có CMP/endpoint | PASS | — |
 | ADR | 8 ADR (≥ 3) đều được SAD §9 tham chiếu | PASS | — |
 | UI/UX | mọi màn hình có prototype | PASS | — |
-| Code | module và route khớp registry | SKIP | chưa có app/main.py (trước Phase 6) |
+| Code | mọi module của CMP tồn tại | PASS | — |
+| Code ↔ openapi.yaml | enum Problem.code = mã lỗi trong app/errors.py | PASS | chỉ ở openapi [], chỉ ở code [] |
+| Code | route FastAPI = endpoint registry | PASS | thiếu [], thừa [] |
 
-**Tổng:** 34 PASS · 0 FAIL · 1 SKIP
+**Tổng:** 37 PASS · 0 FAIL · 0 SKIP
