@@ -1,0 +1,108 @@
+# Element registry — single source of truth for design element IDs.
+# tools/cross_view_audit.py checks every view (SAD, openapi.yaml, data/model.md,
+# diagrams, app code) against this file.
+system: Chat với tài liệu (CWD) MVP
+version: 0.2
+
+actors:
+  - id: ACT-01
+    name: Người dùng (Linh)
+    role: user
+  - id: ACT-02
+    name: Quản lý dự án (Hùng)
+    role: manager
+  - id: ACT-03
+    name: Quản trị / IT (Mai)
+    role: admin-cli
+  - id: ACT-04
+    name: Anthropic API
+    role: external-system
+
+components:
+  - id: CMP-01
+    name: Web UI
+    module: app/web
+    responsibility: SPA tiếng Việt — đăng nhập, workspace, panel trích dẫn, dashboard
+  - id: CMP-02
+    name: API Gateway
+    module: app/main.py
+    responsibility: Tạo ứng dụng, định tuyến, lỗi problem+json, phục vụ file tĩnh
+  - id: CMP-03
+    name: Auth & Session
+    module: app/auth.py
+    responsibility: Đăng nhập, phiên, CSRF, giới hạn đăng nhập sai, phân quyền vai trò
+  - id: CMP-04
+    name: Document Service
+    module: app/documents.py
+    responsibility: Tải lên, kiểm tra file, danh sách, xóa tài liệu
+  - id: CMP-05
+    name: Ingestion Pipeline
+    module: app/ingestion.py
+    responsibility: Trích văn bản PDF, cắt chunk, lập chỉ mục FTS, cập nhật trạng thái
+  - id: CMP-06
+    name: Retriever
+    module: app/retrieval.py
+    responsibility: Chuẩn hóa tiếng Việt, truy vấn FTS5, tính điểm liên quan IDF, lọc phạm vi
+  - id: CMP-07
+    name: Answer Generator
+    module: app/generation.py
+    responsibility: ModelGateway — LocalExtractiveGenerator (mặc định) và AnthropicGenerator
+  - id: CMP-08
+    name: Chat Service
+    module: app/chat.py
+    responsibility: Hội thoại, điều phối truy xuất và sinh, kiểm tra trích dẫn, lưu lượt hỏi đáp
+  - id: CMP-09
+    name: Feedback & Metrics
+    module: app/metrics.py
+    responsibility: Ghi đánh giá câu trả lời, thống kê sử dụng theo tuần
+  - id: CMP-10
+    name: Audit Log
+    module: app/audit.py
+    responsibility: Ghi nhật ký kiểm toán không chứa nội dung
+  - id: CMP-11
+    name: Persistence
+    module: app/db.py
+    responsibility: Kết nối SQLite, schema, file PDF trên đĩa
+  - id: CMP-12
+    name: Admin CLI
+    module: app/cli.py
+    responsibility: Tạo người dùng, dữ liệu demo, sao lưu, khôi phục, dọn nhật ký
+  - id: CMP-13
+    name: Configuration
+    module: app/config.py
+    responsibility: Đọc biến môi trường CWD_*
+
+entities:
+  - {id: ENT-01, name: User, table: users}
+  - {id: ENT-02, name: Session, table: sessions}
+  - {id: ENT-03, name: Document, table: documents}
+  - {id: ENT-04, name: Chunk, table: chunks}
+  - {id: ENT-05, name: Conversation, table: conversations}
+  - {id: ENT-06, name: Turn, table: turns}
+  - {id: ENT-07, name: Feedback, table: feedback}
+  - {id: ENT-08, name: AuditEvent, table: audit_log}
+
+endpoints:
+  - {method: GET, path: /api/health, operationId: health, component: CMP-02, req: [NFR-005]}
+  - {method: GET, path: /api/config, operationId: getConfig, component: CMP-02, req: [FR-003]}
+  - {method: POST, path: /api/auth/login, operationId: login, component: CMP-03, req: [FR-001, FR-019, NFR-010]}
+  - {method: POST, path: /api/auth/logout, operationId: logout, component: CMP-03, req: [FR-002]}
+  - {method: GET, path: /api/auth/me, operationId: getMe, component: CMP-03, req: [FR-002]}
+  - {method: GET, path: /api/documents, operationId: listDocuments, component: CMP-04, req: [FR-007]}
+  - {method: POST, path: /api/documents, operationId: uploadDocuments, component: CMP-04, req: [FR-004, FR-005, FR-006, FR-019]}
+  - {method: GET, path: "/api/documents/{document_id}", operationId: getDocument, component: CMP-04, req: [FR-006, NFR-004]}
+  - {method: DELETE, path: "/api/documents/{document_id}", operationId: deleteDocument, component: CMP-04, req: [FR-008, FR-019]}
+  - {method: GET, path: "/api/chunks/{chunk_id}", operationId: getChunk, component: CMP-08, req: [FR-013]}
+  - {method: POST, path: /api/conversations, operationId: createConversation, component: CMP-08, req: [FR-016]}
+  - {method: GET, path: "/api/conversations/{conversation_id}", operationId: getConversation, component: CMP-08, req: [FR-016]}
+  - {method: POST, path: "/api/conversations/{conversation_id}/questions", operationId: askQuestion, component: CMP-08, req: [FR-009, FR-010, FR-011, FR-012, FR-013, FR-014, FR-015]}
+  - {method: PUT, path: "/api/turns/{turn_id}/feedback", operationId: setFeedback, component: CMP-09, req: [FR-017]}
+  - {method: GET, path: /api/metrics/weekly, operationId: getWeeklyMetrics, component: CMP-09, req: [FR-018]}
+
+screens:
+  - {id: SCR-01, name: Đăng nhập, prototype: UI_UX_design/html_design/01_login.html}
+  - {id: SCR-02, name: Workspace, prototype: UI_UX_design/html_design/02_workspace.html}
+  - {id: SCR-03, name: Panel trích dẫn, prototype: UI_UX_design/html_design/03_source_panel.html}
+  - {id: SCR-04, name: Xác nhận xóa, prototype: UI_UX_design/html_design/04_confirm_delete.html}
+  - {id: SCR-05, name: Dashboard sử dụng, prototype: UI_UX_design/html_design/05_usage_dashboard.html}
+  - {id: SCR-06, name: Phiên hết hạn, prototype: UI_UX_design/html_design/06_session_expired.html}

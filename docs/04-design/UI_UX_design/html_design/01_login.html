@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCR-01 Đăng nhập — Chat với tài liệu</title>
+<meta name="description" content="Màn hình đăng nhập với thông báo lỗi không tiết lộ sự tồn tại của tài khoản.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Design tokens (SDD §3.8.1) ===== */
+:root{
+  --color-primary:#1D4ED8; --color-primary-hover:#1E40AF; --color-primary-soft:#DBEAFE;
+  --color-text:#111827; --color-text-muted:#4B5563;
+  --color-surface:#FFFFFF; --color-bg:#F3F4F6; --color-border:#D1D5DB; --color-border-soft:#E5E7EB;
+  --color-success:#047857; --color-success-soft:#D1FAE5;
+  --color-warning:#B45309; --color-warning-soft:#FEF3C7;
+  --color-danger:#B91C1C; --color-danger-soft:#FEE2E2;
+  --color-info-soft:#EFF6FF;
+  --focus-ring:2px solid #1D4ED8;
+  --font-family:"Be Vietnam Pro","Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-body:16px; --font-small:14px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px;
+  --radius-sm:6px; --radius-md:10px;
+  --motion-fast:150ms;
+  --shadow-sm:0 1px 2px rgba(17,24,39,.08); --shadow-lg:0 12px 32px rgba(17,24,39,.18);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-family);font-size:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:var(--focus-ring);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== Buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;min-width:44px;padding:0 var(--space-4);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text);font-weight:600;cursor:pointer;transition:background var(--motion-fast),border-color var(--motion-fast)}
+.btn:hover{background:var(--color-bg)}
+.btn:active{background:var(--color-border-soft)}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--color-primary);border-color:var(--color-primary);color:#fff}
+.btn-primary:hover{background:var(--color-primary-hover)}
+.btn-primary:active{background:#1E3A8A}
+.btn-danger{background:var(--color-danger);border-color:var(--color-danger);color:#fff}
+.btn-danger:hover{background:#991B1B}
+.btn-ghost{border-color:transparent;background:transparent}
+.btn-sm{min-height:44px;font-size:var(--font-small);padding:0 var(--space-3)}
+.link{background:none;border:0;padding:0;color:var(--color-primary);font-weight:600;text-decoration:underline;cursor:pointer;min-height:44px}
+
+/* ===== Header ===== */
+.app-header{height:56px;background:var(--color-surface);border-bottom:1px solid var(--color-border);display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-4);flex:none;position:relative;z-index:20}
+.brand{display:flex;align-items:center;gap:var(--space-3);font-weight:700;font-size:18px;text-decoration:none;color:var(--color-text)}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--color-primary);color:#fff;display:grid;place-items:center;font-size:18px}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-3);background:none;border:1px solid transparent;border-radius:var(--radius-sm);cursor:pointer;font-weight:600}
+.user-btn:hover{background:var(--color-bg)}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--color-primary-soft);color:var(--color-primary);display:grid;place-items:center;font-size:var(--font-small);font-weight:700}
+.menu{position:absolute;right:0;top:100%;min-width:220px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:var(--space-2);z-index:30}
+.menu a,.menu button{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:44px;padding:0 var(--space-3);background:none;border:0;border-radius:var(--radius-sm);text-align:left;text-decoration:none;color:var(--color-text);cursor:pointer}
+.menu a:hover,.menu button:hover{background:var(--color-bg)}
+
+/* ===== Badges (icon + chữ + màu) ===== */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-small);font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.badge.ready{color:var(--color-success);background:var(--color-success-soft)}
+.badge.processing,.badge.uploading{color:var(--color-primary);background:var(--color-primary-soft)}
+.badge.error,.badge.no_text,.badge.password{color:var(--color-warning);background:var(--color-warning-soft)}
+.badge.error{color:var(--color-danger);background:var(--color-danger-soft)}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== Banner / Toast ===== */
+.banner{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);border:1px solid;font-size:var(--font-small)}
+.banner .b-msg{flex:1}
+.banner.error{background:var(--color-danger-soft);border-color:#FCA5A5;color:#7F1D1D}
+.banner.warning{background:var(--color-warning-soft);border-color:#FCD34D;color:#78350F}
+.banner.info{background:var(--color-info-soft);border-color:#93C5FD;color:#1E3A8A}
+.banner.success{background:var(--color-success-soft);border-color:#6EE7B7;color:#064E3B}
+.banner .link{color:inherit;min-height:28px}
+.toasts{position:fixed;right:var(--space-4);bottom:var(--space-4);display:flex;flex-direction:column;gap:var(--space-2);z-index:100;max-width:380px}
+.toast{background:#111827;color:#fff;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);font-size:var(--font-small);display:flex;gap:var(--space-3);align-items:center}
+.toast.error{background:var(--color-danger)}
+.toast button{background:none;border:0;color:#fff;text-decoration:underline;cursor:pointer;min-height:28px}
+
+/* ===== Forms ===== */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-4)}
+.field label{font-weight:600;font-size:var(--font-small)}
+.input{min-height:44px;padding:0 var(--space-3);border:1px solid #6B7280;border-radius:var(--radius-sm);background:#fff;width:100%}
+.input:hover{border-color:var(--color-text)}
+.input[aria-invalid="true"]{border-color:var(--color-danger)}
+
+/* ===== Prototype toolbar (không thuộc sản phẩm) ===== */
+.proto-bar{background:#1F2937;color:#E5E7EB;font-size:13px;padding:6px var(--space-4);display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center;flex:none}
+.proto-bar strong{color:#fff;margin-right:var(--space-2)}
+.proto-bar a{color:#93C5FD}
+.proto-bar button{background:#374151;color:#fff;border:1px solid #4B5563;border-radius:6px;padding:2px 10px;cursor:pointer;font-size:13px;min-height:28px}
+.proto-bar button:hover{background:#4B5563}
+.proto-bar button[aria-pressed="true"]{background:#2563EB;border-color:#60A5FA}
+.proto-bar .sep{opacity:.4}
+
+body.login{min-height:100vh;display:flex;flex-direction:column}
+.stage{flex:1;display:grid;place-items:center;padding:var(--space-5) var(--space-4)}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);width:100%;max-width:420px;padding:var(--space-6)}
+.card .head{text-align:center;margin-bottom:var(--space-5)}
+.card .logo{width:48px;height:48px;font-size:26px;margin:0 auto var(--space-3);border-radius:12px}
+.card h1{margin:0;font-size:24px}
+.card .sub{margin:var(--space-1) 0 0;color:var(--color-text-muted)}
+.pw-wrap{position:relative}
+.pw-wrap .btn{position:absolute;right:0;top:0;border:0;background:none}
+.divider{display:flex;align-items:center;gap:var(--space-3);color:var(--color-text-muted);font-size:var(--font-small);margin:var(--space-4) 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--color-border)}
+.field-err{color:var(--color-danger);font-size:var(--font-small);font-weight:600}
+.foot{margin-top:var(--space-5);text-align:center;font-size:13px;color:var(--color-text-muted)}
+
+</style>
+</head>
+<body class="login">
+
+<div class="proto-bar"><strong>Bản mẫu SCR-01 · Đăng nhập</strong><span>Trạng thái:</span>
+<button type="button" data-s="idle" aria-pressed="true">Mặc định</button><button type="button" data-s="error" aria-pressed="false">Sai thông tin</button><button type="button" data-s="loading" aria-pressed="false">Đang đăng nhập</button><button type="button" data-s="locked" aria-pressed="false">Chưa được cấp quyền</button>
+<span class="sep">|</span><span>Thử: tên <b>linh</b> / mật khẩu <b>demo</b></span><span class="sep">|</span><a href="index.html">Danh mục màn hình</a></div>
+<div class="stage"><main class="card" aria-labelledby="t">
+ <div class="head"><div class="logo" aria-hidden="true">💬</div><h1 id="t">Chat với tài liệu</h1><p class="sub">Hỏi đáp trên tài liệu dự án của bạn</p></div>
+ <div id="errBox" class="banner error hidden" role="alert" style="margin-bottom:16px" data-testid="login-error"><span aria-hidden="true">⚠</span><span class="b-msg" id="errMsg"></span></div>
+ <form id="f" novalidate>
+  <div class="field"><label for="u">Tên đăng nhập / Email</label><input class="input" id="u" name="u" type="text" autocomplete="username" aria-describedby="uErr" data-testid="login-user"><span class="field-err hidden" id="uErr">Vui lòng nhập tên đăng nhập hoặc email.</span></div>
+  <div class="field"><label for="p">Mật khẩu</label><div class="pw-wrap"><input class="input" id="p" name="p" type="password" autocomplete="current-password" aria-describedby="pErr" data-testid="login-pass" style="padding-right:96px"><button type="button" class="btn btn-sm" id="showPw" aria-pressed="false" aria-label="Hiện mật khẩu">Hiện</button></div><span class="field-err hidden" id="pErr">Vui lòng nhập mật khẩu.</span></div>
+  <button class="btn btn-primary" id="go" type="submit" style="width:100%" data-testid="login-submit">Đăng nhập</button>
+ </form>
+ <div class="divider">hoặc</div>
+ <button class="btn" type="button" style="width:100%" id="sso">🏢 Đăng nhập bằng tài khoản công ty (SSO) <span style="font-weight:400;color:var(--color-text-muted)">[TBD: OQ-006]</span></button>
+ <p class="foot">Chỉ dành cho người dùng được cấp quyền. Cần hỗ trợ? Liên hệ quản trị hệ thống.</p>
+</main></div>
+<script>
+
+(function(){
+var MSG='Thông tin không đúng hoặc tài khoản chưa được cấp quyền.';
+function $(i){return document.getElementById(i)}
+function set(s){
+ var b=document.querySelectorAll('.proto-bar [data-s]');for(var i=0;i<b.length;i++)b[i].setAttribute('aria-pressed',b[i].dataset.s===s);
+ $('errBox').classList.toggle('hidden',s!=='error'&&s!=='locked');
+ $('errMsg').textContent=MSG; /* không tiết lộ tài khoản có tồn tại (AC-101.1) */
+ var g=$('go');g.disabled=s==='loading';g.textContent=s==='loading'?'Đang đăng nhập…':'Đăng nhập';
+ $('u').setAttribute('aria-invalid',s==='error');$('p').setAttribute('aria-invalid',s==='error');
+ if(s==='error'||s==='locked')$('errBox').focus&&0;
+}
+document.querySelector('.proto-bar').addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(b)set(b.dataset.s)});
+$('showPw').onclick=function(){var p=$('p'),h=p.type==='password';p.type=h?'text':'password';this.textContent=h?'Ẩn':'Hiện';this.setAttribute('aria-pressed',h);this.setAttribute('aria-label',h?'Ẩn mật khẩu':'Hiện mật khẩu')};
+$('f').addEventListener('submit',function(e){
+ e.preventDefault();
+ var u=$('u').value.trim(),p=$('p').value,bad=false;
+ $('uErr').classList.toggle('hidden',!!u);$('pErr').classList.toggle('hidden',!!p);
+ $('u').setAttribute('aria-invalid',!u);$('p').setAttribute('aria-invalid',!p);
+ if(!u){$('u').focus();bad=true}else if(!p){$('p').focus();bad=true}
+ if(bad)return;
+ set('loading');
+ setTimeout(function(){ if(u.toLowerCase()==='linh'&&p==='demo')location.href='02_workspace.html'; else {set('error');$('p').value='';$('p').focus()} },900);
+});
+$('sso').onclick=function(){alert('Luồng SSO chưa được chốt [TBD: OQ-006].')};
+})();
+</script>
+</body>
+</html>

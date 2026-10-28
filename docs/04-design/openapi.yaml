@@ -1,0 +1,455 @@
+openapi: 3.1.0
+info:
+  title: Chat với tài liệu API
+  version: 0.2.0
+  description: |
+    Hợp đồng API cho MVP "Chat với tài liệu" (contract-first, Phase 4).
+    Xác thực bằng cookie phiên `cwd_session` (ADR-007). Mọi thao tác ghi
+    (trừ login) yêu cầu header `X-CSRF-Token`. Lỗi trả về dạng
+    `application/problem+json` (RFC 9457) với trường `code` ổn định.
+    Tài nguyên không thuộc người dùng hiện tại trả 404 (NFR-004).
+servers:
+  - url: http://127.0.0.1:8000
+security:
+  - sessionCookie: []
+tags:
+  - name: system
+  - name: auth
+  - name: documents
+  - name: chat
+  - name: metrics
+
+paths:
+  /api/health:
+    get:
+      tags: [system]
+      operationId: health
+      security: []
+      summary: Kiểm tra sức khỏe (NFR-005)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: {type: string, enum: [ok]}
+  /api/config:
+    get:
+      tags: [system]
+      operationId: getConfig
+      security: []
+      summary: Cấu hình công khai, gồm chế độ xử lý AI (FR-003)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/PublicConfig"}
+
+  /api/auth/login:
+    post:
+      tags: [auth]
+      operationId: login
+      security: []
+      summary: Đăng nhập (FR-001)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username: {type: string, minLength: 1, maxLength: 64}
+                password: {type: string, minLength: 1, maxLength: 256}
+      responses:
+        "200":
+          description: Đăng nhập thành công; đặt cookie `cwd_session`
+          headers:
+            Set-Cookie:
+              schema: {type: string}
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Me"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "429": {$ref: "#/components/responses/Problem"}
+  /api/auth/logout:
+    post:
+      tags: [auth]
+      operationId: logout
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      responses:
+        "204": {description: Đã đăng xuất}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+  /api/auth/me:
+    get:
+      tags: [auth]
+      operationId: getMe
+      responses:
+        "200":
+          description: Người dùng hiện tại
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Me"}
+        "401": {$ref: "#/components/responses/Problem"}
+
+  /api/documents:
+    get:
+      tags: [documents]
+      operationId: listDocuments
+      summary: Danh sách tài liệu của workspace (FR-007)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [documents]
+                properties:
+                  documents:
+                    type: array
+                    items: {$ref: "#/components/schemas/Document"}
+        "401": {$ref: "#/components/responses/Problem"}
+    post:
+      tags: [documents]
+      operationId: uploadDocuments
+      summary: Tải lên một hoặc nhiều PDF (FR-004, FR-005)
+      description: |
+        Mỗi file được xử lý độc lập. Phản hồi 200 chứa kết quả từng file;
+        file bị từ chối có `error.code` là `file.wrong_type`, `file.too_large`
+        hoặc `docs.limit_reached`. File hợp lệ có trạng thái `processing` và
+        được xử lý nền (FR-006).
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [files]
+              properties:
+                files:
+                  type: array
+                  items: {type: string, format: binary}
+      responses:
+        "200":
+          description: Kết quả từng file
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [results]
+                properties:
+                  results:
+                    type: array
+                    items: {$ref: "#/components/schemas/UploadResult"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+  /api/documents/{document_id}:
+    parameters:
+      - {name: document_id, in: path, required: true, schema: {type: string}}
+    get:
+      tags: [documents]
+      operationId: getDocument
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Document"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+    delete:
+      tags: [documents]
+      operationId: deleteDocument
+      summary: Xóa tài liệu và toàn bộ chunk (FR-008)
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      responses:
+        "204": {description: Đã xóa}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /api/chunks/{chunk_id}:
+    parameters:
+      - {name: chunk_id, in: path, required: true, schema: {type: integer}}
+    get:
+      tags: [chat]
+      operationId: getChunk
+      summary: Đoạn văn bản gốc của một trích dẫn (AC-305.2)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [chunk_id, document_id, document_name, page, text]
+                properties:
+                  chunk_id: {type: integer}
+                  document_id: {type: string}
+                  document_name: {type: string}
+                  page: {type: integer}
+                  text: {type: string}
+        "401": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /api/conversations:
+    post:
+      tags: [chat]
+      operationId: createConversation
+      summary: Tạo hội thoại mới (FR-016)
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      responses:
+        "201":
+          description: Đã tạo
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Conversation"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+  /api/conversations/{conversation_id}:
+    parameters:
+      - {name: conversation_id, in: path, required: true, schema: {type: string}}
+    get:
+      tags: [chat]
+      operationId: getConversation
+      summary: Toàn bộ lượt hỏi đáp theo thứ tự (FR-016)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Conversation"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+  /api/conversations/{conversation_id}/questions:
+    parameters:
+      - {name: conversation_id, in: path, required: true, schema: {type: string}}
+    post:
+      tags: [chat]
+      operationId: askQuestion
+      summary: Đặt câu hỏi (FR-009..FR-015)
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [question]
+              properties:
+                question: {type: string, description: "1–2000 ký tự sau khi bỏ khoảng trắng"}
+                document_ids:
+                  type: array
+                  description: Phạm vi tài liệu (FR-015); bỏ trống = tất cả tài liệu sẵn sàng
+                  items: {type: string}
+      responses:
+        "200":
+          description: Lượt hỏi đáp đã lưu
+          content:
+            application/json:
+              schema: {$ref: "#/components/schemas/Turn"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+        "422": {$ref: "#/components/responses/Problem"}
+        "503": {$ref: "#/components/responses/Problem"}
+
+  /api/turns/{turn_id}/feedback:
+    parameters:
+      - {name: turn_id, in: path, required: true, schema: {type: string}}
+    put:
+      tags: [chat]
+      operationId: setFeedback
+      summary: Đánh giá câu trả lời (FR-017)
+      parameters: [{$ref: "#/components/parameters/Csrf"}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rating]
+              properties:
+                rating: {type: string, enum: [up, down]}
+                reason: {type: [string, "null"], maxLength: 500}
+      responses:
+        "200":
+          description: Đã lưu
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [turn_id, rating]
+                properties:
+                  turn_id: {type: string}
+                  rating: {type: string, enum: [up, down]}
+                  reason: {type: [string, "null"]}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "422": {$ref: "#/components/responses/Problem"}
+
+  /api/metrics/weekly:
+    get:
+      tags: [metrics]
+      operationId: getWeeklyMetrics
+      summary: Số liệu sử dụng theo tuần ISO, chỉ vai trò manager (FR-018)
+      parameters:
+        - {name: weeks, in: query, required: false, schema: {type: integer, minimum: 1, maximum: 26, default: 8}}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [weeks]
+                properties:
+                  weeks:
+                    type: array
+                    items: {$ref: "#/components/schemas/WeeklyMetric"}
+        "401": {$ref: "#/components/responses/Problem"}
+        "403": {$ref: "#/components/responses/Problem"}
+
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: cwd_session
+  parameters:
+    Csrf:
+      name: X-CSRF-Token
+      in: header
+      required: true
+      schema: {type: string}
+  responses:
+    Problem:
+      description: Lỗi
+      content:
+        application/problem+json:
+          schema: {$ref: "#/components/schemas/Problem"}
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, code]
+      properties:
+        type: {type: string, example: about:blank}
+        title: {type: string, description: Thông báo tiếng Việt cho người dùng}
+        status: {type: integer}
+        code:
+          type: string
+          description: Mã ổn định để UI ánh xạ
+          enum:
+            - auth.invalid_credentials
+            - auth.required
+            - auth.too_many_attempts
+            - auth.forbidden
+            - csrf.invalid
+            - not_found
+            - file.wrong_type
+            - file.too_large
+            - docs.limit_reached
+            - chat.invalid_question
+            - chat.no_ready_documents
+            - chat.ai_unavailable
+            - feedback.invalid
+            - validation.error
+        detail: {type: string}
+    PublicConfig:
+      type: object
+      required: [ai_mode, max_file_mb, max_docs, max_question_chars]
+      properties:
+        ai_mode: {type: string, enum: [local, external]}
+        max_file_mb: {type: integer}
+        max_docs: {type: integer}
+        max_question_chars: {type: integer}
+    Me:
+      type: object
+      required: [id, username, role, csrf_token]
+      properties:
+        id: {type: integer}
+        username: {type: string}
+        role: {type: string, enum: [user, manager]}
+        csrf_token: {type: string}
+    Document:
+      type: object
+      required: [id, filename, size_bytes, status, created_at]
+      properties:
+        id: {type: string}
+        filename: {type: string}
+        size_bytes: {type: integer}
+        page_count: {type: [integer, "null"]}
+        status: {type: string, enum: [processing, ready, failed, no_text]}
+        error_code: {type: [string, "null"]}
+        error_message: {type: [string, "null"], description: Lý do tiếng Việt khi failed/no_text}
+        created_at: {type: string, format: date-time}
+    UploadResult:
+      type: object
+      required: [filename, ok]
+      properties:
+        filename: {type: string}
+        ok: {type: boolean}
+        document: {$ref: "#/components/schemas/Document"}
+        error:
+          type: object
+          properties:
+            code: {type: string}
+            message: {type: string}
+    Citation:
+      type: object
+      required: [index, chunk_id, document_id, document_name, page, snippet, document_deleted]
+      properties:
+        index: {type: integer, description: "Số [n] trong câu trả lời"}
+        chunk_id: {type: integer}
+        document_id: {type: string}
+        document_name: {type: string}
+        page: {type: integer}
+        snippet: {type: string, maxLength: 300}
+        document_deleted: {type: boolean}
+    Turn:
+      type: object
+      required: [id, question, answer, outcome, citations, latency_ms, created_at]
+      properties:
+        id: {type: string}
+        question: {type: string}
+        answer: {type: string}
+        outcome: {type: string, enum: [answered, not_found]}
+        citations:
+          type: array
+          items: {$ref: "#/components/schemas/Citation"}
+        document_ids:
+          type: [array, "null"]
+          items: {type: string}
+        warning:
+          type: [string, "null"]
+          description: "`docs_processing` khi còn tài liệu đang xử lý trong phạm vi (AC-203.4)"
+        latency_ms: {type: integer}
+        feedback: {type: [string, "null"], enum: [up, down, null]}
+        created_at: {type: string, format: date-time}
+    Conversation:
+      type: object
+      required: [id, created_at, turns]
+      properties:
+        id: {type: string}
+        created_at: {type: string, format: date-time}
+        turns:
+          type: array
+          items: {$ref: "#/components/schemas/Turn"}
+    WeeklyMetric:
+      type: object
+      required: [week, active_users, questions, not_found_rate, positive_feedback_rate]
+      properties:
+        week: {type: string, example: 2026-W44}
+        active_users: {type: integer}
+        questions: {type: integer}
+        not_found_rate: {type: number}
+        positive_feedback_rate: {type: [number, "null"]}

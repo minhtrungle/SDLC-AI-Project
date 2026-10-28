@@ -1,0 +1,216 @@
+<mxfile host="tools/gen_diagrams.py" version="1">
+  <diagram name="Hỏi đáp" id="Hỏi_đáp">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1654" pageHeight="1169">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" value="ACT-01 Người dùng" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="CMP-01 Web UI" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="230" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="CMP-03 Auth &amp; Session" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="420" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="CMP-08 Chat Service" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="610" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="CMP-06 Retriever" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="800" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="CMP-07 Answer Generator" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="990" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" value="CMP-11 Persistence" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="40" width="160" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" value="1: nhập câu hỏi, Enter" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="110" as="sourcePoint" />
+            <mxPoint x="310" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c10" value="2: POST /api/conversations/{id}/questions + X-CSRF-Token" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="154" as="sourcePoint" />
+            <mxPoint x="690" y="154" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c11" value="3: current_user() + require_csrf()" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="198" as="sourcePoint" />
+            <mxPoint x="500" y="198" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c12" value="4: CurrentUser | 401 / 403" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="242" as="sourcePoint" />
+            <mxPoint x="690" y="242" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c13" value="5: kiểm tra hội thoại thuộc user, có tài liệu ready" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="286" as="sourcePoint" />
+            <mxPoint x="1260" y="286" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c14" value="6: OK | 404 / 409" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1260" y="330" as="sourcePoint" />
+            <mxPoint x="690" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c15" value="7: retrieve(question, 3 câu trước, phạm vi)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="374" as="sourcePoint" />
+            <mxPoint x="880" y="374" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c16" value="8: FTS5 MATCH + df(t) lọc user_id/status/phạm vi" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="418" as="sourcePoint" />
+            <mxPoint x="1260" y="418" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c17" value="9: ứng viên" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1260" y="462" as="sourcePoint" />
+            <mxPoint x="880" y="462" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c18" value="10: chunk có rel ≥ 0.6 (≤ 6, ≤ 2/tài liệu)" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="506" as="sourcePoint" />
+            <mxPoint x="690" y="506" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c19" value="alt [không có chunk]" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="640" y="550" width="800" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" value="11a: outcome = not_found, không gọi bộ sinh" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="590" as="sourcePoint" />
+            <mxPoint x="750" y="606" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c21" value="alt [có chunk]" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="640" y="650" width="800" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" value="11b: generate(question, chunks)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="690" as="sourcePoint" />
+            <mxPoint x="1070" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c23" value="12: text có [n]" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1070" y="734" as="sourcePoint" />
+            <mxPoint x="690" y="734" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c24" value="13: validate_citations — giữ [n] hợp lệ, tên/trang từ CSDL" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="778" as="sourcePoint" />
+            <mxPoint x="750" y="794" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c25" value="14: INSERT turns (latency_ms, citations_json)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="832" as="sourcePoint" />
+            <mxPoint x="1260" y="832" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c26" value="15: 200 Turn {answer, outcome, citations, warning}" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="876" as="sourcePoint" />
+            <mxPoint x="310" y="876" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c27" value="16: hiển thị câu trả lời + trích dẫn [n]" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="920" as="sourcePoint" />
+            <mxPoint x="120" y="920" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Đăng nhập" id="Đăng_nhập">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1654" pageHeight="1169">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" value="ACT-01 Người dùng" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="CMP-01 Web UI" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="230" y="40" width="160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="CMP-03 Auth &amp; Session" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="420" y="40" width="160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="CMP-10 Audit Log" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="610" y="40" width="160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="CMP-11 Persistence" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;size=40;" vertex="1" parent="1">
+          <mxGeometry x="800" y="40" width="160" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="1: tên đăng nhập + mật khẩu" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="110" as="sourcePoint" />
+            <mxPoint x="310" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c8" value="2: POST /api/auth/login" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="154" as="sourcePoint" />
+            <mxPoint x="500" y="154" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c9" value="3: LoginLimiter.check(username) — 429 nếu ≥ 5 lần sai / 5 phút" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="198" as="sourcePoint" />
+            <mxPoint x="560" y="214" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c10" value="4: SELECT users WHERE username" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="242" as="sourcePoint" />
+            <mxPoint x="880" y="242" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c11" value="5: verify_password (PBKDF2, so sánh hằng thời gian)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="286" as="sourcePoint" />
+            <mxPoint x="560" y="302" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c12" value="6: record(auth.login_success | auth.login_failed)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="330" as="sourcePoint" />
+            <mxPoint x="690" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c13" value="7: INSERT sessions(token_hash, csrf_token)" style="endArrow=block;endFill=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="374" as="sourcePoint" />
+            <mxPoint x="880" y="374" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c14" value="8: 200 Me + Set-Cookie cwd_session (HttpOnly, SameSite=Strict) | 401" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="418" as="sourcePoint" />
+            <mxPoint x="310" y="418" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c15" value="9: chuyển tới workspace" style="endArrow=open;dashed=1;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="462" as="sourcePoint" />
+            <mxPoint x="120" y="462" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
