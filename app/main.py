@@ -10,10 +10,11 @@ from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app import auth, documents
+from app import auth, chat, documents
 from app.config import Settings
 from app.db import init_schema
 from app.errors import install_handlers
+from app.generation import build_generator
 from app.ingestion import recover_pending
 from app.security import LoginLimiter
 
@@ -46,9 +47,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.login_limiter = LoginLimiter()
+    app.state.generator = build_generator(settings)
     install_handlers(app)
     app.include_router(auth.router)
     app.include_router(documents.router)
+    app.include_router(chat.router)
 
     @app.middleware("http")
     async def headers_and_access_log(request: Request, call_next):
@@ -75,7 +78,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/api/config")
     def get_config():
         return {
-            "ai_mode": "local",
+            "ai_mode": app.state.generator.mode,
             "max_file_mb": settings.max_file_mb,
             "max_docs": settings.max_docs,
             "max_question_chars": settings.max_question_chars,
