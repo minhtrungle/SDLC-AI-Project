@@ -10,7 +10,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app import auth, chat, documents
+from app import auth, chat, documents, metrics
 from app.config import Settings
 from app.db import init_schema
 from app.errors import install_handlers
@@ -52,6 +52,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(auth.router)
     app.include_router(documents.router)
     app.include_router(chat.router)
+    app.include_router(metrics.router)
 
     @app.middleware("http")
     async def headers_and_access_log(request: Request, call_next):

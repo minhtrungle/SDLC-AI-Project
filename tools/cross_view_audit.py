@@ -76,13 +76,19 @@ def app_routes():
     sys.path.insert(0, str(ROOT))
     from app.main import create_app  # noqa: PLC0415 — optional until Phase 6
 
-    app = create_app()
     routes = set()
-    for r in app.routes:
-        methods = getattr(r, "methods", None) or set()
-        if r.path.startswith("/api"):
-            for m in methods - {"HEAD", "OPTIONS"}:
-                routes.add((m, r.path))
+
+    def walk(items, prefix=""):
+        for r in items:
+            if hasattr(r, "original_router"):  # FastAPI >= 0.16x wraps included routers
+                walk(r.original_router.routes, prefix + r.include_context.prefix)
+                continue
+            path = prefix + getattr(r, "path", "")
+            if path.startswith("/api"):
+                for m in (getattr(r, "methods", None) or set()) - {"HEAD", "OPTIONS"}:
+                    routes.add((m, path))
+
+    walk(create_app().routes)
     return routes
 
 
