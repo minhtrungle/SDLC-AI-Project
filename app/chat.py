@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 from app.auth import CurrentUser, current_user, require_csrf
 from app.db import get_conn, now_iso
 from app.errors import ProblemError
+from app.generation import GeneratorUnavailable
 from app.retrieval import HISTORY_TURNS, FtsRetriever, RetrievedChunk
 
 router = APIRouter(prefix="/api", tags=["chat"])
@@ -163,7 +164,10 @@ def ask_question(
 
     answer, citations, outcome = NOT_FOUND_ANSWER, [], "not_found"
     if chunks:  # FR-012: no relevant chunk -> the generator is not called at all
-        generated = request.app.state.generator.generate(question, chunks)
+        try:
+            generated = request.app.state.generator.generate(question, chunks)
+        except GeneratorUnavailable:
+            raise ProblemError(503, "chat.ai_unavailable") from None
         text, citations = validate_citations(generated.text, chunks)
         if citations:
             answer, outcome = text, "answered"

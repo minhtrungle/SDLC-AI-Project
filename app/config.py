@@ -19,7 +19,7 @@ class Settings:
     session_idle_hours: float = 8
     allow_external_ai: bool = False
     anthropic_api_key: str | None = field(default=None, repr=False)
-    anthropic_model: str = "claude-sonnet-5-5"
+    anthropic_model: str = "claude-opus-5-5"
     answer_timeout_s: float = 15
     cookie_secure: bool = False
 

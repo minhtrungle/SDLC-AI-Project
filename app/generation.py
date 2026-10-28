@@ -12,6 +12,10 @@ MAX_SENTENCES = 4
 _SENTENCE = re.compile(r"(?<=[.!?;…])\s+")
 
 
+class GeneratorUnavailable(Exception):
+    """The answer service failed or timed out; never fall back to a guessed answer (ADR-003 §4)."""
+
+
 @dataclass(frozen=True)
 class GeneratedAnswer:
     text: str

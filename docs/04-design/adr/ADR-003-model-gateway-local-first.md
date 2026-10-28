@@ -11,7 +11,7 @@
 1. Mọi lời gọi sinh câu trả lời đi qua interface `AnswerGenerator` trong `app/generation.py`.
 2. Hai cài đặt:
    - `LocalExtractiveGenerator` (**mặc định**): chọn các câu liên quan nhất trong chunk đã truy xuất và ghép thành câu trả lời có đánh số trích dẫn. Không gửi dữ liệu ra ngoài, tất định, không thể bị prompt injection điều khiển vì không diễn giải chỉ thị.
-   - `AnthropicGenerator`: gọi Anthropic Messages API (mô hình mặc định `claude-sonnet-5-5`, đổi bằng `CWD_ANTHROPIC_MODEL`), chunk được bọc trong thẻ `<document>` và đánh dấu là dữ liệu; mô hình không có công cụ.
+   - `AnthropicGenerator`: gọi Anthropic Messages API (mô hình mặc định `claude-opus-5-5`, effort `low`, bật `fallbacks: "default"` cho trường hợp bị từ chối; đổi bằng `CWD_ANTHROPIC_MODEL`), chunk được bọc trong thẻ `<document>` và đánh dấu là dữ liệu; mô hình không có công cụ.
 3. `AnthropicGenerator` **chỉ** được chọn khi đồng thời `CWD_ALLOW_EXTERNAL_AI=true` **và** có `ANTHROPIC_API_KEY`. Mọi trường hợp khác dùng chế độ cục bộ. Chế độ đang dùng được công bố tại `GET /api/config` (`ai_mode`).
 4. Nếu dịch vụ ngoài lỗi hoặc quá `CWD_ANSWER_TIMEOUT_S`, hệ thống trả lỗi `chat.ai_unavailable`, không tự rơi về câu trả lời suy đoán.
 

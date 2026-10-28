@@ -188,7 +188,7 @@ Middleware ghi log JSON mỗi request; `latency_ms` lưu trong `turns` cho NFR-0
 | `CWD_TOP_K` | 6 | ADR-004 |
 | `CWD_SESSION_IDLE_HOURS` | 8 | FR-002 |
 | `CWD_ALLOW_EXTERNAL_AI` | false | FR-003 |
-| `CWD_ANTHROPIC_MODEL` | claude-sonnet-5-5 | ADR-003 |
+| `CWD_ANTHROPIC_MODEL` | claude-opus-5-5 | ADR-003 |
 | `CWD_ANSWER_TIMEOUT_S` | 15 | OQ-012 |
 | `CWD_COOKIE_SECURE` | false | ADR-007 |
 

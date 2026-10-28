@@ -135,3 +135,39 @@ def test_upload_then_ask_end_to_end(login):
     r = upload(c, ("a.pdf", __import__("tests.conftest").conftest.make_pdf(corpus.BETA)))
     assert r.json()["results"][0]["ok"]
     assert ok(ask(c, "Dự án Beta triển khai ở đâu?"))["citations"][0]["page"] == 1
+
+
+def test_ai_failure_returns_503(app, login):
+    """EC-05: generator failure -> 503 chat.ai_unavailable, nothing saved as an answer."""
+    from app.generation import GeneratorUnavailable
+
+    class Broken:
+        mode = "external"
+
+        def generate(self, question, chunks):
+            raise GeneratorUnavailable
+
+    c = login()
+    upload_ready(c, "Alpha.pdf", corpus.ALPHA)
+    app.state.generator = Broken()
+    cid = c.post("/api/conversations").json()["id"]
+    r = ask(c, "Giá trị hợp đồng Alpha", cid)
+    assert r.status_code == 503 and r.json()["code"] == "chat.ai_unavailable"
+    assert c.get(f"/api/conversations/{cid}").json()["turns"] == []
+
+
+def test_invalid_citation_markers_are_dropped(app, login):
+    """ADR-005: [n] outside the retrieved set is removed; none valid -> not_found."""
+    from app.generation import GeneratedAnswer
+
+    class Liar:
+        mode = "external"
+
+        def generate(self, question, chunks):
+            return GeneratedAnswer("Theo hợp đồng [7], giá trị là 9 tỷ.", [])
+
+    c = login()
+    upload_ready(c, "Alpha.pdf", corpus.ALPHA)
+    app.state.generator = Liar()
+    t = ok(ask(c, "Giá trị hợp đồng Alpha"))
+    assert t["outcome"] == "not_found" and t["citations"] == []
