@@ -10,17 +10,17 @@
 ## 1. Tóm tắt
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|
-| Cổng L0 (`tools/ci_local.py`) | **16/16 PASS** (207 s) | [ci-log.txt](ci-log.txt) |
+| Cổng L0 (`tools/ci_local.py`) | **16/16 PASS** (207 s) | [ci-log.txt](../ci/ci-log.txt) |
 | Test backend (pytest) | **138/138** · coverage **97,73%** (ngưỡng 70%) | ci-log |
 | Test frontend (Vitest) | **49/49** · statements 91,3% · branches 81,8% · functions 79,5% · lines 91,8% | ci-log |
-| **E2E Playwright** | **20/20 · 0 flaky · 0 bỏ qua** (~60 s, Chrome) · 20 ảnh chụp + 20 video mp4 | [test_reports/](../../test_reports/report.md) |
-| Truy vết | 23/23 hàng có test; 23 liên kết tới E2E | [traceability.md](../03-analysis/traceability.md) |
+| **E2E Playwright** | **20/20 · 0 flaky · 0 bỏ qua** (~60 s, Chrome) · 20 ảnh chụp + 20 video mp4 | [test_reports/](../../../test_reports/report.md) |
+| Truy vết | 23/23 hàng có test; 23 liên kết tới E2E | [traceability.md](../../03-analysis/traceability.md) |
 | Hợp đồng API | Route = registry = `openapi.yaml`; type frontend khớp (`check:api`) | cross-view-audit |
-| Eval chất lượng (bộ tổng hợp) | Đúng 100% · trích dẫn đúng 100% · not_found 10/10 · P90 47 ms / 50 tài liệu | [eval-report.json](eval-report.json) |
+| Eval chất lượng (bộ tổng hợp) | Đúng 100% · trích dẫn đúng 100% · not_found 10/10 · P90 47 ms / 50 tài liệu | [eval-report.json](../eval/eval-report.json) |
 | Eval từ đồng nghĩa (không chặn) | **12,5%**: hạn chế R-01 (§6) | eval-report.json |
 | Phụ thuộc | pip-audit 0 · npm audit 0 (frontend, e2e) | ci-log |
 
-**Kết luận của QA agent:** đạt mọi tiêu chí pass/fail tự động của test plan §7. Chưa đủ để phát hành: thiếu eval trên bộ câu hỏi thật (DEP-002) và review L2/L3 của con người ([review-record.md](review-record.md)).
+**Kết luận của QA agent:** đạt mọi tiêu chí pass/fail tự động của test plan §7. Chưa đủ để phát hành: thiếu eval trên bộ câu hỏi thật (DEP-002) và review L2/L3 của con người ([review-record.md](../code-review/review-record.md)).
 
 ## 2. Variances (khác biệt so với kế hoạch)
 | # | Khác biệt | Lý do |
@@ -43,10 +43,10 @@
 
 ## 4. Summary of results
 ### 4.1 Theo story
-Mọi story US-101…US-502 trong phạm vi: **PASS** ở cả mức API (pytest) và mức người dùng (Playwright). Ngoại lệ: AC-102.3 chờ IT ký luồng dữ liệu; US-306 mới đo trên bộ tổng hợp. Chi tiết từng AC ↔ test (BE/FE/E2E): [traceability.md](../03-analysis/traceability.md).
+Mọi story US-101…US-502 trong phạm vi: **PASS** ở cả mức API (pytest) và mức người dùng (Playwright). Ngoại lệ: AC-102.3 chờ IT ký luồng dữ liệu; US-306 mới đo trên bộ tổng hợp. Chi tiết từng AC ↔ test (BE/FE/E2E): [traceability.md](../../03-analysis/traceability.md).
 
 ### 4.2 Playwright E2E
-Bằng chứng từng kịch bản (ảnh chụp màn hình cuối test, video mp4 toàn bộ test, JSON) ở [test_reports/report.md](../../test_reports/report.md).
+Bằng chứng từng kịch bản (ảnh chụp màn hình cuối test, video mp4 toàn bộ test, JSON) ở [test_reports/report.md](../../../test_reports/report.md).
 
 | Spec | Kịch bản | Kết quả |
 |---|---|---|

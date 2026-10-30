@@ -16,6 +16,7 @@ ignore = [
 "app/backend/tests/**" = ["S", "PLR0915", "PLC0415"]
 "app/e2e/**" = ["S", "PLC0415"]  # Playwright harness: throwaway accounts, local subprocesses
 "tools/**" = ["S", "PLR0915", "PLR0912", "PLR0917", "E501"]
+".claude/hooks/**" = ["S", "E501"]  # process hooks (/sdlc phase gate), same footing as tools/
 
 [lint.isort]
 known-first-party = ["cwd", "tests"]

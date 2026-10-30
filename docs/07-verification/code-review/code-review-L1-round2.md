@@ -4,7 +4,7 @@
 - **Người review:** L1 independent agent reviewer — round 2
 - **Ngày:** 2026-10-28
 - **Vai trò:** chỉ ghi nhận và khuyến nghị, không có quyền approve/merge. Quyết định thuộc reviewer L2/L3 (con người).
-- **Tài liệu đối chiếu:** docs/07-verification/code-review-L1.md (vòng 1), AGENTS.md, docs/03-analysis/USER_STORIES.md, docs/04-design/SAD.md, docs/04-design/blueprint.md §3.7, ADR-007, ADR-009, docs/04-design/design-refine-log.md
+- **Tài liệu đối chiếu:** docs/07-verification/code-review/code-review-L1.md (vòng 1), AGENTS.md, docs/03-analysis/USER_STORIES.md, docs/04-design/SAD.md, docs/04-design/blueprint.md §3.7, ADR-007, ADR-009, docs/04-design/design-refine-log.md
 - **Cách làm:** đọc toàn bộ mã backend đã sửa và toàn bộ `app/frontend/src/**`, `vite.config.ts`, `eslint.config.js`, `package.json`, `scripts/check-api.mjs`; chạy `pytest` backend (135 passed), `ruff check` + `ruff format --check` (sạch), `npm test` (43 passed, coverage 91% lines), `npm run lint`, `npm run type-check`, `npm run check:api` (đều sạch); build Vite ra thư mục tạm để kiểm CSP; viết script/spec tạm ngoài repo (scratchpad/review2) để tái hiện: benchmark retrieval 450k chunk, khóa ghi, xóa giữa lúc ingest, race max_docs, CSDL schema cũ, 4 spec Vitest cho trạng thái frontend.
 
 ## Checklist IEEE 1028
