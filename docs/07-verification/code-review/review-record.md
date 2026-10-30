@@ -3,7 +3,7 @@
 | Mục | Giá trị |
 |---|---|
 | Đối tượng review | Nhánh `feat/chat-with-docs-sdlc` (working tree 2026-10-28, gồm thay đổi chưa commit) |
-| Checklist | [Code_Review_IEEE_1028_Checklist.xlsx](../checklists/Code_Review_IEEE_1028_Checklist.xlsx) |
+| Checklist | [Code_Review_IEEE_1028_Checklist.xlsx](../../checklists/Code_Review_IEEE_1028_Checklist.xlsx) |
 | Tác giả | Agent (Claude) |
 | Trạng thái | **L1 hoàn tất · L2 (người) chưa thực hiện · L3 chưa thực hiện** → **chưa được merge** |
 
@@ -12,7 +12,7 @@
 ## 1. Tháp đảm bảo chất lượng
 | Tầng | Ai | Kết quả | Bằng chứng |
 |---|---|---|---|
-| L0 — máy | `tools/ci_local.py` (= CI) | **16/16 PASS** | [ci-log.txt](ci-log.txt) |
+| L0 — máy | `tools/ci_local.py` (= CI) | **16/16 PASS** | [ci-log.txt](../ci/ci-log.txt) |
 | L1 — agent review vòng 1 | Reviewer agent độc lập | 9/14 — chưa đạt; 15 finding | [code-review-L1.md](code-review-L1.md) |
 | L1 — agent review vòng 2 | Reviewer agent độc lập khác | 10/14 — đạt ngưỡng, khuyến nghị sửa 3 Major trước merge; 12 finding mới | [code-review-L1-round2.md](code-review-L1-round2.md) |
 | L1 — xác minh sửa vòng 2 | Tác giả + test hồi quy chứng minh thất bại khi bỏ bản sửa | Xem §3 | §3 |

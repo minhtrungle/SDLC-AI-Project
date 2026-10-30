@@ -1,8 +1,8 @@
 # Chat với tài liệu — Master Test Plan (MTP)
 
-> **Chuẩn:** IEEE 829-2008 (Software Test Documentation) · **Prompt:** [testPlan_prompt.md](../prompts/testPlan_prompt.md)
-> **Checklist:** [Test_Plan_IEEE_829_Checklist.xlsx](../checklists/Test_Plan_IEEE_829_Checklist.xlsx). Kết quả audit ở [Phụ lục B](#phụ-lục-b--audit-theo-checklist-ieee-829)
-> **Kết quả thực hiện:** [test-report.md](test-report.md) · bằng chứng E2E: [test_reports/report.md](../../test_reports/report.md)
+> **Chuẩn:** IEEE 829-2008 (Software Test Documentation) · **Prompt:** [testPlan_prompt.md](../../prompts/testPlan_prompt.md)
+> **Checklist:** [Test_Plan_IEEE_829_Checklist.xlsx](../../checklists/Test_Plan_IEEE_829_Checklist.xlsx). Kết quả audit ở [Phụ lục B](#phụ-lục-b--audit-theo-checklist-ieee-829)
+> **Kết quả thực hiện:** [test-report.md](test-report.md) · bằng chứng E2E: [test_reports/report.md](../../../test_reports/report.md)
 
 ---
 
@@ -11,15 +11,15 @@
 ### A.1 Danh mục tài liệu đầu vào
 | Loại | Tài liệu | Phiên bản | Nguồn | Thông tin chính dùng cho test |
 |---|---|---|---|---|
-| SRS/PRD | [PRD.md](../03-analysis/PRD.md) §3.9 | 0.2 | BA / Agent | FR-001..FR-019, NFR-001..NFR-010, UX-001..011, EC-01..17, launch gate LG-01..25 |
-| BRD | [BRD.md](../02-requirements/BRD.md) | 0.2 | BA | BR-001..BR-028, ngưỡng mặc định §12.1 |
-| SAD | [SAD.md](../04-design/SAD.md) | 0.4 | Architect / Agent | CMP-01..13, kịch bản chất lượng QS-01..09, ADR-001..009 |
-| Blueprint (IEEE 1016) | [blueprint.md](../04-design/blueprint.md) | 0.2 | Architect | Máy trạng thái tài liệu / ô hỏi (§3.7), thuật toán (§3.9) |
-| UI/UX | [UI_UX_design/](../04-design/UI_UX_design/README.md) | 0.2 | UX | SCR-01..06, WCAG 2.1 AA |
-| API | [app/api-contract/openapi.yaml](../../app/api-contract/openapi.yaml) · [openapi.md](../04-design/openapi.md) | 0.2 | Dev | 15 endpoint, 16 mã lỗi problem+json |
-| User Stories | [USER_STORIES.md](../03-analysis/USER_STORIES.md) | 0.2 | PO | 19 story trong phạm vi, AC dạng Given/When/Then |
-| Development Plan | [PLAN.md](../05-implement/PLAN.md) | — | PO / Tech Lead | T-01..T-10, sprint S1–S3 |
-| Data model | [data/model.md](../04-design/data/model.md) | 0.2 | Dev | 8 bảng + FTS5, ràng buộc toàn vẹn |
+| SRS/PRD | [PRD.md](../../03-analysis/PRD.md) §3.9 | 0.2 | BA / Agent | FR-001..FR-019, NFR-001..NFR-010, UX-001..011, EC-01..17, launch gate LG-01..25 |
+| BRD | [BRD.md](../../02-requirements/BRD.md) | 0.2 | BA | BR-001..BR-028, ngưỡng mặc định §12.1 |
+| SAD | [SAD.md](../../04-design/SAD.md) | 0.4 | Architect / Agent | CMP-01..13, kịch bản chất lượng QS-01..09, ADR-001..009 |
+| Blueprint (IEEE 1016) | [blueprint.md](../../04-design/blueprint.md) | 0.2 | Architect | Máy trạng thái tài liệu / ô hỏi (§3.7), thuật toán (§3.9) |
+| UI/UX | [UI_UX_design/](../../04-design/UI_UX_design/README.md) | 0.2 | UX | SCR-01..06, WCAG 2.1 AA |
+| API | [app/api-contract/openapi.yaml](../../../app/api-contract/openapi.yaml) · [openapi.md](../../04-design/openapi.md) | 0.2 | Dev | 15 endpoint, 16 mã lỗi problem+json |
+| User Stories | [USER_STORIES.md](../../03-analysis/USER_STORIES.md) | 0.2 | PO | 19 story trong phạm vi, AC dạng Given/When/Then |
+| Development Plan | [PLAN.md](../../05-implement/PLAN.md) | — | PO / Tech Lead | T-01..T-10, sprint S1–S3 |
+| Data model | [data/model.md](../../04-design/data/model.md) | 0.2 | Dev | 8 bảng + FTS5, ràng buộc toàn vẹn |
 
 ### A.2 Yêu cầu kiểm thử được (trích PRD §3.9)
 | ID | Loại | Mô tả ngắn | Ưu tiên | Story |
@@ -74,7 +74,7 @@
 | /api/metrics/weekly | GET | weeks | WeeklyMetric[] | 403 | Có (manager) |
 
 ### A.6 User story và tiêu chí chấp nhận
-19 story trong phạm vi (US-101..103, US-201..205, US-301..306, US-401..403, US-501..502), mỗi story có AC Given/When/Then trong [USER_STORIES.md](../03-analysis/USER_STORIES.md). US-404, US-601 hoãn (P2). Ánh xạ AC ↔ test tự động (backend, frontend, E2E) được sinh ra tự động ở [traceability.md](../03-analysis/traceability.md).
+19 story trong phạm vi (US-101..103, US-201..205, US-301..306, US-401..403, US-501..502), mỗi story có AC Given/When/Then trong [USER_STORIES.md](../../03-analysis/USER_STORIES.md). US-404, US-601 hoãn (P2). Ánh xạ AC ↔ test tự động (backend, frontend, E2E) được sinh ra tự động ở [traceability.md](../../03-analysis/traceability.md).
 
 ### A.7 Đánh giá rủi ro (định hướng mức đầu tư kiểm thử)
 | ID | Rủi ro | Khả năng (1–5) | Tác động (1–5) | Điểm | Giảm thiểu bằng kiểm thử |
@@ -390,14 +390,14 @@ Xác định chiến lược kiểm thử cho MVP "Chat với tài liệu": các
 ## 9.0 Test Deliverables
 | Deliverable | Vị trí |
 |---|---|
-| Master Test Plan (tài liệu này) | `docs/07-verification/test-plan.md` |
+| Master Test Plan (tài liệu này) | `docs/07-verification/testing/test-plan.md` |
 | Test Summary Report | [test-report.md](test-report.md) |
-| Bằng chứng E2E: mỗi test một thư mục (ảnh, video mp4, report.md, result.json) | [test_reports/](../../test_reports/report.md) |
-| CI log | [ci-log.txt](ci-log.txt) |
-| Kết quả eval chất lượng AI | [eval-report.json](eval-report.json) |
+| Bằng chứng E2E: mỗi test một thư mục (ảnh, video mp4, report.md, result.json) | [test_reports/](../../../test_reports/report.md) |
+| CI log | [ci-log.txt](../ci/ci-log.txt) |
+| Kết quả eval chất lượng AI | [eval-report.json](../eval/eval-report.json) |
 | Coverage | Artifact CI (`app/backend/coverage.xml`, `app/frontend/coverage/`); số liệu trong test-report |
-| Truy vết yêu cầu ↔ test | [traceability.md](../03-analysis/traceability.md) |
-| Review record (L1 vòng 1, 2; L2/L3) | [code-review-L1.md](code-review-L1.md) · [code-review-L1-round2.md](code-review-L1-round2.md) · [review-record.md](review-record.md) |
+| Truy vết yêu cầu ↔ test | [traceability.md](../../03-analysis/traceability.md) |
+| Review record (L1 vòng 1, 2; L2/L3) | [code-review-L1.md](../code-review/code-review-L1.md) · [code-review-L1-round2.md](../code-review/code-review-L1-round2.md) · [review-record.md](../code-review/review-record.md) |
 
 ## 10.0 Testing Tasks
 | Task | Đầu vào | Đầu ra | Phụ thuộc |
