@@ -86,5 +86,5 @@ Thứ tự khuyên dùng cho `B`: `api` → `database` → `blueprint` → `uiux
 | | |
 |---|---|
 | Đối số | ghi chú phạm vi, ví dụ `cập nhật sau sprint S3` hoặc `chỉ audit` |
-| Đầu ra | `docs/07-verification/testing/test-plan.md` + `Test_Plan_IEEE_829_Checklist_v<x>.xlsx` |
+| Đầu ra | `docs/07-verification/testing/TEST_PLAN.md` + `Test_Plan_IEEE_829_Checklist_v<x>.xlsx` |
 | Ví dụ | `/test-plan` · `/test-plan chỉ audit` |

@@ -6,9 +6,9 @@
   "criteria": "AC-402.1, AC-402.2",
   "spec": "app/e2e/tests/chat.spec.ts:56",
   "status": "passed",
-  "duration_ms": 1735,
+  "duration_ms": 2653,
   "retry": 0,
-  "start_time": "2026-10-28T16:26:24.855Z",
+  "start_time": "2026-11-02T13:46:51.383Z",
   "errors": [],
   "evidence": {
     "screenshot": "screenshot.png",

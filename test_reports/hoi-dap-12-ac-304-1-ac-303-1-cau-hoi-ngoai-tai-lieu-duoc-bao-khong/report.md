@@ -6,8 +6,8 @@
 | Nhóm | US-301..US-501 Hỏi đáp có trích dẫn |
 | Tiêu chí chấp nhận | AC-304.1, AC-303.1 |
 | Kết quả | ✅ Đạt |
-| Thời gian chạy | 1.6 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:21 |
+| Thời gian chạy | 1.4 s |
+| Bắt đầu (UTC) | 2026-11-02 13:46:48 |
 | Mã test | `app/e2e/tests/chat.spec.ts:42` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

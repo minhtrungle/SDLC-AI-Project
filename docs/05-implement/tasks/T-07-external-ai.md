@@ -6,10 +6,10 @@
 | Phụ thuộc | T-04 |
 | Risk tier | High — review L3 bắt buộc |
 | Owner | Agent (sinh) · Dev owner (review, merge) |
-| Trạng thái | Planned |
+| Trạng thái | Implemented — AC đã tick PASS theo [RTM](../../07-verification/testing/RTM.md) (RUN-20261102-25eb89f); mục chưa tick không phải AC, cần review L2 xác nhận · cập nhật 2026-11-02 |
 
 ## Tiêu chí hoàn thành (AC đích)
-- [ ] AC-102.1, AC-102.2 (chọn bộ sinh)
+- [x] AC-102.1, AC-102.2 (chọn bộ sinh)
 - [ ] Chunk bọc `<document>`, hệ thống nhắc không làm theo chỉ dẫn trong tài liệu
 - [ ] Lỗi/timeout → 503 `chat.ai_unavailable`, không trả câu trả lời suy đoán
 - [ ] Test bằng client giả, không gọi mạng

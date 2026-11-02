@@ -7,7 +7,7 @@
 | Tiêu chí chấp nhận | AC-101.4 |
 | Kết quả | ✅ Đạt |
 | Thời gian chạy | 0.6 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:07 |
+| Bắt đầu (UTC) | 2026-11-02 13:46:34 |
 | Mã test | `app/e2e/tests/auth.spec.ts:29` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

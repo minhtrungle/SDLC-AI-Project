@@ -6,13 +6,13 @@
 | Phụ thuộc | T-05 |
 | Risk tier | Medium |
 | Owner | Agent (sinh) · Dev owner (review, merge) |
-| Trạng thái | Planned |
+| Trạng thái | Implemented — AC đã tick PASS theo [RTM](../../07-verification/testing/RTM.md) (RUN-20261102-25eb89f); mục chưa tick không phải AC, cần review L2 xác nhận · cập nhật 2026-11-02 |
 
 ## Tiêu chí hoàn thành (AC đích)
-- [ ] AC-306.1..2 (bộ câu hỏi tổng hợp, ngưỡng 85/90/9-trên-10, P90 ≤ 2 s)
-- [ ] AC-NFR-004 cô lập workspace trên mọi endpoint
-- [ ] AC-NFR-008 log sạch
-- [ ] AC-303.2 injection
+- [x] AC-306.1..2 (bộ câu hỏi tổng hợp, ngưỡng 85/90/9-trên-10, P90 ≤ 2 s)
+- [x] AC-NFR-004 cô lập workspace trên mọi endpoint
+- [x] AC-NFR-008 log sạch
+- [x] AC-303.2 injection
 
 ## Test (viết trước)
 - `app/backend/tests/eval/test_eval.py`

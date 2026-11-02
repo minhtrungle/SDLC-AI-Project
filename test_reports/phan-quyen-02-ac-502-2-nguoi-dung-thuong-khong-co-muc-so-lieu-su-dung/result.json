@@ -6,9 +6,9 @@
   "criteria": "AC-502.2",
   "spec": "app/e2e/tests/access.spec.ts:26",
   "status": "passed",
-  "duration_ms": 1189,
+  "duration_ms": 1498,
   "retry": 0,
-  "start_time": "2026-10-28T16:25:58.493Z",
+  "start_time": "2026-11-02T13:46:22.867Z",
   "errors": [],
   "evidence": {
     "screenshot": "screenshot.png",

@@ -6,11 +6,11 @@
 | Phụ thuộc | T-04 |
 | Risk tier | Low |
 | Owner | Agent (sinh) · Dev owner (review, merge) |
-| Trạng thái | Planned |
+| Trạng thái | Implemented — AC đã tick PASS theo [RTM](../../07-verification/testing/RTM.md) (RUN-20261102-25eb89f); mục chưa tick không phải AC, cần review L2 xác nhận · cập nhật 2026-11-02 |
 
 ## Tiêu chí hoàn thành (AC đích)
-- [ ] AC-501.1..2
-- [ ] AC-502.1..2
+- [x] AC-501.1..2
+- [x] AC-502.1..2
 - [ ] SCR-05
 
 ## Test (viết trước)

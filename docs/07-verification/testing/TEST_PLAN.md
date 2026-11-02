@@ -2,7 +2,7 @@
 
 > **Chuẩn:** IEEE 829-2008 (Software Test Documentation) · **Prompt:** [testPlan_prompt.md](../../prompts/testPlan_prompt.md)
 > **Checklist:** [Test_Plan_IEEE_829_Checklist.xlsx](../../checklists/Test_Plan_IEEE_829_Checklist.xlsx). Kết quả audit ở [Phụ lục B](#phụ-lục-b--audit-theo-checklist-ieee-829)
-> **Kết quả thực hiện:** [test-report.md](test-report.md) · bằng chứng E2E: [test_reports/report.md](../../../test_reports/report.md)
+> **Kết quả thực hiện:** [TEST_REPORT.md](TEST_REPORT.md) · bằng chứng E2E: [test_reports/report.md](../../../test_reports/report.md)
 
 ---
 
@@ -96,7 +96,7 @@
 | Thuộc tính | Giá trị |
 |---|---|
 | Document ID | CWD-MTP-v2.0 |
-| Phiên bản | 2.0 (thay TP-CWD-001 v1.0; viết lại theo testPlan_prompt) |
+| Phiên bản | 2.1 (2026-11-02: bổ sung deliverable TEST_CASES, RTM, evidence; đổi tên file thành TEST_PLAN.md) · 2.0 (thay TP-CWD-001 v1.0; viết lại theo testPlan_prompt) |
 | Ngày ban hành | 2026-10-28 |
 | Trạng thái | Review |
 | Phân loại | Nội bộ |
@@ -390,8 +390,11 @@ Xác định chiến lược kiểm thử cho MVP "Chat với tài liệu": các
 ## 9.0 Test Deliverables
 | Deliverable | Vị trí |
 |---|---|
-| Master Test Plan (tài liệu này) | `docs/07-verification/testing/test-plan.md` |
-| Test Summary Report | [test-report.md](test-report.md) |
+| Master Test Plan (tài liệu này) | `docs/07-verification/testing/TEST_PLAN.md` |
+| Test Summary Report | [TEST_REPORT.md](TEST_REPORT.md) |
+| Test cases (TC-xxx từ AC) | [TEST_CASES.md](TEST_CASES.md) — sinh bởi `tools/rtm.py` |
+| Ma trận truy vết hai chiều AC → TC → kết quả → bằng chứng | [RTM.md](RTM.md) |
+| Bằng chứng theo lần chạy (JUnit, CI log, eval) | [evidence/&lt;run-id&gt;/](../evidence/RUN-20261102-25eb89f/README.md) |
 | Bằng chứng E2E: mỗi test một thư mục (ảnh, video mp4, report.md, result.json) | [test_reports/](../../../test_reports/report.md) |
 | CI log | [ci-log.txt](../ci/ci-log.txt) |
 | Kết quả eval chất lượng AI | [eval-report.json](../eval/eval-report.json) |
@@ -408,7 +411,7 @@ Xác định chiến lược kiểm thử cho MVP "Chat với tài liệu": các
 | Chạy eval | Bộ câu hỏi | eval-report.json | Backend |
 | Chạy E2E + sinh báo cáo | Bản build | `test_reports/` | Build |
 | L1 agent review | Diff | code-review-L1*.md | Cổng L0 xanh |
-| Lập test report | Tất cả trên | test-report.md | Tất cả trên |
+| Lập test report | Tất cả trên | TEST_REPORT.md | Tất cả trên |
 | UAT, L2, L3 | Báo cáo, video | Biên bản, rubric | Test report |
 
 ## 11.0 Environmental Needs

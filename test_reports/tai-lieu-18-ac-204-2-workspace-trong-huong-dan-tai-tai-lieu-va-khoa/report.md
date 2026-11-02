@@ -7,7 +7,7 @@
 | Tiêu chí chấp nhận | AC-204.2 |
 | Kết quả | ✅ Đạt |
 | Thời gian chạy | 1.2 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:31 |
+| Bắt đầu (UTC) | 2026-11-02 13:46:59 |
 | Mã test | `app/e2e/tests/documents.spec.ts:10` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

@@ -1,0 +1,25 @@
+=== [PASS] py-format (2.8s): python -m ruff format --check .
+=== [PASS] py-lint (1.0s): python -m ruff check .
+=== [PASS] py-compile (0.7s): python -m compileall -q app/backend/cwd tools
+=== [PASS] secret-scan (2.8s): python tools/secret_scan.py
+=== [FAIL] py-dependency-audit (33.4s): python -m pip_audit -r app/backend/requirements.txt --progress-spinner off
+Name  Version ID              Fix Versions
+----- ------- --------------- ------------
+pypdf 6.21.3  CVE-2026-119203 6.21.4
+pypdf 6.21.3  CVE-2026-119205 6.21.4
+pypdf 6.21.3  CVE-2026-119204 6.21.4
+Found 3 known vulnerabilities in 1 package
+=== [PASS] cross-view-audit (4.1s): python tools/cross_view_audit.py
+=== [PASS] traceability (0.6s): python tools/trace_matrix.py
+=== [PASS] backend-tests+coverage (80.2s): python -m pytest -p no:cacheprovider
+=== [PASS] fe-api-contract (19.8s): npm run check:api
+=== [PASS] fe-lint (58.8s): npm run lint
+=== [PASS] fe-type-check (12.6s): npm run type-check
+=== [PASS] fe-tests+coverage (54.3s): npm test
+=== [PASS] fe-build (10.3s): npm run build
+=== [PASS] fe-dependency-audit (49.9s): npm audit --audit-level=high
+=== [PASS] e2e-type-check (6.8s): npm run type-check
+=== [PASS] e2e-playwright (76.9s): npm test
+=== [PASS] e2e-report (11.9s): python tools/e2e_report.py
+L0 gate: 16/17 passed in 426.8s; failed: py-dependency-audit
+ci exit=1

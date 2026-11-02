@@ -2,25 +2,25 @@
 
 | Mục | Giá trị |
 |---|---|
-| Mã | TSR-CWD-001 v1.1 · tham chiếu [Test Plan TP-CWD-001](test-plan.md) |
-| Phạm vi | Nhánh `feat/chat-with-docs-sdlc`, working tree ngày 2026-10-28 (gồm thay đổi chưa commit) |
+| Mã | TSR-CWD-001 v1.2 · tham chiếu [Test Plan CWD-MTP-v2.0](TEST_PLAN.md) · [TEST_CASES.md](TEST_CASES.md) · [RTM.md](RTM.md) |
+| Phạm vi | Nhánh `feat/chat-with-docs-sdlc`, commit `25eb89f`. Lần chạy bằng chứng [RUN-20261102-25eb89f](../evidence/RUN-20261102-25eb89f/README.md), 2026-11-02 |
 | Tác giả | Agent (Claude) |
 | Người duyệt | QA (STK-006): **chưa duyệt** |
 
 ## 1. Tóm tắt
 | Hạng mục | Kết quả | Bằng chứng |
 |---|---|---|
-| Cổng L0 (`tools/ci_local.py`) | **16/16 PASS** (207 s) | [ci-log.txt](../ci/ci-log.txt) |
-| Test backend (pytest) | **138/138** · coverage **97,73%** (ngưỡng 70%) | ci-log |
-| Test frontend (Vitest) | **49/49** · statements 91,3% · branches 81,8% · functions 79,5% · lines 91,8% | ci-log |
+| Cổng L0 (`tools/ci_local.py`) | **16/17 PASS** (427 s). FAIL `py-dependency-audit`: DEF-001 | [ci-log.txt](../evidence/RUN-20261102-25eb89f/ci-log.txt) |
+| Test backend (pytest) | **138/138** · coverage **97,73%** (ngưỡng 70%) | [backend-junit.xml](../evidence/RUN-20261102-25eb89f/backend-junit.xml) |
+| Test frontend (Vitest) | **49/49** · statements 91,3% · branches 81,8% · functions 79,5% · lines 91,8% | [frontend-junit.xml](../evidence/RUN-20261102-25eb89f/frontend-junit.xml) |
 | **E2E Playwright** | **20/20 · 0 flaky · 0 bỏ qua** (~60 s, Chrome) · 20 ảnh chụp + 20 video mp4 | [test_reports/](../../../test_reports/report.md) |
-| Truy vết | 23/23 hàng có test; 23 liên kết tới E2E | [traceability.md](../../03-analysis/traceability.md) |
+| Truy vết | 23/23 hàng có test. RTM: **58 AC — 57 PASS, 1 chờ review (AC-102.3), 0 GAP** | [RTM.md](RTM.md) · [traceability.md](../../03-analysis/traceability.md) |
 | Hợp đồng API | Route = registry = `openapi.yaml`; type frontend khớp (`check:api`) | cross-view-audit |
-| Eval chất lượng (bộ tổng hợp) | Đúng 100% · trích dẫn đúng 100% · not_found 10/10 · P90 47 ms / 50 tài liệu | [eval-report.json](../eval/eval-report.json) |
+| Eval chất lượng (bộ tổng hợp) | Đúng 100% · trích dẫn đúng 100% · not_found 100% · P90 35,6 ms / 50 tài liệu | [eval-report.json](../evidence/RUN-20261102-25eb89f/eval-report.json) |
 | Eval từ đồng nghĩa (không chặn) | **12,5%**: hạn chế R-01 (§6) | eval-report.json |
-| Phụ thuộc | pip-audit 0 · npm audit 0 (frontend, e2e) | ci-log |
+| Phụ thuộc | **pip-audit: 3 CVE `pypdf 6.21.3`** (DEF-001, bản sửa 6.21.4) · npm audit 0 (frontend, e2e) | ci-log |
 
-**Kết luận của QA agent:** đạt mọi tiêu chí pass/fail tự động của test plan §7. Chưa đủ để phát hành: thiếu eval trên bộ câu hỏi thật (DEP-002) và review L2/L3 của con người ([review-record.md](../code-review/review-record.md)).
+**Kết luận của QA agent:** mọi test chức năng đạt, nhưng cổng L0 **chưa xanh** vì DEF-001. Khuyến nghị: **NO-GO** cho tới khi nâng `pypdf` và chạy lại L0. Ngoài ra còn thiếu eval trên bộ câu hỏi thật (DEP-002) và review L2/L3 của con người ([review-record.md](../code-review/review-record.md)).
 
 ## 2. Variances (khác biệt so với kế hoạch)
 | # | Khác biệt | Lý do |
@@ -63,6 +63,8 @@ Bằng chứng từng kịch bản (ảnh chụp màn hình cuối test, video m
 | CR-01..15 | L1 vòng 1 | 5 Major | Khóa ghi, ingestion kẹt, body không giới hạn, truy xuất chậm, restore phá dữ liệu… | 14 đã sửa; CR-12 → L3 |
 | NR-01..12 | L1 vòng 2 | 3 Major | Vượt giới hạn tài liệu khi song song, thiếu migration, rò dữ liệu giữa user cùng tab… | Đã sửa + test (NR-07 phần typed path chấp nhận) |
 | E2E-1 | UI E2E (upload song song) | Major | Connection SQLite dùng qua thread → 500 | Đã sửa + test |
+| DEF-001 | pip-audit (RUN-20261102) | Major | 3 CVE mới cho `pypdf 6.21.3`, bản sửa 6.21.4 | **Open**: Tech Lead duyệt nâng phiên bản |
+| DEF-002 | Kiểm chứng bằng chứng | Minor | Test eval ghi `docs/07-verification/eval-report.json`, còn tài liệu trỏ `eval/eval-report.json` (bản cũ) | **Open**: Tech Lead |
 | **E2E-2** | **Playwright** | **Blocker** | Commit phiên chạy **sau** khi gửi response → ngay sau đăng nhập bị 401 và bị đẩy về màn hình đăng nhập | Đã sửa (`scope="function"`); Playwright 0/3 → 5/5, gỡ bản sửa → 3/3 lỗi |
 
 **Bài học:** 4 lỗi đồng thời/thứ tự (CR-01, NR-01, E2E-1, E2E-2) đều không bị test API tuần tự (`TestClient`) phát hiện. E2E-2, lỗi nặng nhất, làm hỏng toàn bộ luồng đăng nhập trên trình duyệt thật nhưng 138 test backend vẫn xanh. Playwright trong cổng L0 là lớp bắt được loại lỗi này.
@@ -76,12 +78,12 @@ Bằng chứng từng kịch bản (ảnh chụp màn hình cuối test, video m
 | R-L3 | CR-12/DF-18 khóa đăng nhập theo username | Inspection L3 (review-record §6) | IT/Bảo mật |
 
 ## 7. Evaluation
-Không còn defect Blocker/Major nào đang mở mà agent biết. Mức sẵn sàng còn phụ thuộc review của con người: L2 chấm rubric, L3 inspection.
+Còn 1 defect Major đang mở là DEF-001 (phụ thuộc có CVE). Không còn defect chức năng Blocker/Major nào. Mức sẵn sàng còn phụ thuộc review của con người: L2 chấm rubric, L3 inspection.
 
 ## 8. Summary of activities
 | Hoạt động | Thời lượng chạy |
 |---|---|
-| Cổng L0 đầy đủ (16 bước) | 207 s |
+| Cổng L0 đầy đủ (17 bước, RUN-20261102) | 427 s |
 | Backend pytest | ~80 s |
 | Frontend Vitest | ~35 s |
 | Playwright E2E | ~60–80 s |
@@ -92,3 +94,9 @@ Không còn defect Blocker/Major nào đang mở mà agent biết. Mức sẵn s
 |---|---|---|
 | QA | ☐ Approve ☐ Reject | |
 | Tech Lead | ☐ Approve ☐ Reject | |
+
+## Lịch sử phiên bản
+| Phiên bản | Ngày | Thay đổi |
+|---|---|---|
+| 1.1 | 2026-10-28 | Thêm kết quả Playwright E2E |
+| 1.2 | 2026-11-02 | Chạy lại toàn bộ trên RUN-20261102-25eb89f; liên kết TEST_CASES, RTM và thư mục evidence; thêm DEF-001 (CVE pypdf), DEF-002; đổi khuyến nghị sang NO-GO; đổi tên file thành TEST_REPORT.md |

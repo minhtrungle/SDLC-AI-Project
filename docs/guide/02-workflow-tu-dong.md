@@ -35,7 +35,7 @@ ENTRY ─► SPECIFY ─► GENERATE ─► VERIFY ─► AUDIT ─► REFINE (�
 | **G3b** Thiết kế chi tiết | Architect + Tech Lead | `openapi.yaml`, `data/model.md`, `blueprint.md`, `UI_UX_design/`, `diagrams/`, `cross-view-audit.md` | Các view nhất quán? FR P0 nào chưa có endpoint/màn hình? |
 | **G4** Plan | PO + Tech Lead | `05-implement/PLAN.md`, `tasks/` | Thứ tự hợp lý? Task đủ nhỏ? Rủi ro có owner? |
 | **G5** Build | Human owner | `ci-log`, `traceability.md`, diff (`git log`, `git diff main...`) | L0 xanh? AC nào chưa có test? Có lệch thiết kế (DEV-xx)? |
-| **G6** Verify | Reviewer ≠ author | `07-verification/testing/test-report.md`, `code-review/`, review record | Còn Critical/Major? Đủ bằng chứng để L2 review? |
+| **G6** Verify | Reviewer ≠ author | `07-verification/testing/TEST_REPORT.md`, `code-review/`, review record | Còn Critical/Major? Đủ bằng chứng để L2 review? |
 
 Mỗi cổng, agent luôn đưa: danh sách artifact + phiên bản, số liệu kiểm tra thật, bảng đếm Status checklist, gap mở, giả định cần xác nhận.
 
