@@ -6,8 +6,8 @@
 | Nhóm | US-502 Số liệu sử dụng |
 | Tiêu chí chấp nhận | AC-502.1 |
 | Kết quả | ✅ Đạt |
-| Thời gian chạy | 4.9 s |
-| Bắt đầu (UTC) | 2026-10-28 16:25:59 |
+| Thời gian chạy | 5.4 s |
+| Bắt đầu (UTC) | 2026-11-02 13:46:24 |
 | Mã test | `app/e2e/tests/access.spec.ts:32` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

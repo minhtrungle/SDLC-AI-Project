@@ -25,7 +25,7 @@ Ghi chú phạm vi từ người dùng (có thể trống): **$ARGUMENTS**
 | Truy vết | `docs/03-analysis/traceability.md` (sinh bởi `tools/trace_matrix.py`) |
 | Test có thật | `app/backend/tests/`, `app/frontend/src/**/*.spec.ts`, `app/e2e/tests/`, `app/backend/tests/eval/` |
 | Checklist (template, chỉ đọc) | `docs/checklists/Test_Plan_IEEE_829_Checklist.xlsx` |
-| **Đầu ra 1: MTP** | `docs/07-verification/testing/test-plan.md` |
+| **Đầu ra 1: MTP** | `docs/07-verification/testing/TEST_PLAN.md` |
 | **Đầu ra 2: checklist đã điền** | `docs/07-verification/testing/Test_Plan_IEEE_829_Checklist_v<phiên bản MTP>.xlsx` |
 
 Thiếu file đầu vào nào thì ghi vào A.1 là "không có" và nêu rủi ro ở 15.0. Không được bịa nội dung cho phần thiếu.
@@ -35,7 +35,7 @@ Thiếu file đầu vào nào thì ghi vào A.1 là "không có" và nêu rủi 
 ### 1. Chuẩn bị
 1. Đọc **toàn bộ** `docs/prompts/testPlan_prompt.md`. Lưu ý: bản prompt hiện tại chỉ chi tiết đến §6.1.10 và để trống §6.2. Các mục 6.2 → 16.0 phải được viết theo bảng mục IEEE 829 ở prompt §3.1 (clause 5.6–5.16).
 2. Đọc `AGENTS.md` (quy ước ID AC trong test, lệnh chạy test, điều cấm).
-3. Nếu `docs/07-verification/testing/test-plan.md` đã có, đây là **chế độ cập nhật**:
+3. Nếu `docs/07-verification/testing/TEST_PLAN.md` đã có, đây là **chế độ cập nhật**:
    - Đọc bản hiện có, giữ cấu trúc Phần A / Phần B / Phụ lục và các ID đã cấp (F-xx, RISK-xx, INT-API-xxx, E2E-xxx…). Không đánh số lại; ID mới được cấp tiếp nối.
    - Tăng phiên bản: thay đổi nội dung là tăng minor (2.0 → 2.1), viết lại cấu trúc là tăng major.
    - Thêm hoặc cập nhật mục **Lịch sử phiên bản** (phiên bản · ngày · thay đổi · người soạn), vì `AGENTS.md` cấm sửa tài liệu đã baseline mà không ghi lịch sử.
@@ -67,7 +67,7 @@ cd app/backend && ../../.venv/Scripts/python -m pytest -q          # backend + c
 cd app/frontend && npm test                                         # Vitest + coverage
 .venv/Scripts/python tools/trace_matrix.py                          # exit 1 nếu có dòng trong phạm vi chưa có test
 ```
-- E2E (`cd app/e2e && npm test`) cần bản build frontend và mất nhiều thời gian. Chỉ chạy khi người dùng yêu cầu hoặc bản build đã có sẵn. Nếu không chạy, ghi lại kết quả gần nhất từ `test_reports/report.md` hoặc `docs/07-verification/testing/test-report.md`, có ghi chú nguồn và ngày.
+- E2E (`cd app/e2e && npm test`) cần bản build frontend và mất nhiều thời gian. Chỉ chạy khi người dùng yêu cầu hoặc bản build đã có sẵn. Nếu không chạy, ghi lại kết quả gần nhất từ `test_reports/report.md` hoặc `docs/07-verification/testing/TEST_REPORT.md`, có ghi chú nguồn và ngày.
 - Lệnh nào fail hoặc không chạy được: ghi đúng output tóm tắt. Không làm tròn thành "Đạt".
 - `trace_matrix.py` có ghi lại `docs/03-analysis/traceability.md`. Đây là file sinh tự động nên được phép cập nhật; báo cho người dùng nếu file thay đổi.
 - Đếm số AC trong USER_STORIES.md (phạm vi P0/P1) và số AC có ít nhất một test, rồi ghi tỉ lệ bao phủ AC vào 2.3 (Objectives) và Phụ lục A.
@@ -77,11 +77,11 @@ cd app/frontend && npm test                                         # Vitest + c
    ```bash
    .venv/Scripts/python -c "import openpyxl; ws=openpyxl.load_workbook('docs/checklists/Test_Plan_IEEE_829_Checklist.xlsx').worksheets[0]; print([d.formula1 for d in ws.data_validations.dataValidation]); [print(r[0].row,'|',r[1].value,'|',r[2].value) for r in ws.iter_rows(min_row=2) if r[1].value]"
    ```
-2. Viết Phụ lục B trong `test-plan.md` dưới dạng bảng `| Row | Item | Status | Notes |`, trong đó `Row` là số dòng trong sheet. Mọi dòng phải có Status và Notes; Notes trỏ tới mục MTP làm bằng chứng và không chứa `|` hay xuống dòng. Mục nào chưa đủ (ví dụ lịch UAT chưa có ngày) thì đánh `In Progress` kèm lý do, không đánh `Done`. Ghi rõ đây là tự kiểm tra của người soạn; QA Lead phải review độc lập.
+2. Viết Phụ lục B trong `TEST_PLAN.md` dưới dạng bảng `| Row | Item | Status | Notes |`, trong đó `Row` là số dòng trong sheet. Mọi dòng phải có Status và Notes; Notes trỏ tới mục MTP làm bằng chứng và không chứa `|` hay xuống dòng. Mục nào chưa đủ (ví dụ lịch UAT chưa có ngày) thì đánh `In Progress` kèm lý do, không đánh `Done`. Ghi rõ đây là tự kiểm tra của người soạn; QA Lead phải review độc lập.
 3. **Ràng buộc với parser:** `tools/checklist_fill.py` đọc **bảng đầu tiên trong file có cả hai cột `Status` và `Notes`**. Vì vậy không bảng nào phía trên Phụ lục B được có đồng thời hai tiêu đề cột này (dùng "Trạng thái", "Ghi chú" hoặc "Kết quả" thay thế).
 4. Xuất bản sao (template không bị sửa):
    ```bash
-   .venv/Scripts/python tools/checklist_fill.py docs/checklists/Test_Plan_IEEE_829_Checklist.xlsx docs/07-verification/testing/test-plan.md docs/07-verification/testing/Test_Plan_IEEE_829_Checklist_v<phiên bản>.xlsx
+   .venv/Scripts/python tools/checklist_fill.py docs/checklists/Test_Plan_IEEE_829_Checklist.xlsx docs/07-verification/testing/TEST_PLAN.md docs/07-verification/testing/Test_Plan_IEEE_829_Checklist_v<phiên bản>.xlsx
    ```
 5. Kiểm tra: số dòng được điền bằng số mục của template, không có ô Status trống hay sai giá trị, và `git status docs/checklists` sạch.
 

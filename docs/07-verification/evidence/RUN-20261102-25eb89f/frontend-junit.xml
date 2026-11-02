@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="49" failures="0" errors="0" time="1.3411237">
+    <testsuite name="src/api/client.spec.ts" timestamp="2026-11-02T13:48:54.939Z" hostname="Dell-G7-7588" tests="7" failures="0" errors="0" skipped="0" time="0.1294549">
+        <testcase classname="src/api/client.spec.ts" name="request &gt; sends the CSRF header on writes only (AC-NFR-010)" time="0.0695607">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="request &gt; raises ApiError with the problem code and Vietnamese title" time="0.0077102">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="request &gt; calls the unauthorized handler on 401 auth.required (EC-15)" time="0.0019537">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="request &gt; maps network failures to a readable error (EC-04)" time="0.0030757">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="request &gt; handles 204 and sends scope only when given (FR-015)" time="0.0039383">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="uploadFile (AC-201.3) &gt; reports progress and resolves with the file result" time="0.0359919">
+        </testcase>
+        <testcase classname="src/api/client.spec.ts" name="uploadFile (AC-201.3) &gt; rejects on HTTP errors and network failures" time="0.0024494">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/components/components.spec.ts" timestamp="2026-11-02T13:48:54.949Z" hostname="Dell-G7-7588" tests="15" failures="0" errors="0" skipped="0" time="0.3519536">
+        <testcase classname="src/components/components.spec.ts" name="App + LoginView (US-101) &gt; shows the login screen when not signed in, then the workspace after login" time="0.2131323">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="App + LoginView (US-101) &gt; shows the server message on wrong credentials (AC-101.3)" time="0.0072227">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="DocumentPanel (US-203, US-204) &gt; renders the empty state (AC-204.2)" time="0.0029048">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="DocumentPanel (US-203, US-204) &gt; lists name, status label and pages; only ready documents can be scoped" time="0.0324113">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="AnswerMessage (US-305, US-501) &gt; renders [n] as a button that opens the citation" time="0.0081334">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="AnswerMessage (US-305, US-501) &gt; marks not-found answers, deleted sources and processing warnings" time="0.0037805">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="AnswerMessage (US-305, US-501) &gt; records feedback and reflects it with aria-pressed" time="0.0259933">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="ChatPanel (US-301, US-402, US-403) &gt; disables the question box without ready documents (AC-301.5)" time="0.0034871">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="ChatPanel (US-301, US-402, US-403) &gt; sends with Enter, scoped to selected documents, and shows the answer" time="0.014171">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="ChatPanel (US-301, US-402, US-403) &gt; keeps the question and offers retry when sending fails (EC-04)" time="0.0148252">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="ChatPanel (US-301, US-402, US-403) &gt; starts a new, empty conversation (AC-403.2)" time="0.0062637">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="CitationDrawer (AC-305.2) &gt; loads the original passage and closes with Escape" time="0.0030577">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="CitationDrawer (AC-305.2) &gt; falls back to the stored snippet for deleted documents (AC-205.4)" time="0.0020998">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="UsageDashboard (US-502) &gt; renders weekly metrics" time="0.0089798">
+        </testcase>
+        <testcase classname="src/components/components.spec.ts" name="UsageDashboard (US-502) &gt; shows the error for non-managers (AC-502.2)" time="0.002855">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/composables/composables.spec.ts" timestamp="2026-11-02T13:48:54.953Z" hostname="Dell-G7-7588" tests="11" failures="0" errors="0" skipped="0" time="0.1474347">
+        <testcase classname="src/composables/composables.spec.ts" name="useDocuments &gt; polls while a document is processing, then stops (AC-203.2)" time="0.0077817">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useDocuments &gt; drops a selection when the document is no longer ready" time="0.0010385">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useDocuments &gt; reports load errors" time="0.0005697">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useDocuments &gt; tracks per-file upload results, one bad file never blocks others (AC-201.2)" time="0.0041521">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useDocuments &gt; removes a document and its selection" time="0.0012336">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useSession &gt; keeps the draft question when the session expires (EC-15)" time="0.0068737">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useSession &gt; logs out, forgets the conversation and falls back to default config" time="0.0008804">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="useChat.restore &gt; drops a conversation id the server no longer knows" time="0.0004181">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="AppHeader &gt; shows the dashboard link only to managers (US-502)" time="0.0384873">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="WorkspaceView delete flow (US-205) &gt; asks for confirmation before deleting (AC-205.3)" time="0.0615218">
+        </testcase>
+        <testcase classname="src/composables/composables.spec.ts" name="WorkspaceView delete flow (US-205) &gt; cancel keeps the document" time="0.022061">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/composables/review-fixes.spec.ts" timestamp="2026-11-02T13:48:54.956Z" hostname="Dell-G7-7588" tests="6" failures="0" errors="0" skipped="0" time="0.0491339">
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-03 no data of the previous user after logout / expiry &gt; logout clears documents, selection and conversation" time="0.0059675">
+        </testcase>
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-03 no data of the previous user after logout / expiry &gt; session expiry clears data too, and the saved draft is offered only to the same user" time="0.0014151">
+        </testcase>
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-12 logout failure &gt; stays signed in and tells the user when the server cannot end the session" time="0.0011667">
+        </testcase>
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-04 / NR-06 polling &gt; does not start polling again after stopPolling (unmount) while a request is in flight" time="0.0035102">
+        </testcase>
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-04 / NR-06 polling &gt; ignores a stale poll response that arrives after a newer load (deleted document stays gone)" time="0.000896">
+        </testcase>
+        <testcase classname="src/composables/review-fixes.spec.ts" name="NR-05 upload batches &gt; clearing a finished batch never removes rows of a newer batch" time="0.0330764">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/utils/utils.spec.ts" timestamp="2026-11-02T13:48:54.957Z" hostname="Dell-G7-7588" tests="10" failures="0" errors="0" skipped="0" time="0.6631466">
+        <testcase classname="src/utils/utils.spec.ts" name="splitAnswer (AC-305.1) &gt; turns known [n] markers into citations and keeps the rest as text" time="0.005861">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="splitAnswer (AC-305.1) &gt; never interprets markup (XSS guard)" time="0.0009247">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="composerState (blueprint §3.7) &gt; is disabled without documents (AC-204.2, AC-301.5)" time="0.003047">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="composerState (blueprint §3.7) &gt; explains documents still processing (EC-02)" time="0.0012161">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="composerState (blueprint §3.7) &gt; is disabled when only failed documents exist" time="0.0008663">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="composerState (blueprint §3.7) &gt; blocks sending while an answer is pending (AC-301.3)" time="0.001065">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="composerState (blueprint §3.7) &gt; ignores whitespace-only drafts (AC-301.4) and counts characters" time="0.0014091">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="format helpers &gt; labels every status with icon and text (UX-002)" time="0.0006388">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="format helpers &gt; formats percentages and dates" time="0.6422034">
+        </testcase>
+        <testcase classname="src/utils/utils.spec.ts" name="format helpers &gt; sessionStore survives storage errors" time="0.0010427">
+        </testcase>
+    </testsuite>
+</testsuites>

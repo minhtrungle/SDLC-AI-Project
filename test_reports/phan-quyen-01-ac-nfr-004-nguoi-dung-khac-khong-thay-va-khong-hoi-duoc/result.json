@@ -6,9 +6,9 @@
   "criteria": "AC-NFR-004",
   "spec": "app/e2e/tests/access.spec.ts:6",
   "status": "passed",
-  "duration_ms": 8775,
+  "duration_ms": 8143,
   "retry": 0,
-  "start_time": "2026-10-28T16:25:49.260Z",
+  "start_time": "2026-11-02T13:46:14.263Z",
   "errors": [],
   "evidence": {
     "screenshot": "screenshot.png",

@@ -6,8 +6,8 @@
 | Nhóm | US-201..US-205 Quản lý tài liệu |
 | Tiêu chí chấp nhận | AC-201.1, AC-201.2, AC-202.1 |
 | Kết quả | ✅ Đạt |
-| Thời gian chạy | 4.4 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:32 |
+| Thời gian chạy | 3.8 s |
+| Bắt đầu (UTC) | 2026-11-02 13:47:00 |
 | Mã test | `app/e2e/tests/documents.spec.ts:16` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

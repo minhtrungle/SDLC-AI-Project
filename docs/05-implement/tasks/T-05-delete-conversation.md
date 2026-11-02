@@ -6,13 +6,13 @@
 | Phụ thuộc | T-04 |
 | Risk tier | Medium |
 | Owner | Agent (sinh) · Dev owner (review, merge) |
-| Trạng thái | Planned |
+| Trạng thái | Implemented — AC đã tick PASS theo [RTM](../../07-verification/testing/RTM.md) (RUN-20261102-25eb89f); mục chưa tick không phải AC, cần review L2 xác nhận · cập nhật 2026-11-02 |
 
 ## Tiêu chí hoàn thành (AC đích)
-- [ ] AC-205.1..4
-- [ ] AC-401.1
-- [ ] AC-402.1..2
-- [ ] AC-403.1..2
+- [x] AC-205.1..4
+- [x] AC-401.1
+- [x] AC-402.1..2
+- [x] AC-403.1..2
 
 ## Test (viết trước)
 - `app/backend/tests/test_documents.py`

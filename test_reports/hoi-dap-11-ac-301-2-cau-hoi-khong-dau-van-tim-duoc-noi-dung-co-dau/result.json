@@ -6,9 +6,9 @@
   "criteria": "AC-301.2",
   "spec": "app/e2e/tests/chat.spec.ts:37",
   "status": "passed",
-  "duration_ms": 2588,
+  "duration_ms": 1326,
   "retry": 0,
-  "start_time": "2026-10-28T16:26:18.872Z",
+  "start_time": "2026-11-02T13:46:46.948Z",
   "errors": [],
   "evidence": {
     "screenshot": "screenshot.png",

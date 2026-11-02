@@ -13,9 +13,9 @@ argument-hint: "[full | review-only | retest]"
 
 | # | Việc | Ai làm | Đầu ra (`docs/07-verification/`) |
 |---|---|---|---|
-| 1 | Master Test Plan | skill `test-plan` (orchestrator gọi `Skill`, hoặc giao `sdlc-author` đọc `.claude/skills/test-plan/SKILL.md`) | `testing/test-plan.md` + checklist IEEE 829 đã điền |
+| 1 | Master Test Plan | skill `test-plan` (orchestrator gọi `Skill`, hoặc giao `sdlc-author` đọc `.claude/skills/test-plan/SKILL.md`) | `testing/TEST_PLAN.md` + checklist IEEE 829 đã điền |
 | 2 | Chạy test thật: L0 (`tools/ci_local.py --log docs/07-verification/ci/ci-log.txt`), E2E (`cd app/e2e && npm test` rồi `python tools/e2e_report.py`), eval AI nếu có | orchestrator (lệnh deterministic) | `ci/ci-log.txt`, `test_reports/`, `eval/eval-report.json` |
-| 3 | Test report | `sdlc-author` | `testing/test-report.md`: số test theo tầng, pass/fail, coverage, AC pass/fail/chưa có test, lỗi mở theo mức độ, so với exit criteria của MTP |
+| 3 | Test report | `sdlc-author` | `testing/TEST_REPORT.md`: số test theo tầng, pass/fail, coverage, AC pass/fail/chưa có test, lỗi mở theo mức độ, so với exit criteria của MTP |
 | 4 | L1 code review — **song song với 5** | agent `code-reviewer` | `code-review/code-review-L1-round<N>.md` + xlsx |
 | 5 | Security audit — **song song với 4** | agent `security-auditor` | biên bản theo định dạng của agent |
 | 6 | Sửa lỗi | `sdlc-author` theo danh sách Critical/Major từ 3–5; mỗi sửa có test hồi quy mang ID AC hoặc ID phát hiện | commit `fix(...)` với `Refs:` |

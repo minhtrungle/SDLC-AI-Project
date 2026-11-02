@@ -6,9 +6,9 @@
   "criteria": "AC-205.1, AC-205.3",
   "spec": "app/e2e/tests/documents.spec.ts:28",
   "status": "passed",
-  "duration_ms": 1583,
+  "duration_ms": 1584,
   "retry": 0,
-  "start_time": "2026-10-28T16:26:37.045Z",
+  "start_time": "2026-11-02T13:47:04.125Z",
   "errors": [],
   "evidence": {
     "screenshot": "screenshot.png",

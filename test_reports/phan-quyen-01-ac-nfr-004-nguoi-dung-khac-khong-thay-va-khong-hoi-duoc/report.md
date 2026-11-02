@@ -6,8 +6,8 @@
 | Nhóm | NFR-004 Cô lập workspace |
 | Tiêu chí chấp nhận | AC-NFR-004 |
 | Kết quả | ✅ Đạt |
-| Thời gian chạy | 8.8 s |
-| Bắt đầu (UTC) | 2026-10-28 16:25:49 |
+| Thời gian chạy | 8.1 s |
+| Bắt đầu (UTC) | 2026-11-02 13:46:14 |
 | Mã test | `app/e2e/tests/access.spec.ts:6` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

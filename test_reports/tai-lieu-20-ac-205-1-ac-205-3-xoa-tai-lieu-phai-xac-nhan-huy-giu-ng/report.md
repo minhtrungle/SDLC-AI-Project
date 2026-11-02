@@ -7,7 +7,7 @@
 | Tiêu chí chấp nhận | AC-205.1, AC-205.3 |
 | Kết quả | ✅ Đạt |
 | Thời gian chạy | 1.6 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:37 |
+| Bắt đầu (UTC) | 2026-11-02 13:47:04 |
 | Mã test | `app/e2e/tests/documents.spec.ts:28` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

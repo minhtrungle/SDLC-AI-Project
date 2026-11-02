@@ -1,0 +1,18 @@
+
+ RUN  v5.0.4 E:/SamsungSDS/Trainning_SDLC_AI/SDLC-AI-Project/app/frontend
+
+ ✓ src/api/client.spec.ts (7 tests) 129ms
+ ✓ src/composables/review-fixes.spec.ts (6 tests) 49ms
+ ✓ src/utils/utils.spec.ts (10 tests) 663ms
+   ✓ format helpers (3)
+     ✓ formats percentages and dates 642ms
+ ✓ src/composables/composables.spec.ts (11 tests) 147ms
+ ✓ src/components/components.spec.ts (15 tests) 352ms
+
+ Test Files  5 passed (5)
+      Tests  49 passed (49)
+   Start at  20:48:43
+   Duration  11.22s (environment 86%, transform 8%, import 3%, tests 3%)
+
+JUNIT report written to E:/SamsungSDS/Trainning_SDLC_AI/SDLC-AI-Project/docs/07-verification/evidence/RUN-20261102-25eb89f/frontend-junit.xml
+vitest exit=0

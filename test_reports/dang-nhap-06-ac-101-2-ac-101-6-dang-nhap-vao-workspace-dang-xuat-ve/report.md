@@ -6,8 +6,8 @@
 | Nhóm | US-101 Đăng nhập |
 | Tiêu chí chấp nhận | AC-101.2, AC-101.6 |
 | Kết quả | ✅ Đạt |
-| Thời gian chạy | 1.3 s |
-| Bắt đầu (UTC) | 2026-10-28 16:26:06 |
+| Thời gian chạy | 2.6 s |
+| Bắt đầu (UTC) | 2026-11-02 13:46:31 |
 | Mã test | `app/e2e/tests/auth.spec.ts:20` |
 
 Tệp: [screenshot.png](screenshot.png) · [video.mp4](video.mp4) · [result.json](result.json) · [← Mục lục](../report.md)

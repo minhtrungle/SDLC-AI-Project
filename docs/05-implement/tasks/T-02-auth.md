@@ -6,12 +6,12 @@
 | Phụ thuộc | T-01 |
 | Risk tier | High — review L3 bắt buộc |
 | Owner | Agent (sinh) · Dev owner (review, merge) |
-| Trạng thái | Planned |
+| Trạng thái | Implemented — AC đã tick PASS theo [RTM](../../07-verification/testing/RTM.md) (RUN-20261102-25eb89f); mục chưa tick không phải AC, cần review L2 xác nhận · cập nhật 2026-11-02 |
 
 ## Tiêu chí hoàn thành (AC đích)
-- [ ] AC-101.1..6
-- [ ] AC-103.1..3
-- [ ] AC-NFR-010 (băm PBKDF2, cookie HttpOnly+SameSite=Strict, CSRF)
+- [x] AC-101.1..6
+- [x] AC-103.1..3
+- [x] AC-NFR-010 (băm PBKDF2, cookie HttpOnly+SameSite=Strict, CSRF)
 - [ ] CLI `create-user`, `seed-demo`
 - [ ] SCR-01, SCR-06 trên Web UI
 

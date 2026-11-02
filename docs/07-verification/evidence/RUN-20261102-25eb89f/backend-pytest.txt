@@ -1,0 +1,29 @@
+........................................................................ [ 52%]
+..................................................................       [100%]
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.15.2-final-0 _______________
+
+Name                         Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+cwd\__init__.py                  0      0   100%
+cwd\audit.py                     3      0   100%
+cwd\auth.py                     87      2    98%   39, 62
+cwd\chat.py                    102      0   100%
+cwd\cli.py                     148      5    97%   70, 87, 91-92, 188
+cwd\config.py                   39      0   100%
+cwd\db.py                       42      0   100%
+cwd\documents.py                83      0   100%
+cwd\errors.py                   39      3    92%   62, 67-68
+cwd\generation.py               39      2    95%   50, 57
+cwd\generation_external.py      32      0   100%
+cwd\ingestion.py                84      1    99%   89
+cwd\main.py                    105      4    96%   76-77, 164, 173
+cwd\metrics.py                  43      1    98%   85
+cwd\retrieval.py                57      3    95%   100, 106-107
+cwd\security.py                 49      1    98%   23
+cwd\textnorm.py                 16      0   100%
+----------------------------------------------------------
+TOTAL                          968     22    98%
+Coverage XML written to file coverage.xml
+Required test coverage of 70% reached. Total coverage: 97.73%
+pytest exit=0
